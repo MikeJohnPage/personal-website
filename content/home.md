@@ -2,4 +2,6 @@
 title = "Home"
 +++
 
-Check out my latest blog posts here:
+***
+# Data Scientist, Question Asker, and R Enthusiast.
+***
