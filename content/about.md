@@ -7,8 +7,8 @@ title = "About"
 ## Education 
 - MSc by Research in Psychoendocrinology: *York St John Universitry*
 - Sport Science Performance Conditionig BSc (hons): *York St John Univeristy*
-- Introduction to Data Science: *springboard.com*
-- Data Scientist with R Career Track (12 modules): *datacamp.com*
+- Introduction to Data Science: [*Springboard*](https://www.springboard.com)
+- Data Scientist with R Career Track (12 modules): [*DataCamp*](https://www.datacamp.com/profile/mikepage)
 
 ## Publications
 - [Multidimensional perfectionism and cortisol response in non-clinical populations: A systematic review and evaluation. Journal of Personality and Individual Differences Volume 124. April 2018.](https://doi.org/10.1016/j.paid.2017.11.037)
