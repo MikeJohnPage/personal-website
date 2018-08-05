@@ -584,7 +584,7 @@ perf_topics <- tidy(perf_lda, matrix = "beta")
 
 *Word-topic probabilities*: having established the optimum number of topics (*k* = 9), topic models were then fitted using latent Dirichlet allocation (a generative statistical model). For each term in each document the model computes, among other metrics, the probability of a term being generated from a given topic (known as beta probabilities) Therefore, using these probabilities, the most common words within topics were extracted and plotted, as demonstrated in Figure 11:
 
-```{r topic-model-terms, fig.cap='Word-topic probabilities'}
+```{r topic-model-terms, fig.cap='Word-topic probabilities.'}
 
 # Find most common terms for each topic.
 
