@@ -179,18 +179,18 @@ perf_news %&lt;&gt;% distinct(title, .keep_all = TRUE)</code></pre>
 <h5>4.1 Frequency distributions</h5>
 <p>In order to understand the underlying structure of the data, several exploratory data analyses were performed.</p>
 <p><em>Term frequency distribution</em>: the frequency of terms in each article were calculated and then divided by the total number of terms in each article (i.e., term frequency) as can be seen in Figure 1:</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/term%20frequency%20distribution-1.png" alt="Figure 1. Term frequency across all articles." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:term-frequency-distribution"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/term-frequency-distribution-1.png" alt="Term frequency across all articles." width="672" />
 <p class="caption">
-(#fig:term frequency distribution)Figure 1. Term frequency across all articles.
+Figure 1: Term frequency across all articles.
 </p>
 </div>
 <p>The distribution in Figure 1 demonstrates a large positive skew, as would be expected in a corpus of natural language such as the one in this study. This is because some types of words such as articles (e.g., ‘the’) appear more frequently than other types of words.</p>
-<p><em>Zipf’s law</em>: to further explore the term frequency distribution in Figure 1, frequency rank against term frequency (on logarithmic scales) was plotted. A linear model was fitted to the plot to further examine the underlying data structure (Figure 2):</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/Zipfs%20law-1.png" alt="Figure 2. Zipfs law applied to the data." width="672" />
+<p><em>Zipf’s law</em>: to further explore the term frequency distribution in Figure 1, frequency rank against term frequency (on log base 10 scales) was plotted. To calculate frequency rank, frequency for each term was calculated and then terms were grouped by title and then ranked by row number. Additionally, a linear model was fitted to the plot to further examine the underlying data structure. To fit the linear model, first the log base 10 of term frequency was fitted against the log base 10 of rank. The model summary data was then used to plot a reference line on the plot (Figure 2):</p>
+<div class="figure" style="text-align: center"><span id="fig:Zipfs-law"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/Zipfs-law-1.png" alt="Zipfs law applied to the data." width="672" />
 <p class="caption">
-(#fig:Zipfs law)Figure 2. Zipfs law applied to the data.
+Figure 2: Zipfs law applied to the data.
 </p>
 </div>
 <p>The relationship between term frequency and rank in Figure 2 represents that of Zipf’s law (an interpretation of the power law). That is, that there is an inverse relationship between term frequency and rank (i.e., the most frequent word will occur approximately twice as often as the second most frequent word, etc.). The middle section of the rank range in Figure 2 has a gradient of -0.76, as determined by the fitted linear model, demonstrating that the data in this study does not strictly abide to Zipf’s law (i.e., a perfect case of Zipf’s law would result in a gradient of -1). Furthermore, there are small deviations at both the higher and lower ranked words. This means that the data set contains fewer rare and common words than would typically be predicted by a power law. Nonetheless, these kind of deviations are not uncommon for many kinds of natural language (Silge &amp; Robinson (2017). Collectively, the plots in Figure 1 and Figure 2 confirm that data in this project represent a typical corpus of natural language.</p>
@@ -198,27 +198,27 @@ perf_news %&lt;&gt;% distinct(title, .keep_all = TRUE)</code></pre>
 <div id="word-frequencies" class="section level5">
 <h5>4.2 Word frequencies</h5>
 <p>To understand the basic text composition of the corpus of news articles, a list of custom stop words was removed from the data (see appendix) and the most common words were found (Figure 3):</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/word%20frequencies%20bar-1.png" alt="Figure 3. The most common words across all articles." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:word-frequencies-bar"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/word-frequencies-bar-1.png" alt="The most common words across all articles." width="672" />
 <p class="caption">
-(#fig:word frequencies bar)Figure 3. The most common words across all articles.
+Figure 3: The most common words across all articles.
 </p>
 </div>
 <p>The most common words match those one would expect to find in a corpus of language discussing perfectionism. For example, words such as ‘expectations’, ‘standards’, and ‘pressure’ appear, words commonly used in the academic domain that reflect the high expectations perfectionists place upon themselves. Other words such as ‘students’, ‘college’, and ‘university’ also appear, again, unsurprising given that a large body of academic research has been conducted in University samples. This basic frequency analysis indicates that the words used in this corpus of text can be paralleled to that in the academic domain. Figure 4 demonstrates a further exploration into the most common words used (with the size of the word equating to frequency):</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/word%20frequencies%20bar%20cloud-1.png" alt="Figure 4. A word cloud of the most frequent perfectionism terms used across all articles." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:word-frequencies-bar-cloud"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/word-frequencies-bar-cloud-1.png" alt="A word cloud of the most frequent perfectionism terms used across all articles." width="672" />
 <p class="caption">
-(#fig:word frequencies bar cloud)Figure 4. A word cloud of the most frequent perfectionism terms used across all articles.
+Figure 4: A word cloud of the most frequent perfectionism terms used across all articles.
 </p>
 </div>
 </div>
 <div id="sentiment-analyses" class="section level5">
 <h5>4.3 Sentiment Analyses</h5>
 <p><em>Sentiment time analysis</em>: Having established that the data represented a typical corpus of natural language, and contained words inline with those one may expect in a corpus of text examining perfectionism, a sentiment analysis over time was performed. This was done in order to explore the underlying polarity of the data (i.e., is perfectionism reported in a positive or negative fashion), and to see if this has changed over time. To achieve this, articles were first tokenised by sentence and assigned a sentence number. Next, the sentences were tokenised by word. To compute a sentiment score for each article, individual word sentiment scores across each sentence were summed, and then each sentence sentiment score across each article was summed. Analyzing sentiment in sentence units, as was done here, better captures the structure of natural language over simpler unigram methods such as summing individual word sentiment scores across a whole text (Silge &amp; Robinson, 2017). In order to provide a multifaceted sentiment analysis, three sentiment lexicons (AFINN, Bing, and NRC) were used to determine the sentiment of each article. For each lexicon, sentiment was split into negative and positive classifications, inline with the theory on perfectionistic strivings and perfectionistic concerns, as can be seen in Figure 5:</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/sentiment%20analyses-1.png" alt="Figure 5. Sentiment analysis over time." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:sentiment-analyses"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/sentiment-analyses-1.png" alt="Sentiment analysis over time." width="672" />
 <p class="caption">
-(#fig:sentiment analyses)Figure 5. Sentiment analysis over time.
+Figure 5: Sentiment analysis over time.
 </p>
 </div>
 <p>The data in Figure 5 reveals several noteworthy artifacts about the data. Firstly, the frequency of publications over time remains consistent, with no time period demonstrating a noticeable increase in publication frequency. Secondly, there appears to be no significant trends in sentiment over time (i.e., the distribution of sentiment scores remains consistent over the time). Finally, the plots reveal that articles report perfectionism in both a positive and negative manner. Using the AFINN and Bing sentiments, perfectionism is frequently reported in a negative fashion, whereas the NRC lexicon demonstrates the opposite effect. One reason for the observed difference in sentiment scores between lexicons may be the higher ratio of positive to negative words used in the NRC lexicon in comparison to the AFINN and Bing lexicons. The table below demonstrates this difference between the Bing and NRC lexicons:</p>
@@ -254,10 +254,10 @@ perf_news %&lt;&gt;% distinct(title, .keep_all = TRUE)</code></pre>
 </tbody>
 </table>
 <p><em>Frequent positive and negative words</em>: the most frequent positive and negative words across all texts were found using the Bing sentiment lexicon as shown in Figure 6:</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/positive%20negative%20bar-1.png" alt="Figure 6. The most frequent positive and negative terms contributing to sentiment." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:positive-negative-bar"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/positive-negative-bar-1.png" alt="The most frequent positive and negative terms contributing to sentiment." width="672" />
 <p class="caption">
-(#fig:positive negative bar)Figure 6. The most frequent positive and negative terms contributing to sentiment.
+Figure 6: The most frequent positive and negative terms contributing to sentiment.
 </p>
 </div>
 <p>Similar to the term frequency analysis conducted earlier, many predictable terms appear. For example, of the most frequent negative terms, ‘failure’, ‘mistakes’, and ‘unrealistic’ are commonly used in the academic literature to denote the unrealistic expectations perfectionists demand upon themselves, and their associated fear of failure and mistakes. This also extends to terms such as ‘hard’, ‘unhealthy’, and ‘depression’, terms in the academic literature which denote the experiences perfectionists typically find themselves in. On the contrary, of the most frequent positive terms, many terms appear unexpected. Indeed some terms such as ‘positive’ and ‘healthy’ do parallel those terms used in the academic literature (denoting perfectionistic strivings), however, terms such as ‘love’, ‘worth’, and ‘happy’ are not common occurrences in academic texts. Moreover, one would expect literature discussing perfectionism to discuss low self-worth, and a deficit of happiness and love reflecting the relationship and life difficulties associated with perfectionism (Dunkley et al., 2003; Hewitt and Flett, 2002). Perhaps one explanation for the occurrence of unexpected words is the use of unigrams to determine sentiment. Indeed, statements such as ‘not happy’ reflect a negative sentiment, yet result in a positive sentiment as the outcome (i.e, not gets discarded as a stop word and happy gets treated as a positive sentiment) using the methods employed above. One way to overcome and further explore this is through the use of bigrams.</p>
@@ -265,10 +265,10 @@ perf_news %&lt;&gt;% distinct(title, .keep_all = TRUE)</code></pre>
 <div id="bigrams" class="section level5">
 <h5>4.4 Bigrams</h5>
 <p><em>Bigram sentiment time analysis</em>: in order to account for any negation words in the data set and their effect on sentiment scores, a further sentiment analysis using bigrams was performed. First, the perf_news data set was tokenised by bigrams while keeping track of sentence number. Then, a sentiment analysis was performed by reversing the sentiment score of any bigrams that matched a list of negation words (‘not’, ‘never’, ‘no’, ‘without’). As was done in the unigram sentiment analysis conducted previously, individual word sentiment scores across each sentence were summed, and then each sentence sentiment score across each article was summed to achieve a sentiment score for each article, as can be seen in Figure 7:</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/bigram%20sentiment-1.png" alt="Figure 7. Sentiment analysis over time using bigrams." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:bigram-sentiment"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/bigram-sentiment-1.png" alt="Sentiment analysis over time using bigrams." width="672" />
 <p class="caption">
-(#fig:bigram sentiment)Figure 7. Sentiment analysis over time using bigrams.
+Figure 7: Sentiment analysis over time using bigrams.
 </p>
 </div>
 <p>The data in Figure 7 demonstrate that after controlling for negation words, the articles still maintained a split across both positive and negative sentiments. However, in this instance, there was a heavier weighting towards a negative sentiment (as would be expected after controlling for negation words).</p>
@@ -336,39 +336,45 @@ perf_news %&lt;&gt;% distinct(title, .keep_all = TRUE)</code></pre>
 </table>
 <p>The data in the above table demonstrates that the public reporting of perfectionism is inline with the latest research in the academic domain. For instance, the most frequent bigram terms closely match those of a recent publication by Curran and Hill (2017) published in Psychological Bulletin in which ‘social media’, ‘socially prescribed (perfectionism)’ and ‘mental health’ are discussed in the context of ‘college students’.</p>
 <p><em>Bigram igraph</em>: to visualise the relationship among bigrams simultaneously, the data was arranged into a network of connected nodes, as can be seen in Figure 8:</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/bigram%20igraph-1.png" alt="Figure 8. The most frequent bigrams visualised as a network of connected nodes." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:bigram-igraph"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/bigram-igraph-1.png" alt="The most frequent bigrams visualised as a network of connected nodes." width="672" />
 <p class="caption">
-(#fig:bigram igraph)Figure 8. The most frequent bigrams visualised as a network of connected nodes.
+Figure 8: The most frequent bigrams visualised as a network of connected nodes.
 </p>
 </div>
 </div>
 <div id="pairwise-correlations" class="section level5">
 <h5>4.5 Pairwise correlations</h5>
 <p><em>Pairwise correlations</em>: to determine which words various perfectionism terms (e.g., perfect, perfectionist, etc.) coalesce with, pairwise correlations were calculated using the phi coefficient. This identified how much more likely it was that a word would appear in conjunction with a perfectionism term, or that neither term appeared, than that one appeared without the other (Figure 9):</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/pairwise%20cor-1.png" alt="Figure 9. Pairwise correlations with various perfectionism terms." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:pairwise-cor"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/pairwise-cor-1.png" alt="Pairwise correlations with various perfectionism terms." width="672" />
 <p class="caption">
-(#fig:pairwise cor)Figure 9. Pairwise correlations with various perfectionism terms.
+Figure 9: Pairwise correlations with various perfectionism terms.
 </p>
 </div>
 <p>The words correlated with perfectionism terms mirrors those found in the frequency analysis conducted previously. These words include ‘mistakes’, ‘fear’, ‘failure’, and ‘expectations’, all words in the arsenal of the academic perfectionism lexicon. Moreover, the terms correlated with ‘perfect’ and ‘perfectionists’ are in keeping with this theme, albeit they are less frequently employed terms in the academic literature. For instance, the occurrence of the terms ‘pregnancy’, ‘person’, ‘kids’, and ‘week’ are not published about frequently in the academic domain, but indeed, a small handful of articles do exists examining these topics (e.g., Macedo et al., 2009).</p>
 </div>
 <div id="topic-models" class="section level5">
 <h5>4.6 Topic models</h5>
-<p><em>Model fit</em>: one question of interest is what topics perfectionism coalesces with in the collected news articles. In order to answer such a question the data must be divided into a set of natural groups. One such method for achieving this is topic modelling, a method of unsupervised classification of documents. In topic modelling, each documented is treated as a mixture of topics, and each topic as a mixture of words. This prevents documents being categorised into discrete groups, and allows for overlap in terms of content in a way that represents the structure of natural language. Consequently, topic models were fitted to the data. First, a document-term matrix was calculated and then the ‘ldatuning’ package was used to determine the optimum number of topics (<em>k</em>). The results from this optimisation process can be observed in Figure 10:</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/lda%20fit%20graph-1.png" alt="Figure 10. Topic model fit according to the number of topics." width="1152" />
+<p><em>Model fit</em>: one question of interest is what topics perfectionism coalesces with in the collected news articles. In order to answer such a question the data must be divided into a set of natural groups. One such method for achieving this is topic modelling, a method of unsupervised classification of documents. In topic modelling, each documented is treated as a mixture of topics, and each topic as a mixture of words. This prevents documents being categorised into discrete groups, and allows for overlap in terms of content in a way that represents the structure of natural language. Consequently, topic models were fitted to the data. To achieve this, first, a document-term matrix was calculated. In a document-term matrix, each row represents one document (in this case an article), each column represents one term (in this case a word), and each value contains the number of appearances of that term in the document. As most words often don’t appear in a given text, document-term matrices are usually implemented as sparse matrices as can be seen below:</p>
+<pre><code>## &lt;&lt;DocumentTermMatrix (documents: 74, terms: 5226)&gt;&gt;
+## Non-/sparse entries: 13002/373722
+## Sparsity           : 97%
+## Maximal term length: 26
+## Weighting          : term frequency (tf)</code></pre>
+<p>After the document-term matrix was calculated, the ‘ldatuning’ package was used to determine the optimum number of topics (<em>k</em>). The results from this optimisation process can be observed in Figure 10:</p>
+<div class="figure" style="text-align: center"><span id="fig:lda-fit-graph"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/lda-fit-graph-1.png" alt="Topic model fit according to the number of topics." width="1152" />
 <p class="caption">
-(#fig:lda fit graph)Figure 10. Topic model fit according to the number of topics.
+Figure 10: Topic model fit according to the number of topics.
 </p>
 </div>
 <p>The results in Figure 10 indicate the optimum number of topics (<em>k</em>) occurs in the range 6-15, as indicated by the variance in extremum. Subsequently, topic models were fitted incrementally in this range and qualitatively evaluated at each stage. In this instance, the optimum number of topics occurred at <em>k</em> = 9.</p>
-<p><em>Word-topic probabilities</em>: having established the number of topics (<em>k</em> = 9), the per-topic-per-word probabilities (“beta”) were then calculated. The beta probabilities demonstrate the most common words within topics, as demonstrated in Figure 11:</p>
-<div class="figure" style="text-align: center">
-<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/topic%20model%20terms-1.png" alt="Figure 11. Word-topic probabilities" width="672" />
+<p><em>Word-topic probabilities</em>: having established the optimum number of topics (<em>k</em> = 9), topic models were then fitted using latent Dirichlet allocation (a generative statistical model). For each term in each document the model computes, among other metrics, the probability of a term being generated from a given topic (known as beta probabilities) Therefore, using these probabilities, the most common words within topics were extracted and plotted, as demonstrated in Figure 11:</p>
+<div class="figure" style="text-align: center"><span id="fig:topic-model-terms"></span>
+<img src="/projects/2018-08-05-perfectionism-in-the-public-domain-a-natural-language-processing-approach_files/figure-html/topic-model-terms-1.png" alt="Word-topic probabilities" width="672" />
 <p class="caption">
-(#fig:topic model terms)Figure 11. Word-topic probabilities
+Figure 11: Word-topic probabilities
 </p>
 </div>
 <p>As can be seen in Figure 11, some topics overlap. For example, topics three, five, and seven contain at least one of the terms ‘life’ and ‘people’ in the top two terms, whereas topics four, seven, and nine contain the terms ‘kids’ or ‘parents’. It can be observed that there are meaningful differences between the nine topics, with some of these topics in keeping with the perfectionism themes highlighted so far. For example topic two is unique in its use of terms such as ‘college’ and ‘students’ and reflects the academic research of Curran and Hill (2017) highlighted previously. Other topics are also unique, such as topics four and seven, but their relevance to perfectionism is not as clear. For example, topic one contains key terms such as ‘code’, ‘music’, and ‘time’, topics not frequently employed in the academic literature. That is not to say that all discussions of perfectionism in the public domain should exactly mirror those in the academic domain, rather, it is interesting to note the diversity of topics discussed outside of the academic setting, as exemplified in this topic model.</p>

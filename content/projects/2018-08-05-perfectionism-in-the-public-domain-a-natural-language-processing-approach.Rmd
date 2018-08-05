@@ -165,7 +165,7 @@ In order to understand the underlying structure of the data, several exploratory
 
 *Term frequency distribution*: the frequency of terms in each article were calculated and then divided by the total number of terms in each article (i.e., term frequency) as can be seen in Figure 1:
 
-```{r term frequency distribution, fig.cap='Figure 1. Term frequency across all articles.'}
+```{r term-frequency-distribution, fig.cap='Term frequency across all articles.'}
 
 words_news <- perf_news %>% 
   unnest_tokens(word, text) %>% 
@@ -187,7 +187,7 @@ ggplot(words_news, aes(n/total, fill = title)) +
 
 The distribution in Figure 1 demonstrates a large positive skew, as would be expected in a corpus of natural language such as the one in this study. This is because some types of words such as articles (e.g., 'the') appear more frequently than other types of words. 
 
-*Zipf's law*: to further explore the term frequency distribution in Figure 1, frequency rank against term frequency (on logarithmic scales) was plotted. A linear model was fitted to the plot to further examine the underlying data structure (Figure 2):
+*Zipf's law*: to further explore the term frequency distribution in Figure 1, frequency rank against term frequency (on log base 10 scales) was plotted. To calculate frequency rank, frequency for each term was calculated and then terms were grouped by title and then ranked by row number. Additionally, a linear model was fitted to the plot to further examine the underlying data structure. To fit the linear model, first the log base 10 of term frequency was fitted against the log base 10 of rank. The model summary data was then used to plot a reference line on the plot (Figure 2):
 
 ```{r linear model, include = FALSE}
 
@@ -199,7 +199,7 @@ lm(log10(`term frequency`) ~ log10(rank), data = freq_by_rank)
 
 ```
 
-```{r Zipfs law, fig.cap='Figure 2. Zipfs law applied to the data.'}
+```{r Zipfs-law, fig.cap='Zipfs law applied to the data.'}
 
  freq_by_rank %>% 
   ggplot(aes(rank, `term frequency`, color = title)) +
@@ -216,7 +216,7 @@ The relationship between term frequency and rank in Figure 2 represents that of 
 
 To understand the basic text composition of the corpus of news articles, a list of custom stop words was removed from the data (see appendix) and the most common words were found (Figure 3):
 
-```{r word frequencies bar, fig.cap='Figure 3. The most common words across all articles.'}
+```{r word-frequencies-bar, fig.cap='The most common words across all articles.'}
  
 # Create custom stop words
 
@@ -251,7 +251,7 @@ tidy_news %>%
 
 The most common words match those one would expect to find in a corpus of language discussing perfectionism. For example, words such as 'expectations', 'standards', and 'pressure' appear, words commonly used in the academic domain that reflect the high expectations perfectionists place upon themselves. Other words such as 'students', 'college', and 'university' also appear, again, unsurprising given that a large body of academic research has been conducted in University samples. This basic frequency analysis indicates that the words used in this corpus of text can be paralleled to that in the academic domain. Figure 4 demonstrates a further exploration into the most common words used (with the size of the word equating to frequency):
 
-```{r word frequencies bar cloud, fig.cap='Figure 4. A word cloud of the most frequent perfectionism terms used across all articles.'}
+```{r word-frequencies-bar-cloud, fig.cap='A word cloud of the most frequent perfectionism terms used across all articles.'}
 
 # As a word cloud:
 
@@ -282,7 +282,7 @@ tidier_news <- perf_news %>%
 ```
 
 
-```{r sentiment analyses, fig.cap='Figure 5. Sentiment analysis over time.'}
+```{r sentiment-analyses, fig.cap='Sentiment analysis over time.'}
 
 # Perform sentiment analyses using three different sentiment lexicons (AFINN, Bing, and NRC). Compute sentiment in sentence units by summing individual word sentiment scores across each sentence.
 
@@ -357,7 +357,7 @@ knitr::kable(bind_rows(nrc_lex, bing_lex))
 
 *Frequent positive and negative words*: the most frequent positive and negative words across all texts were found using the Bing sentiment lexicon as shown in Figure 6: 
 
-```{r positive negative bar, fig.cap='Figure 6. The most frequent positive and negative terms contributing to sentiment.'}
+```{r positive-negative-bar, fig.cap='The most frequent positive and negative terms contributing to sentiment.'}
 
 # Find the most common positive and negative words
 
@@ -407,7 +407,7 @@ bigrams_separated <- bigram_news %>%
 
 *Bigram sentiment time analysis*: in order to account for any negation words in the data set and their effect on sentiment scores, a further sentiment analysis using bigrams was performed. First, the perf_news data set was tokenised by bigrams while keeping track of sentence number. Then, a sentiment analysis was performed by reversing the sentiment score of any bigrams that matched a list of negation words ('not', 'never', 'no', 'without'). As was done in the unigram sentiment analysis conducted previously, individual word sentiment scores across each sentence were summed, and then each sentence sentiment score across each article was summed to achieve a sentiment score for each article, as can be seen in Figure 7:
 
-```{r bigram sentiment, fig.cap='Figure 7. Sentiment analysis over time using bigrams.'}
+```{r bigram-sentiment, fig.cap='Sentiment analysis over time using bigrams.'}
 
 # Use bigrams to perform sentiment analyses by reversing the sentiment score of negated words
 
@@ -462,7 +462,7 @@ The data in the above table demonstrates that the public reporting of perfection
 
 *Bigram igraph*: to visualise the relationship among bigrams simultaneously, the data was arranged into a network of connected nodes, as can be seen in Figure 8:
 
-```{r bigram igraph, fig.cap='Figure 8. The most frequent bigrams visualised as a network of connected nodes.'}
+```{r bigram-igraph, fig.cap='The most frequent bigrams visualised as a network of connected nodes.'}
 
 # Create igraph object for the most frequent bigrams. The transparency of links denotes how common or rare the bigram is
 
@@ -501,7 +501,7 @@ word_cors <- perf_news %>%
 
 ```
 
-```{r pairwise cor, fig.cap='Figure 9. Pairwise correlations with various perfectionism terms.'}
+```{r pairwise-cor, fig.cap='Pairwise correlations with various perfectionism terms.'}
 
 # Plot words most correlated with different perfectionism terms
 
@@ -527,7 +527,20 @@ The words correlated with perfectionism terms mirrors those found in the frequen
 
 ##### 4.6 Topic models
 
-*Model fit*: one question of interest is what topics perfectionism coalesces with in the collected news articles. In order to answer such a question the data must be divided into a set of natural groups. One such method for achieving this is topic modelling, a method of unsupervised classification of documents. In topic modelling, each documented is treated as a mixture of topics, and each topic as a mixture of words. This prevents documents being categorised into discrete groups, and allows for overlap in terms of content in a way that represents the structure of natural language. Consequently, topic models were fitted to the data. First, a document-term matrix was calculated and then the 'ldatuning' package was used to determine the optimum number of topics (*k*). The results from this optimisation process can be observed in Figure 10:
+*Model fit*: one question of interest is what topics perfectionism coalesces with in the collected news articles. In order to answer such a question the data must be divided into a set of natural groups. One such method for achieving this is topic modelling, a method of unsupervised classification of documents. In topic modelling, each documented is treated as a mixture of topics, and each topic as a mixture of words. This prevents documents being categorised into discrete groups, and allows for overlap in terms of content in a way that represents the structure of natural language. Consequently, topic models were fitted to the data. To achieve this, first, a document-term matrix was calculated. In a document-term matrix, each row represents one document (in this case an article), each column represents one term (in this case a word), and each value contains the number of appearances of that term in the document. As most words often don't appear in a given text, document-term matrices are usually implemented as sparse matrices as can be seen below:
+
+```{r dtm example}
+
+# Print dtm
+
+tidy_news %>% 
+  anti_join(custom_stop_words) %>%
+  count(title, word) %>% 
+  cast_dtm(title, word, n)
+
+```
+
+After the document-term matrix was calculated, the 'ldatuning' package was used to determine the optimum number of topics (*k*). The results from this optimisation process can be observed in Figure 10:
 
 ```{r dtm, include = FALSE, cache = TRUE}
 
@@ -547,7 +560,7 @@ lda_fit <-FindTopicsNumber(news_dtm,
 
 ```
 
-```{r lda fit graph, fig.width = 12, fig.cap='Figure 10. Topic model fit according to the number of topics.'}
+```{r lda-fit-graph, fig.width = 12, fig.cap='Topic model fit according to the number of topics.'}
 
 # find the extremum to determine optimal k
 
@@ -556,8 +569,6 @@ FindTopicsNumber_plot(lda_fit)
 ```
 
 The results in Figure 10 indicate the optimum number of topics (*k*) occurs in the range 6-15, as indicated by the variance in extremum. Subsequently, topic models were fitted incrementally in this range and qualitatively evaluated at each stage. In this instance, the optimum number of topics occurred at *k* = 9.
-
-
 
 ```{r fit topic models, include = FALSE}
 
@@ -571,9 +582,9 @@ perf_topics <- tidy(perf_lda, matrix = "beta")
 
 ```
 
-*Word-topic probabilities*: having established the number of topics (*k* = 9), the per-topic-per-word probabilities ("beta") were then calculated. The beta probabilities demonstrate the most common words within topics, as demonstrated in Figure 11:
+*Word-topic probabilities*: having established the optimum number of topics (*k* = 9), topic models were then fitted using latent Dirichlet allocation (a generative statistical model). For each term in each document the model computes, among other metrics, the probability of a term being generated from a given topic (known as beta probabilities) Therefore, using these probabilities, the most common words within topics were extracted and plotted, as demonstrated in Figure 11:
 
-```{r topic model terms, fig.cap='Figure 11. Word-topic probabilities'}
+```{r topic-model-terms, fig.cap='Word-topic probabilities'}
 
 # Find most common terms for each topic.
 
@@ -644,7 +655,6 @@ Stoeber, J. (2011). The dual nature of perfectionism in sports: Relationships wi
 Stoeber, J., & Otto, K. (2006). Positive conceptions of perfectionism: Approaches, evidence, challenges. *Personality and Social Psychology Review*, 10, 295- 319.
 
 Wickham, H. (2014). Tidy data. *Journal of Statistical Software*, 59.
-
 
 ### 8. APPENDIX
 ***
