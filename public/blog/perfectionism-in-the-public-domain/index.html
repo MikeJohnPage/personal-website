@@ -1168,7 +1168,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <hr />
 <div id="the-data" class="section level5">
 <h5>2.1 The data</h5>
-<p>In order to analyse public perceptions of perfectionism, a data set is required! Accordingly, an API client (a program which talks to other computer programs) was built and used to retrieve news articles from across the web using the <a href="https://newsriver.io">NewsRiver API</a> API. The returned articles were cleaned (i.e., unwanted data and errors were removed) and the final data set contained four columns: article title (title), date of publication (date), the website the article was retrieved from (website), and the words from each article (word). A subset of the data can be seen in the table below:</p>
+<p>In order to analyse public perceptions of perfectionism, a data set is required! Accordingly, an API client (a program which talks to other computer programs) was built and used to retrieve news articles from across the web using the <a href="https://newsriver.io">NewsRiver API</a>. The returned articles were cleaned (i.e., unwanted data and errors were removed) and the final data set contained four columns: article title (title), date of publication (date), the website the article was retrieved from (website), and the words from each article (word). A subset of the data can be seen in the table below:</p>
 <table>
 <thead>
 <tr class="header">
@@ -1251,7 +1251,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 </div>
 <div id="summary-of-the-data" class="section level5">
 <h5>2.2 Summary of the data</h5>
-<p>The final data set contained 18,160 observations (words), split across 74 news articles from a variety of sources. Each article contained the word ‘perfectionism’ or ‘perfect’ in the title and ‘perfectionism’ in the text on at least one occasion. The date range of the articles was from 2017-11-22 to 2018-07-03 (these limits were imposed by the API). It should be noted that other data structures (other than the ‘tidy’) data structure above were used, but it is not necessary to review these data structures to understand the analyses below.</p>
+<p>The final data set contained 18,160 observations (words), split across 74 news articles from a variety of sources. Each article contained the word ‘perfectionism’ or ‘perfect’ in the title and ‘perfectionism’ in the text on at least one occasion. The date range of the articles was from 2017-11-22 to 2018-07-03 (these limits were imposed by the API). It should be noted that other data structures (other than the ‘tidy’ data structure above) were used, but it is not necessary to review these data structures to understand the analyses below.</p>
 </div>
 </div>
 <div id="analyses" class="section level3">
@@ -1276,7 +1276,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 </div>
 <div id="sentiment-analyses" class="section level5">
 <h5>3.3 Sentiment Analyses</h5>
-<p><em>Sentiment time analysis</em>: Having established that the data represented a typical corpus of natural language, and contained words inline with those one may expect in a corpus of text examining perfectionism, a sentiment analysis over time was performed. This was done in order to explore the underlying polarity of the data (i.e., if perfectionism was reported in a positive or negative fashion), and to see if this has changed over time. While a variety of approaches exist to examine text sentiment, in general, the process involves scoring each word in the data set a sentiment value (this can take many forms from a numeric score(e.g., -5, 2, 3) to a word (e.g. positive, negative, anger)). These values are derived from pre-compiled lists called sentiment lexicons. For this project, three commonly used sentiment lexicons were used: Bing, AFINN, and NRC. For each lexicon, sentiment was split into negative and positive classifications, inline with the theory on perfectionistic strivings and perfectionistic concerns:</p>
+<p>Having established that the data represented a typical corpus of natural language, and contained words inline with those one may expect in a corpus of text examining perfectionism, a sentiment analysis over time was performed. This was done in order to explore the underlying polarity of the data (i.e., if perfectionism was reported in a positive or negative fashion), and to see if this has changed over time. While a variety of approaches exist to examine text sentiment, in general, the process involves scoring each word in the data set a sentiment value (this can take many forms from a numeric score (e.g., -5, 2, 3) to a word (e.g. positive, negative, anger)). These values are derived from pre-compiled lists called sentiment lexicons. For this project, three commonly used sentiment lexicons were used: Bing, AFINN, and NRC. For each lexicon, sentiment was split into negative and positive classifications, inline with the theory on perfectionistic strivings and perfectionistic concerns:</p>
 <p><img src="/blog/2018-08-05-perfectionism-in-the-public-domain_files/figure-html/sentiment%20analyses-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The data above reveals several noteworthy artifacts about the data. Firstly, the frequency of publications over time remains consistent, with no time period demonstrating a noticeable increase in publication frequency. Secondly, there appears to be no significant trends in sentiment over time (i.e., the distribution of sentiment scores remains consistent over the time). Finally, the plots reveal that articles report perfectionism in both a positive and negative manner. Using the AFINN and Bing sentiments, perfectionism is frequently reported in a negative fashion, whereas the NRC lexicon demonstrates the opposite effect. One reason for the observed difference in sentiment scores between lexicons may be the higher ratio of positive to negative words used in the NRC lexicon in comparison to the AFINN and Bing lexicons. The table below demonstrates this difference between the Bing and NRC lexicons:</p>
 <table>
@@ -1392,7 +1392,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <div id="topic-models" class="section level5">
 <h5>4.6 Topic models</h5>
 <p>One question of interest is what topics perfectionism coalesces with in the collected news articles. In order to answer such a question the data must be divided into a set of natural groups. One such method for achieving this is topic modelling, a method of unsupervised classification of documents. In topic modelling, each documented is treated as a mixture of topics, and each topic as a mixture of words. This prevents documents being categorised into discrete groups, and allows for overlap in terms of content in a way that represents the structure of natural language. Consequently, topic models were fitted to the data, and nine topics were found:</p>
-<p><em>Word-topic probabilities</em>: having established the number of topics (9), the most common words within each topic were calculated:</p>
+<p>Having established the number of topics (9), the most common words within each topic were calculated:</p>
 <p><img src="/blog/2018-08-05-perfectionism-in-the-public-domain_files/figure-html/topic%20model%20terms-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>As can be seen above, some topics overlap. For example, topics three, five, and seven contain at least one of the terms ‘life’ and ‘people’ in the top two terms, whereas topics four, seven, and nine contain the terms ‘kids’ or ‘parents’. It can be observed that there are meaningful differences between the nine topics, with some of these topics in keeping with the perfectionism themes highlighted so far. For example topic two is unique in its use of terms such as ‘college’ and ‘students’ and reflects the academic research of Curran and Hill (2017) highlighted previously. Other topics are also unique, such as topics four and seven, but their relevance to perfectionism is not as clear. For example, topic one contains key terms such as ‘code’, ‘music’, and ‘time’, topics not frequently employed in the academic literature. That is not to say that all discussions of perfectionism in the public domain should exactly mirror those in the academic domain, rather, it is interesting to note the diversity of topics discussed outside of the academic setting, as exemplified in this topic model.</p>
 </div>
@@ -1443,11 +1443,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
             
             
                 <div class="navigation">
-                    
-                    <div>
-                        <img class="icon" src="/img/back.svg" alt="back" />
-                        <a href="/blog/test-post/">Test Post</a>
-                    </div>
                     
                     <div style="width: 100%;"></div>
                     

@@ -38,7 +38,7 @@ One method to understand the meaning and social understanding of perfectionism, 
 
 ##### 2.1 The data
 
-In order to analyse public perceptions of perfectionism, a data set is required! Accordingly, an API client (a program which talks to other computer programs) was built and used to retrieve news articles from across the web using the [NewsRiver API](https://newsriver.io) API. The returned articles were cleaned (i.e., unwanted data and errors were removed) and the final data set contained four columns: article title (title), date of publication (date), the website the article was retrieved from (website), and the words from each article (word). A subset of the data can be seen in the table below:
+In order to analyse public perceptions of perfectionism, a data set is required! Accordingly, an API client (a program which talks to other computer programs) was built and used to retrieve news articles from across the web using the [NewsRiver API](https://newsriver.io). The returned articles were cleaned (i.e., unwanted data and errors were removed) and the final data set contained four columns: article title (title), date of publication (date), the website the article was retrieved from (website), and the words from each article (word). A subset of the data can be seen in the table below:
 
 ```{r data set}
 tidy_news <- readr::read_rds("/Users/mikepage/Documents/Data Science/Springboard/Capstone_Project/Capstone Project/tidy_news.RDS")
@@ -50,7 +50,7 @@ It should be noted that each row only contains one word. This kind of data forma
 
 ##### 2.2 Summary of the data
 
-The final data set contained 18,160 observations (words), split across 74 news articles from a variety of sources. Each article contained the word 'perfectionism' or 'perfect' in the title and 'perfectionism' in the text on at least one occasion. The date range of the articles was from 2017-11-22 to 2018-07-03 (these limits were imposed by the API). It should be noted that other data structures (other than the 'tidy') data structure above were used, but it is not necessary to review these data structures to understand the analyses below.
+The final data set contained 18,160 observations (words), split across 74 news articles from a variety of sources. Each article contained the word 'perfectionism' or 'perfect' in the title and 'perfectionism' in the text on at least one occasion. The date range of the articles was from 2017-11-22 to 2018-07-03 (these limits were imposed by the API). It should be noted that other data structures (other than the 'tidy' data structure above) were used, but it is not necessary to review these data structures to understand the analyses below.
 
 ### 3. ANALYSES
 ***
@@ -189,7 +189,7 @@ tidy_news %>%
 
 ##### 3.3 Sentiment Analyses
 
-*Sentiment time analysis*: Having established that the data represented a typical corpus of natural language, and contained words inline with those one may expect in a corpus of text examining perfectionism, a sentiment analysis over time was performed. This was done in order to explore the underlying polarity of the data (i.e., if perfectionism was reported in a positive or negative fashion), and to see if this has changed over time. While a variety of approaches exist to examine text sentiment, in general, the process involves scoring each word in the data set a sentiment value (this can take many forms from a numeric score(e.g., -5, 2, 3) to a word (e.g. positive, negative, anger)). These values are derived from pre-compiled lists called sentiment lexicons. For this project, three commonly used sentiment lexicons were used: Bing, AFINN, and NRC. For each lexicon, sentiment was split into negative and positive classifications, inline with the theory on perfectionistic strivings and perfectionistic concerns:
+Having established that the data represented a typical corpus of natural language, and contained words inline with those one may expect in a corpus of text examining perfectionism, a sentiment analysis over time was performed. This was done in order to explore the underlying polarity of the data (i.e., if perfectionism was reported in a positive or negative fashion), and to see if this has changed over time. While a variety of approaches exist to examine text sentiment, in general, the process involves scoring each word in the data set a sentiment value (this can take many forms from a numeric score (e.g., -5, 2, 3) to a word (e.g. positive, negative, anger)). These values are derived from pre-compiled lists called sentiment lexicons. For this project, three commonly used sentiment lexicons were used: Bing, AFINN, and NRC. For each lexicon, sentiment was split into negative and positive classifications, inline with the theory on perfectionistic strivings and perfectionistic concerns:
 
 
 ```{r tidier news, include = FALSE}
@@ -463,7 +463,7 @@ perf_topics <- tidy(perf_lda, matrix = "beta")
 
 ```
 
-*Word-topic probabilities*: having established the number of topics (9), the most common words within each topic were calculated:
+Having established the number of topics (9), the most common words within each topic were calculated:
 
 ```{r topic model terms}
 
