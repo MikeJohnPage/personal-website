@@ -131,12 +131,7 @@ meta_img: /images/image.jpg
 <p><img src="/blog/2018-08-05-perfectionism-in-the-public-domain_files/figure-html/term%20frequency%20distribution-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The above plot shows how frequently a word is likely to appear in relation to the total number of words in each article. As would be expected, a long tail to the right can be observed. This simply means that some types of words such as articles (e.g., ‘the’) appear more frequently than other types of words.</p>
 <p>To further explore the term frequency distribution shown above, a second plot examining frequency rank (rank of each word by frequency) against term frequency was then created. This kind of plot indicates which kind of words in the documents deviate from a typical corpus (collection of texts) of natural language:</p>
-<div class="figure" style="text-align: center">
-<img src="/blog/2018-08-05-perfectionism-in-the-public-domain_files/figure-html/Zipfs%20law-1.png" alt="Figure 2. Zipfs law applied to the data." width="672" />
-<p class="caption">
-(#fig:Zipfs law)Figure 2. Zipfs law applied to the data.
-</p>
-</div>
+<p><img src="/blog/2018-08-05-perfectionism-in-the-public-domain_files/figure-html/Zipfs%20law-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>In a ‘perfect’ corpus of text, it would be expected that the model plotted above would fall directly on the linear model imposed on top of the plot (the black dotted line). However, in this instance, there are small deviations at both the higher and lower ranked words (as indicated by the deviations away from the black dotted line). This means that the data set contains fewer rare and common words than would typically be predicted by a mathematical model. Nonetheless, these kind of deviations are not uncommon for many kinds of natural language (Silge &amp; Robinson (2017). Therefore, the plots in Figure 1 and Figure 2 confirm that data in this project represent a typical corpus of natural language.</p>
 </div>
 <div id="word-frequencies" class="section level5">
@@ -149,12 +144,7 @@ meta_img: /images/image.jpg
 <div id="sentiment-analyses" class="section level5">
 <h5>3.3 Sentiment Analyses</h5>
 <p><em>Sentiment time analysis</em>: Having established that the data represented a typical corpus of natural language, and contained words inline with those one may expect in a corpus of text examining perfectionism, a sentiment analysis over time was performed. This was done in order to explore the underlying polarity of the data (i.e., if perfectionism was reported in a positive or negative fashion), and to see if this has changed over time. While a variety of approaches exist to examine text sentiment, in general, the process involves scoring each word in the data set a sentiment value (this can take many forms from a numeric score(e.g., -5, 2, 3) to a word (e.g. positive, negative, anger)). These values are derived from pre-compiled lists called sentiment lexicons. For this project, three commonly used sentiment lexicons were used: Bing, AFINN, and NRC. For each lexicon, sentiment was split into negative and positive classifications, inline with the theory on perfectionistic strivings and perfectionistic concerns:</p>
-<div class="figure" style="text-align: center">
-<img src="/blog/2018-08-05-perfectionism-in-the-public-domain_files/figure-html/sentiment%20analyses-1.png" alt="Figure 5. Sentiment analysis over time." width="672" />
-<p class="caption">
-(#fig:sentiment analyses)Figure 5. Sentiment analysis over time.
-</p>
-</div>
+<p><img src="/blog/2018-08-05-perfectionism-in-the-public-domain_files/figure-html/sentiment%20analyses-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The data above reveals several noteworthy artifacts about the data. Firstly, the frequency of publications over time remains consistent, with no time period demonstrating a noticeable increase in publication frequency. Secondly, there appears to be no significant trends in sentiment over time (i.e., the distribution of sentiment scores remains consistent over the time). Finally, the plots reveal that articles report perfectionism in both a positive and negative manner. Using the AFINN and Bing sentiments, perfectionism is frequently reported in a negative fashion, whereas the NRC lexicon demonstrates the opposite effect. One reason for the observed difference in sentiment scores between lexicons may be the higher ratio of positive to negative words used in the NRC lexicon in comparison to the AFINN and Bing lexicons. The table below demonstrates this difference between the Bing and NRC lexicons:</p>
 <table>
 <thead>
@@ -195,7 +185,7 @@ meta_img: /images/image.jpg
 <h5>3.4 Bigrams</h5>
 <p>In order to account for any negation words in the data set and their effect on sentiment scores, a further sentiment analysis using bigrams was performed. Whereas previously single words (i.e, unigrams) were used to analyse the data, now bigrams were used, which is when the text is split into pairs of consecutive words. To perform the sentiment analysis on bigrams, the sentiment score of any bigrams that matched a list of negation words (‘not’, ‘never’, ‘no’, ‘without’) were reversed:</p>
 <p><img src="/blog/2018-08-05-perfectionism-in-the-public-domain_files/figure-html/bigram%20sentiment-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The data in Figure 7 demonstrate that after controlling for negation words, the articles still maintained a split across both positive and negative sentiments. However, in this instance, there was a heavier weighting towards a negative sentiment (as would be expected after controlling for negation words).</p>
+<p>The data above demonstrate that after controlling for negation words, the articles still maintained a split across both positive and negative sentiments. However, in this instance, there was a heavier weighting towards a negative sentiment (as would be expected after controlling for negation words).</p>
 <p>A frequency count of the most common bigrams was then computed to further explore the underlying structure of the data, as can be seen in the table below:</p>
 <table>
 <thead>

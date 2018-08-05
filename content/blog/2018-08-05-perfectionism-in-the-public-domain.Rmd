@@ -124,7 +124,7 @@ lm(log10(`term frequency`) ~ log10(rank), data = freq_by_rank)
 
 ```
 
-```{r Zipfs law, fig.cap='Figure 2. Zipfs law applied to the data.'}
+```{r Zipfs law}
 
  freq_by_rank %>% 
   ggplot(aes(rank, `term frequency`, color = title)) +
@@ -207,7 +207,7 @@ tidier_news <- perf_news %>%
 ```
 
 
-```{r sentiment analyses, fig.cap='Figure 5. Sentiment analysis over time.'}
+```{r sentiment analyses}
 
 # Perform sentiment analyses using three different sentiment lexicons (AFINN, Bing, and NRC). Compute sentiment in sentence units by summing individual word sentiment scores across each sentence.
 
@@ -363,7 +363,7 @@ ggplot(bigrams_afinn_sentiment, aes(date, sent_sum, fill = date)) +
 
 ```
 
-The data in Figure 7 demonstrate that after controlling for negation words, the articles still maintained a split across both positive and negative sentiments. However, in this instance, there was a heavier weighting towards a negative sentiment (as would be expected after controlling for negation words).
+The data above demonstrate that after controlling for negation words, the articles still maintained a split across both positive and negative sentiments. However, in this instance, there was a heavier weighting towards a negative sentiment (as would be expected after controlling for negation words).
 
 A frequency count of the most common bigrams was then computed to further explore the underlying structure of the data, as can be seen in the table below:
 
