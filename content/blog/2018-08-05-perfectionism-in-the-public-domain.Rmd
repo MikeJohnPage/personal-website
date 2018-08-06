@@ -135,7 +135,7 @@ lm(log10(`term frequency`) ~ log10(rank), data = freq_by_rank)
 
 ```
 
-In a 'perfect' corpus of text, it would be expected that the model plotted above would fall directly on the linear model imposed on top of the plot (the black dotted line). However, in this instance, there are small deviations at both the higher and lower ranked words (as indicated by the deviations away from the black dotted line). This means that the data set contains fewer rare and common words than would typically be predicted by a mathematical model. Nonetheless, these kind of deviations are not uncommon for many kinds of natural language (Silge & Robinson (2017). Therefore, the plots in Figure 1 and Figure 2 confirm that data in this project represent a typical corpus of natural language.
+In a 'perfect' corpus of text, it would be expected that the model plotted above would fall directly on the linear model imposed on top of the plot (the black dotted line). However, in this instance, there are small deviations at both the higher and lower ranked words (as indicated by the deviations away from the black dotted line). This means that the data set contains fewer rare and common words than would typically be predicted by a mathematical model. Nonetheless, these kind of deviations are not uncommon for many kinds of natural language (Silge & Robinson, 2017). Therefore, the plots in Figure 1 and Figure 2 confirm that data in this project represent a typical corpus of natural language.
 
 ##### 3.2 Word frequencies
 
