@@ -4,6 +4,13 @@ title = "About"
 +++
 
 ***
+
+## Data Science
+- Technologies: R, IBM SPSS Statistics, Microsoft Excel, G-Power, Markdown.
+- Analyses: multilevel modelling, latent Dirichlet allocation, topic modelling, sentiment analysis, k-means clustering, linear and logistic regression, ANOVA, etc.
+- Skills: data mining, web scraping, API clients, data wrangling, exploratory and explanatory analysis.
+- R libraries - dplyr, tidyr, ggplot2, httr, jsonlite, xml2, urltools, lubridate, magrittr, tidytext, tidyr, wordcloud, reshape2, igraph, ggraph, widyr, topicmodels, ldatuning.
+
 ## Education 
 - MSc by Research in Psychoendocrinology: *York St John Universitry*
 - Sport Science Performance Conditionig BSc (hons): *York St John Univeristy*
@@ -14,12 +21,16 @@ title = "About"
 - [Multidimensional perfectionism and cortisol response in non-clinical populations: A systematic review and evaluation. Journal of Personality and Individual Differences Volume 124. April 2018.](https://doi.org/10.1016/j.paid.2017.11.037)
 
 ## Awards
-- Undergraduate: *Dissertation prize. Highest course grade.*
 - Postgraduate: *£2500 Nestlé research grant.*
 - Conference: *Poster presentation prize in recognition of excellence in the presentation of doctoral research at the 2016 BSPID conference*
+- Undergraduate: *Dissertation prize. Highest course grade.*
 
 ## Academic Posts
-- Module Director: Sport and Exercise Biomechanics. *York St John University*.
+- Lecturer & Module Director: Sport and Exercise Biomechanics. *York St John University*.
 - Technical Demonstrator: Biomechanics laboratory. *York St John University*.
 - Research Assistant (Biomechanics).
+
+## Charity
+- 2014: Cycled 4800 Km unsupported from Manchester to Corfu to raise money for Leukemia and Lymphoma Research.
+- 2011: Cycled 2085 Km unsupported from London to Rome in 14 days, raising over £4000 for MS Trust.
 
