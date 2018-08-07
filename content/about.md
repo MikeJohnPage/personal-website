@@ -6,7 +6,7 @@ title = "About"
 ***
 
 ## Data Science
-- Technologies: R, IBM SPSS Statistics, Microsoft Excel, G-Power, Markdown.
+- Technologies: R, IBM SPSS Statistics, Microsoft Excel, G-Power, Git, Markdown.
 - Analyses: multilevel modelling, latent Dirichlet allocation, topic modelling, sentiment analysis, k-means clustering, linear and logistic regression, ANOVA, etc.
 - Skills: data mining, web scraping, API clients, data wrangling, exploratory and explanatory analysis.
 - R libraries - dplyr, tidyr, ggplot2, httr, jsonlite, xml2, urltools, lubridate, magrittr, tidytext, tidyr, wordcloud, reshape2, igraph, ggraph, widyr, topicmodels, ldatuning.
