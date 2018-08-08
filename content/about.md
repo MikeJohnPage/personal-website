@@ -21,6 +21,7 @@ title = "About"
 
 ## Publications
 - [Multidimensional perfectionism and cortisol response in non-clinical populations: A systematic review and evaluation. Journal of Personality and Individual Differences Volume 124. April 2018.](https://doi.org/10.1016/j.paid.2017.11.037)
+- I am currently leading a research project investigating the effects of perfectionism on pre-competition stress as determined by the cortisol awakening response in athletes. Publication date TBC.
 
 ## Awards
 - Postgraduate: *£2500 Nestlé research grant.*

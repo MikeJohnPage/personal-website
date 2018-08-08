@@ -1125,7 +1125,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                         <div class="author middot" title="Mike Page">Mike Page</div>
                         
                     
-                    <div class="reading-time middot">3 minute read</div>
+                    <div class="reading-time middot">7 minute read</div>
                     <div class="tags">
                         <ul>
                           
@@ -1147,15 +1147,24 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                 
     
     <p><span style="color:grey">Michael Page</span> <br/></p>
+<div id="introduction" class="section level3">
+<h3>INTRODUCTION</h3>
 <hr />
-<div id="what-is-a-multilevel-model" class="section level5">
-<h5>What is a multilevel model?</h5>
-<p>One important question to ask when selecting an analysis for a given data set is: is the data in a nested (i.e., hierarchial/clustered/grouped) stucture? A nested data structure is one in which the data is organised at more than one level. For example, students are nested within class as so:</p>
-<p><img src="/img/blog/SPSS/img1.jpeg" style="display: block; margin: auto;" /></p>
-<p>The level of nesting can extend beyond two levels. For example individual student scores can be nested within students, who are then nested within classes, which are nested within regions, etc:</p>
-<p>Why is this important? Simple linear regression the effect of hospital gets treated the same across all participants</p>
-<p>Generally multilevel models are useful for exploring how relationships vary across higher-level units, for example schools.</p>
-<p>In reality a lot of data is nested, and a typical regression analysis will introduce large amounts of error in to the model.</p>
+<div id="nested-data-structures" class="section level5">
+<h5>Nested data structures</h5>
+<p>When selecting an analysis for a given data set it is important to consider if the data is in a nested (i.e., hierarchial/clustered/grouped) stucture. A nested data structure is one in which the data is organised at more than one level. For example, students can be nested within classes as so:</p>
+<div class="figure">
+<img src="/img/blog/SPSS/img1.jpeg" />
+
+</div>
+<p>In a similar fashion, it could be said that individual student test scores can be nested within students, who are nested within classes, which are nested within schools:</p>
+<div class="figure">
+<img src="/img/blog/SPSS/img2.jpeg" />
+
+</div>
+<p>To extent of this nesting structure is only limited by the nature of the data collected. Nonetheless, the most common nested structure is a two level structure, (i.e., students with classes), which is the type of nesting we will be exploring later.</p>
+<p>Essentially, a nested data structure is one where the variables at one level (e.g., student) cannot be considered independent of the variables at another level (e.g. class). So extending the student-class example above, if the test scores of students 1-9 were to be predicted, it would be reasonable to assume that the scores of students 1-3 will be similar, as will the scores of students 4-6, as will the scores of students 7-9, as nested (grouped) by the higher-level class variable. The explanation for this is intuitive: the pupils in class 1 will be exposed to differnt teachers and different envrionments, etc., in comparison to the students in class 2, and so on. That is not to say that the class is the only predictor of student grades, rather it must be modelled into the data. Indeed, there will be variability in students scores within classes, and it may be that different students in different classes still achieve similar scores. In this scenario, the effect of the higher-level class variable will be minimal or non-significant (more on this later).</p>
+<p>If we were to model the prediction of student test scores as was done above using ordinary least squares (OLS) regression we would run into a problem: OLS regression requires indepedence of observations. In this case, the assumption would be violated, as student scores are not independent of their class. This is because we have a nested data structure. Therefore, we must use an alternative solution: multilevel models.</p>
 </div>
 <div id="why-use-multilevel-models-over-regression" class="section level5">
 <h5>Why use multilevel models over regression?</h5>
@@ -1165,6 +1174,53 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <li>Multilevel models do not require homegeneity of regression slopes (i.e., multilevel models explicitly model variability in regression slopes; Field, 2009).</li>
 <li>Multilevel models play nicely with missing (i.e., NA) data.</li>
 </ol>
+</div>
+<div id="multilevel-models" class="section level5">
+<h5>Multilevel models</h5>
+<p>In short, multilevel models are just a fancy type of regression. The title of Bickel (2009) supports this notion:</p>
+<blockquote>
+<p>“Multilevel Analysis for Applied Research: It’s Just Regression!”</p>
+</blockquote>
+<p>While the mathematics behind multilevel models is a little more complex, they are essentially regression equations which control for variability in the higher-level structures. This variability occurs as variance in the slope and intercept of the plotted regression lines, which are fixed in a standard OLS regression. Thus, multilevel models are said to have a fixed and <em>random</em> component. To understand these concepts further, let’s run through a specific example.</p>
+</div>
+</div>
+<div id="multilevel-models-in-action" class="section level3">
+<h3>MULTILEVEL MODELS IN ACTION</h3>
+<hr />
+<div id="cortisol-and-perfectionism" class="section level5">
+<h5>Cortisol and perfectionism</h5>
+<p>To understand and apply multilevel models, let’s model some data on perfectionism and cortisol I have collected for an on-going study using SPSS.</p>
+</div>
+<div id="the-variables" class="section level5">
+<h5>The variables</h5>
+<p>The study is investigating whether athletes experience a change in their cortisol awakening response (CAR) the morning of a competition (the CAR is essentially a measure of stress), and whether perfectionism (a multidimensional personality trait) can predict these changes. In other words, the study is trying to see if levels of perfectionism in athletes can predict how stressed they get before a competition (of course, it is a little more complicated than that). One might expect that an athlete higher in perfectionism would get more stressed before a competition.</p>
+<p>To assess whether athletes are experiencing a change in CAR before a competition, the CAR is measured on a baseline day and the day of a competition (i.e., at multiple time points). The CAR is expressed in two different metrics: AUCi and AUCg. The details of these metrics are not important at this stage, but take note they both provide an index of stress. Perfectionism is measured at one time point before any measures of the CAR take place. As each participant must provide CAR measurements on two separate occasions (a baseline day and a competition day), the CAR measurements are nested within participants. Therefore, multilevel models must be used to model this data.</p>
+</div>
+<div id="the-data" class="section level5">
+<h5>The data</h5>
+<p>The data we will use to create our models can be seen below:</p>
+<pre><code>## # A tibble: 40 x 9
+##       ID   SOP   SPP  SOPP  SPPP AUCg_Base AUCg_Comp AUCi_Base AUCi_Comp
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1     1   2.8   2.2  3.75  1.75     25.7       22.3    17.0      -0.758
+##  2     2   5.6   4.4  6     4.25     17.3       35.4     5.12     -2.05 
+##  3     3   5     3    4.5   2         3.93      12.6     1.95      1.17 
+##  4     4   2.8   3.8  6.25  5.25     18.2       13.6    -0.244    -9.89 
+##  5     5   6.6   2.2  6.75  2.5      22.3       25.7    -1.04      2.84 
+##  6     6   5.8   4.6  5.5   2.5       8.59      22.0     0.804    -7.33 
+##  7     7   3.6   2.8  4.25  2.75     23.1       16.7     3.11      5.55 
+##  8     8   4     5    5     5.25     21.4       27.8     4.34      7.44 
+##  9     9   4.8   3.8  5.5   4.25      6.95      23.1     0.357     4.64 
+## 10    10   4.8   3.2  5.25  4        15.0       27.1     2.16     14.6  
+## # ... with 30 more rows</code></pre>
+<p>The data contains four perfectionism measures (SOP, SPP, SOPP, SPPP), both CAR metrics across the baseline day and competition day (AUCg_Base, AUCg_Comp, AUCi_Base, AUCi_comp) and a participant identifier (ID).</p>
+</div>
+<div id="growth-models" class="section level5">
+<h5>Growth models</h5>
+<p>To apply mulitlevel models to the data, we need to use a type of model called a growth model (because we are assessing changes over time - from baseline day to competition day). the growth models we will use will examine whether there were intra-individual changes in cortisol scores across days (level 1 or unconditional model including only time), and whether perfectionism measures can predict these changes (level 2 or conditional model that includes perfectionism dimensions; see Bickel, 2007).</p>
+<p>The fixed components of level 1 models follow a normal regression equation structure and describe an individual’s score as a function of the intercept, the slope (i.e. the growth rate), and a time-specific residual. The random components of level 1 models examine whether there is individual variation in terms of the intercept and the slope.</p>
+<p>Typically, the level 1 growth rate is tested to establish if there is a relationships across time for the repeated measures. If a significant relationship is found, the variance components (intercept and slope) are then tested to establish if individuals differed in terms of their initial status and growth rates. If significant relationships are found for the intercept and slope, the model is then tested for fit using a chi-square likelihood ratio test. Providing adequate fit, level 2 predictor variables are then added to the model. Significant interaction terms at level 2 indicate whether the predictor variables are related to accelerated or decelerated growth in the repeated measures at level 1.</p>
+</div>
 </div>
 <div id="references" class="section level3">
 <h3>REFERENCES</h3>
