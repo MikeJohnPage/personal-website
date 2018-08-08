@@ -1,0 +1,86 @@
+---
+title: Multilevel Modelling in SPSS
+author: Mike Page
+date: '2018-08-08'
+slug: multilevel-modelling-in-spss
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+
+<p><span style="color:grey">Michael Page</span> <br/></p>
+<hr />
+<div id="what-is-a-multilevel-model" class="section level5">
+<h5>What is a multilevel model?</h5>
+<p>One important question to ask when selecting an analysis for a given data set is: is the data in a nested (i.e., hierarchial/clustered/grouped) stucture? A nested data structure is one in which the data is organised at more than one level. For example, students are nested within class as so:</p>
+<p><img src="/img/blog/SPSS/img1.jpeg" style="display: block; margin: auto;" /></p>
+<p>The level of nesting can extend beyond two levels. For example individual student scores can be nested within students, who are then nested within classes, which are nested within regions, etc:</p>
+<p>Why is this important? Simple linear regression the effect of hospital gets treated the same across all participants</p>
+<p>Generally multilevel models are useful for exploring how relationships vary across higher-level units, for example schools.</p>
+<p>In reality a lot of data is nested, and a typical regression analysis will introduce large amounts of error in to the model.</p>
+</div>
+<div id="why-use-multilevel-models-over-regression" class="section level5">
+<h5>Why use multilevel models over regression?</h5>
+<p>When dealing with a nested data structure, multilevel models offer several distinct advantages over OLS regression:</p>
+<ol style="list-style-type: decimal">
+<li>Multilevel models do not require independence of observations (i.e., the same participant can be measured twice without confounding the data).</li>
+<li>Multilevel models do not require homegeneity of regression slopes (i.e., multilevel models explicitly model variability in regression slopes; Field, 2009).</li>
+<li>Multilevel models play nicely with missing (i.e., NA) data.</li>
+</ol>
+</div>
+<div id="references" class="section level3">
+<h3>REFERENCES</h3>
+<p>Bickel, R. (2007). Multilevel Analysis for Applied Research: It’s Just Regression!. New York: Guilford Press.</p>
+<p>Field, A. P. (2009). Discovering Statistics Using SPSS: and Sex and Drugs and Rock ‘n’ Roll (third edition). London: Sage publications.</p>
+<p>Peugh, J.L., &amp; Enders, C.K. (2005). Using the SPSS mixed procedure to fit cross- sectional and longitudinal multilevel models. Educational and Psychological Measurement, 65 (5), 717-741.</p>
+</div>
+<div id="appendix" class="section level3">
+<h3>APPENDIX</h3>
+<pre class="r"><code>* Level 1 unconditional linear growth models.
+* Model below is for AUCg
+MIXED AUCg WITH Time
+/PRINT = SOLUTION TESTCOV /METHOD =ML
+/FIXED = INTERCEPT Time
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Model below is for AUCi
+MIXED AUCi WITH Time
+/PRINT = SOLUTION TESTCOV
+/METHOD =ML
+/FIXED = INTERCEPT Time
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Level 2 conditional linear growth models.
+* Model below is for AUCg with the HF-MPS
+MIXED AUCg WITH Time SOP SPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOP SPP Time*SOP Time*SPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Model below is for AUCi with the HF-MPS
+MIXED AUCi WITH Time SOP SPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOP SPP Time*SOP Time*SPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Model below is for AUCg with the PPS-S
+MIXED AUCg WITH Time SOPP SPPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOPP SPPP Time*SOPP Time*SPPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN).
+
+* Model below is for AUCi with the PPS-S
+MIXED AUCi WITH Time SOPP SPPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOPP SPPP Time*SOPP Time*SPPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN).</code></pre>
+</div>

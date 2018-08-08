@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-	<meta name="generator" content="Hugo 0.43" />
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -16,24 +15,24 @@
 <meta property="og:site_name" content="Mike John Page" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/" />
-<meta property="og:title" content="Mike John Page" />
-<meta property="twitter:title" content="Mike John Page">
+<meta property="og:url" content="/blog/multilevel-modelling-in-spss/" />
+<meta property="og:title" content="Multilevel Modelling in SPSS" />
+<meta property="twitter:title" content="Multilevel Modelling in SPSS">
 
-    <meta property="og:image" content="/img/banner.png">
+    <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="/img/banner.png">
+    <meta property="twitter:image" content="//images/image.jpg">
 
-<meta property="og:description" content="Mike John Page">
-<meta property="twitter:description" content="Mike John Page">
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
 
 <title>
 
 
-    Mike John Page
+     Mike John Page - Multilevel Modelling in SPSS 
 
 </title>
-<link rel="canonical" href="/">
+<link rel="canonical" href="/blog/multilevel-modelling-in-spss/">
 
 
 <style media="screen">
@@ -1057,8 +1056,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Mike John Page" />
-
 
 </head>
 
@@ -1066,7 +1063,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1105,58 +1102,165 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            
-                <div class="markdown">
-                
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
-<hr />
+    Multilevel Modelling in SPSS
 
-<h1 id="data-scientist-question-asker-and-r-enthusiast">Data Scientist, Question Asker, and R Enthusiast.</h1>
-
-<hr />
+</div>
 
                 </div>
-            
-
-            
-                <div class="posts">
-                
-                
-                    <div class="page-heading">Latest posts</div>
-                    <ul>
+                <div class="meta">
+                    <div class="date" title="Wed Aug 8 2018 00:00:00 UTC">Aug 8, 2018</div>
                     
-                        <li class="groupby">Aug, 2018</li>
                         
-                            <li class="post-item">
-    <span class="meta">Aug 8, 2018</span>
-    <a href="/blog/multilevel-modelling-in-spss/"><span>Multilevel Modelling in SPSS</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 5, 2018</span>
-    <a href="/blog/perfectionism-in-the-public-domain/"><span>Perfectionism in the Public Domaim</span></a>
-</li>
-
+                        <div class="author middot" title="Mike Page">Mike Page</div>
                         
                     
-                    </ul>
-
-                    
-                
+                    <div class="reading-time middot">3 minute read</div>
+                    <div class="tags">
+                        <ul>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
                 </div>
-            
-
-            <div class="best-posts">
-            
-            
             </div>
+            <div class="markdown">
+                
+    
+    <p><span style="color:grey">Michael Page</span> <br/></p>
+<hr />
+<div id="what-is-a-multilevel-model" class="section level5">
+<h5>What is a multilevel model?</h5>
+<p>One important question to ask when selecting an analysis for a given data set is: is the data in a nested (i.e., hierarchial/clustered/grouped) stucture? A nested data structure is one in which the data is organised at more than one level. For example, students are nested within class as so:</p>
+<p><img src="/img/blog/SPSS/img1.jpeg" style="display: block; margin: auto;" /></p>
+<p>The level of nesting can extend beyond two levels. For example individual student scores can be nested within students, who are then nested within classes, which are nested within regions, etc:</p>
+<p>Why is this important? Simple linear regression the effect of hospital gets treated the same across all participants</p>
+<p>Generally multilevel models are useful for exploring how relationships vary across higher-level units, for example schools.</p>
+<p>In reality a lot of data is nested, and a typical regression analysis will introduce large amounts of error in to the model.</p>
+</div>
+<div id="why-use-multilevel-models-over-regression" class="section level5">
+<h5>Why use multilevel models over regression?</h5>
+<p>When dealing with a nested data structure, multilevel models offer several distinct advantages over OLS regression:</p>
+<ol style="list-style-type: decimal">
+<li>Multilevel models do not require independence of observations (i.e., the same participant can be measured twice without confounding the data).</li>
+<li>Multilevel models do not require homegeneity of regression slopes (i.e., multilevel models explicitly model variability in regression slopes; Field, 2009).</li>
+<li>Multilevel models play nicely with missing (i.e., NA) data.</li>
+</ol>
+</div>
+<div id="references" class="section level3">
+<h3>REFERENCES</h3>
+<p>Bickel, R. (2007). Multilevel Analysis for Applied Research: It’s Just Regression!. New York: Guilford Press.</p>
+<p>Field, A. P. (2009). Discovering Statistics Using SPSS: and Sex and Drugs and Rock ‘n’ Roll (third edition). London: Sage publications.</p>
+<p>Peugh, J.L., &amp; Enders, C.K. (2005). Using the SPSS mixed procedure to fit cross- sectional and longitudinal multilevel models. Educational and Psychological Measurement, 65 (5), 717-741.</p>
+</div>
+<div id="appendix" class="section level3">
+<h3>APPENDIX</h3>
+<pre class="r"><code>* Level 1 unconditional linear growth models.
+* Model below is for AUCg
+MIXED AUCg WITH Time
+/PRINT = SOLUTION TESTCOV /METHOD =ML
+/FIXED = INTERCEPT Time
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Model below is for AUCi
+MIXED AUCi WITH Time
+/PRINT = SOLUTION TESTCOV
+/METHOD =ML
+/FIXED = INTERCEPT Time
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Level 2 conditional linear growth models.
+* Model below is for AUCg with the HF-MPS
+MIXED AUCg WITH Time SOP SPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOP SPP Time*SOP Time*SPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Model below is for AUCi with the HF-MPS
+MIXED AUCi WITH Time SOP SPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOP SPP Time*SOP Time*SPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Model below is for AUCg with the PPS-S
+MIXED AUCg WITH Time SOPP SPPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOPP SPPP Time*SOPP Time*SPPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN).
+
+* Model below is for AUCi with the PPS-S
+MIXED AUCi WITH Time SOPP SPPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOPP SPPP Time*SOPP Time*SPPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN).</code></pre>
+</div>
+
+
+                <br>
+            </div>
+            
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+                <div class="navigation">
+                    
+                    <div>
+                        <img class="icon" src="/img/back.svg" alt="back" />
+                        <a href="/blog/perfectionism-in-the-public-domain/">Perfectionism in the Public Domaim</a>
+                    </div>
+                    
+                    <div style="width: 100%;"></div>
+                    
+                </div>
+            
+            <br>
+            
+
+            
+
+            
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

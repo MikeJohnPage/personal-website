@@ -1,0 +1,124 @@
+---
+title: Multilevel Modelling in SPSS
+author: Mike Page
+date: '2018-08-08'
+slug: multilevel-modelling-in-spss
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align = "center")
+```
+
+<span style="color:grey">Michael Page</span>
+<br/>
+
+***
+
+##### What is a multilevel model?
+
+One important question to ask when selecting an analysis for a given data set is: is the data in a nested (i.e., hierarchial/clustered/grouped) stucture? A nested data structure is one in which the data is organised at more than one level. For example, students are nested within class as so:
+
+```{r, echo = FALSE}
+
+knitr::include_graphics("/img/blog/SPSS/img1.jpeg")
+
+```
+
+
+
+The level of nesting can extend beyond two levels. For example individual student scores can be nested within students, who are then nested within classes, which are nested within regions, etc:
+
+
+
+
+Why is this important? Simple linear regression the effect of hospital gets treated the same across all participants
+
+
+
+Generally multilevel models are useful for exploring how relationships vary across higher-level units, for example schools.
+
+In reality a lot of data is nested, and a typical regression analysis will introduce large amounts of error in to the model.
+
+##### Why use multilevel models over regression?
+
+When dealing with a nested data structure, multilevel models offer several distinct advantages over OLS regression:
+
+1. Multilevel models do not require independence of observations (i.e., the same participant can be measured twice without confounding the data).
+2. Multilevel models do not require homegeneity of regression slopes (i.e., multilevel models explicitly model variability in regression slopes; Field, 2009).
+3. Multilevel models play nicely with missing (i.e., NA) data.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### REFERENCES
+
+Bickel, R. (2007). Multilevel Analysis for Applied Research: It’s Just Regression!. New York: Guilford Press.
+
+Field, A. P. (2009). Discovering Statistics Using SPSS: and Sex and Drugs and Rock 'n' Roll (third edition). London: Sage publications.
+
+Peugh, J.L., & Enders, C.K. (2005). Using the SPSS mixed procedure to fit cross- sectional and longitudinal multilevel models. Educational and Psychological Measurement, 65 (5), 717-741.
+
+### APPENDIX
+
+```{r, eval = FALSE}
+
+* Level 1 unconditional linear growth models.
+* Model below is for AUCg
+MIXED AUCg WITH Time
+/PRINT = SOLUTION TESTCOV /METHOD =ML
+/FIXED = INTERCEPT Time
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Model below is for AUCi
+MIXED AUCi WITH Time
+/PRINT = SOLUTION TESTCOV
+/METHOD =ML
+/FIXED = INTERCEPT Time
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Level 2 conditional linear growth models.
+* Model below is for AUCg with the HF-MPS
+MIXED AUCg WITH Time SOP SPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOP SPP Time*SOP Time*SPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Model below is for AUCi with the HF-MPS
+MIXED AUCi WITH Time SOP SPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOP SPP Time*SOP Time*SPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
+
+* Model below is for AUCg with the PPS-S
+MIXED AUCg WITH Time SOPP SPPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOPP SPPP Time*SOPP Time*SPPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN).
+
+* Model below is for AUCi with the PPS-S
+MIXED AUCi WITH Time SOPP SPPP
+/PRINT = SOLUTION TESTCOV
+/METHOD = ML
+/FIXED = INTERCEPT Time SOPP SPPP Time*SOPP Time*SPPP
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN).
+
+```

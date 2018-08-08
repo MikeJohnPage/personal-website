@@ -6,10 +6,21 @@
     <description>Recent content in Blog on Mike John Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 05 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Aug 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Multilevel Modelling in SPSS</title>
+      <link>/blog/multilevel-modelling-in-spss/</link>
+      <pubDate>Wed, 08 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/multilevel-modelling-in-spss/</guid>
+      <description>Michael Page 
+What is a multilevel model? One important question to ask when selecting an analysis for a given data set is: is the data in a nested (i.e., hierarchial/clustered/grouped) stucture? A nested data structure is one in which the data is organised at more than one level. For example, students are nested within class as so:
+The level of nesting can extend beyond two levels. For example individual student scores can be nested within students, who are then nested within classes, which are nested within regions, etc:</description>
+    </item>
     
     <item>
       <title>Perfectionism in the Public Domaim</title>
