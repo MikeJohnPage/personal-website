@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align =
 
 ##### Nested data structures
 
-When selecting an analysis for a given data set it is important to consider if the data is in a nested (i.e., hierarchial/clustered/grouped) stucture. A nested data structure is one in which the data is organised at more than one level. For example, students can be nested within classes as so:
+When selecting an analysis for a given data set it is important to consider if the data is in a nested (i.e., hierarchical/clustered/grouped) structure. A nested data structure is one in which the data is organised at more than one level. For example, students can be nested within classes as so:
 
 ![](/img/blog/SPSS/img1.jpeg)
 
@@ -34,16 +34,16 @@ In a similar fashion, it could be said that individual student test scores can b
 
 To extent of this nesting structure is only limited by the nature of the data collected. Nonetheless, the most common nested structure is a two level structure, (i.e., students with classes), which is the type of nesting we will be exploring later.
 
-Essentially, a nested data structure is one where the variables at one level (e.g., student) cannot be considered independent of the variables at another level (e.g. class). So extending the student-class example above, if the test scores of students 1-9 were to be predicted, it would be reasonable to assume that the scores of students 1-3 will be similar, as will the scores of students 4-6, as will the scores of students 7-9, as nested (grouped) by the higher-level class variable. The explanation for this is intuitive: the pupils in class 1 will be exposed to differnt teachers and different envrionments, etc., in comparison to the students in class 2, and so on. That is not to say that the class is the only predictor of student grades, rather, it must be modelled into the data. Indeed, there will be variability in students scores within classes, and it may be that different students in different classes still achieve similar scores. In this scenario, the effect of the higher-level class variable will be minimal or non-significant (more on this later). 
+Essentially, a nested data structure is one where the variables at one level (e.g., student) cannot be considered independent of the variables at another level (e.g. class). So extending the student-class example above, if the test scores of students 1-9 were to be predicted, it would be reasonable to assume that the scores of students 1-3 will be similar, as will the scores of students 4-6, as will the scores of students 7-9, as nested (grouped) by the higher-level class variable. The explanation for this is intuitive: the pupils in class 1 will be exposed to different teachers and different environments, etc., in comparison to the students in class 2, and so on. That is not to say that the class is the only predictor of student grades, rather, it must be modeled into the data. Indeed, there will be variability in students scores within classes, and it may be that different students in different classes still achieve similar scores. In this scenario, the effect of the higher-level class variable will be minimal or non-significant (more on this later). 
 
-If we were to model the prediction of student test scores as was done above using ordinary least squares (OLS) regression we would run into a problem: OLS regression requires indepedence of observations. In this case, the assumption would be violated, as student scores are not independent of their class. This is because we have a nested data structure. Therefore, we must use an alternative solution: multilevel models.
+If we were to model the prediction of student test scores as was done above using ordinary least squares (OLS) regression we would run into a problem: OLS regression requires independence of observations. In this case, the assumption would be violated, as student scores are not independent of their class. This is because we have a nested data structure. Therefore, we must use an alternative solution: multilevel models.
 
 ##### Why use multilevel models over regression?
 
 When dealing with a nested data structure, multilevel models offer several distinct advantages over OLS regression:
 
 1. Multilevel models do not require independence of observations (i.e., the same participant can be measured twice without confounding the data).
-2. Multilevel models do not require homegeneity of regression slopes (i.e., multilevel models explicitly model variability in regression slopes; Field, 2009).
+2. Multilevel models do not require homogeneity of regression slopes (i.e., multilevel models explicitly model variability in regression slopes; Field, 2009).
 3. Multilevel models play nicely with missing (i.e., NA) data.
 
 ##### Multilevel models
@@ -86,7 +86,7 @@ To model the data, it must be transformed into a longitudinal (or 'tidy'; Wickha
 
 ##### Growth models
 
-To apply mulitlevel models to the data, we need to use a type of model called a growth model (because we are assessing changes over time - from baseline day to competition day). the growth models we will use will examine whether there are intra-individual changes in cortisol scores across days (level 1 or unconditional model including only time), and whether perfectionism measures can predict these changes (level 2 or conditional model that includes perfectionism dimensions; see Bickel, 2007). 
+To apply multilevel models to the data, we need to use a type of model called a growth model (because we are assessing changes over time - from baseline day to competition day). the growth models we will use will examine whether there are intro-individual changes in cortisol scores across days (level 1 or unconditional model including only time), and whether perfectionism measures can predict these changes (level 2 or conditional model that includes perfectionism dimensions; see Bickel, 2007). 
 
 The fixed components of level 1 models follow a normal regression equation structure and describe an individual’s score as a function of the intercept, the slope (i.e. the growth rate), and a time-specific residual. The random components of level 1 models examine whether there is individual variation in terms of the intercept and the slope.
 
@@ -94,7 +94,7 @@ Typically, the level 1 growth rate is tested to establish if there is a relation
 
 ##### Fitting the models
 
-To fit the growth models in SPSS let's go beyond the point and click interface, which is convoluted and timely, and write some concise, reproducible snytax. As a guide, let's use the syntax provided in Peugh and Enders (2005) to run our growth models (note that comments are indicated by an asterix). First, we need to write our level 1 uncoditional linear models to test whether there is a change in CAR over time, and whether there is individual varation in terms of the intercept and slope, for both CAR metrics (AUCi and AUCg):
+To fit the growth models in SPSS let's go beyond the point and click interface, which is convoluted and timely, and write some concise, reproducible syntax. As a guide, let's use the syntax provided in Peugh and Enders (2005) to run our growth models (note that comments are indicated by an asterisk). First, we need to write our level 1 unconditional linear models to test whether there is a change in CAR over time, and whether there is individual variation in terms of the intercept and slope, for both CAR metrics (AUCi and AUCg):
 
 ```{r level-one, eval = FALSE}
 
@@ -114,7 +114,7 @@ MIXED AUCi WITH Time
 
 ```
 
-Next, we need to build our level 2 models to assess whether the predictor variables are related to accelerated or decelerated growth in the repeated measures at level 1 for both CAR metrics (AUCi and AUCg). Note that in the models below the four perfectionism measures are added to the models in groups of two (e.g., SOP and SPP), this is beacause these pairs of perfectionism measures are subdomains of a perfectionism scale (consiting of multiple dimensions):
+Next, we need to build our level 2 models to assess whether the predictor variables are related to accelerated or decelerated growth in the repeated measures at level 1 for both CAR metrics (AUCi and AUCg). Note that in the models below the four perfectionism measures are added to the models in groups of two (e.g., SOP and SPP), this is because these pairs of perfectionism measures are subdomains of a perfectionism scale (consisting of multiple dimensions):
 
 ```{r level-two, eval = FALSE}
 
@@ -149,20 +149,25 @@ MIXED AUCi WITH Time SOPP SPPP
 
 ```
 
-That is it! That is the models built. Next, we run the syntax and inspect the results. Below, is a cleaned up, more digestiable version of the SPSS output for the level 1 and 2 models examing SOP and SPP:
+That is it! That is the models built. Next, we run the syntax and inspect the results. Below, is a cleaned up, more digestible version of the SPSS output for the level 1 and 2 models examining SOP and SPP:
 
 <br/>
 ![](/img/blog/SPSS/screen_shot.png)
 <br/>
 
-For AUCi, the level 1 unconditional linear growth models showed that there were no significant changes in cortisol over time (*p* = .596). For AUCg, the level 1 unconditional linear growth models showed that there were significant changes in cortisol over time (*p* = .001). However, there was no significant variability between individuals in terms of both slope and intercept, therefore, the level 2 models need not be examined (as they have no variability to explain). In this case, a two step regression analyis would be an appropriate analysis to now run on the data to examine the significant hange in cortisol over time that was found.
+For AUCi, the level 1 unconditional linear growth models showed that there were no significant changes in cortisol over time (*p* = .596). For AUCg, the level 1 unconditional linear growth models showed that there were significant changes in cortisol over time (*p* = .001). However, there was no significant variability between individuals in terms of both slope and intercept, therefore, the level 2 models need not be examined (as they have no variability to explain). In this case, a two step regression analysis would be an appropriate analysis to now run on the data to examine the significant change in cortisol over time that was found.
 
 ### SUMMARY
 ***
 
+1. Multilevel models allow us to analyse nested data structures and offer several advantages over OLS regression.
 
+2. When using multilevel growth models, first, level 1 growth rate is tested to establish if there is a relationships across time for the repeated measures. If a significant relationship is found, the variance components (intercept and slope) are then tested to establish if individuals differed in terms of their initial status and growth rates. Level 2 predictor variables are then added to the model. Significant interaction terms at level 2 indicate whether the predictor variables are related to accelerated or decelerated growth in the repeated measures at level 1.
+
+3. SPSS syntax offers a simple and reproducible method for performing multilevel models.
 
 ### REFERENCES
+***
 
 Bickel, R. (2007). Multilevel Analysis for Applied Research: It’s Just Regression!. New York: Guilford Press.
 

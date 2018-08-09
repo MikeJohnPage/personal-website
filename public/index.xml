@@ -18,7 +18,7 @@
       
       <guid>/blog/multilevel-modelling-in-spss/</guid>
       <description>Michael Page 
-INTRODUCTION Nested data structures When selecting an analysis for a given data set it is important to consider if the data is in a nested (i.e., hierarchial/clustered/grouped) stucture. A nested data structure is one in which the data is organised at more than one level. For example, students can be nested within classes as so:
+INTRODUCTION Nested data structures When selecting an analysis for a given data set it is important to consider if the data is in a nested (i.e., hierarchical/clustered/grouped) structure. A nested data structure is one in which the data is organised at more than one level. For example, students can be nested within classes as so:
  In a similar fashion, it could be said that individual student test scores can be nested within students, who are nested within classes, which are nested within schools:</description>
     </item>
     
