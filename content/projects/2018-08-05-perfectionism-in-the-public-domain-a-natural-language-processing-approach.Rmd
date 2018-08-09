@@ -631,6 +631,7 @@ Three key themes emerged in the data:
 3. The data in this study were limited to articles published in English. While the vast majority of academic literature is published in English, the translations of the findings of this study cannot be extended outside of English speaking, Western populations. This is because societal and cultural factors affect the implicit meaning behind psychological constructs, such as perfectionism (Hui & Triandis, 1989). Therefore, it is recommended that future research investigates the sentiment and topics of perfectionism in other languages.
 
 ### 7. REFERENCES
+***
 
 Curran, T., & Hill, A. P. (2017, December 28). Perfectionism Is Increasing Over Time: A MetaAnalysis of Birth Cohort Differences From 1989 to 2016. *Psychological Bulletin*. Advance online publication. http://dx.doi.org/10.1037/bul0000138.
 

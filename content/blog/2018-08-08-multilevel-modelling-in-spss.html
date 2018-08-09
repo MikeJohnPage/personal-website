@@ -30,7 +30,7 @@ meta_img: /images/image.jpg
 
 </div>
 <p>To extent of this nesting structure is only limited by the nature of the data collected. Nonetheless, the most common nested structure is a two level structure, (i.e., students with classes), which is the type of nesting we will be exploring later.</p>
-<p>Essentially, a nested data structure is one where the variables at one level (e.g., student) cannot be considered independent of the variables at another level (e.g. class). So extending the student-class example above, if the test scores of students 1-9 were to be predicted, it would be reasonable to assume that the scores of students 1-3 will be similar, as will the scores of students 4-6, as will the scores of students 7-9, as nested (grouped) by the higher-level class variable. The explanation for this is intuitive: the pupils in class 1 will be exposed to differnt teachers and different envrionments, etc., in comparison to the students in class 2, and so on. That is not to say that the class is the only predictor of student grades, rather it must be modelled into the data. Indeed, there will be variability in students scores within classes, and it may be that different students in different classes still achieve similar scores. In this scenario, the effect of the higher-level class variable will be minimal or non-significant (more on this later).</p>
+<p>Essentially, a nested data structure is one where the variables at one level (e.g., student) cannot be considered independent of the variables at another level (e.g. class). So extending the student-class example above, if the test scores of students 1-9 were to be predicted, it would be reasonable to assume that the scores of students 1-3 will be similar, as will the scores of students 4-6, as will the scores of students 7-9, as nested (grouped) by the higher-level class variable. The explanation for this is intuitive: the pupils in class 1 will be exposed to differnt teachers and different envrionments, etc., in comparison to the students in class 2, and so on. That is not to say that the class is the only predictor of student grades, rather, it must be modelled into the data. Indeed, there will be variability in students scores within classes, and it may be that different students in different classes still achieve similar scores. In this scenario, the effect of the higher-level class variable will be minimal or non-significant (more on this later).</p>
 <p>If we were to model the prediction of student test scores as was done above using ordinary least squares (OLS) regression we would run into a problem: OLS regression requires indepedence of observations. In this case, the assumption would be violated, as student scores are not independent of their class. This is because we have a nested data structure. Therefore, we must use an alternative solution: multilevel models.</p>
 </div>
 <div id="why-use-multilevel-models-over-regression" class="section level5">
@@ -48,7 +48,7 @@ meta_img: /images/image.jpg
 <blockquote>
 <p>“Multilevel Analysis for Applied Research: It’s Just Regression!”</p>
 </blockquote>
-<p>While the mathematics behind multilevel models is a little more complex, they are essentially regression equations which control for variability in the higher-level structures. This variability occurs as variance in the slope and intercept of the plotted regression lines, which are fixed in a standard OLS regression. Thus, multilevel models are said to have a fixed and <em>random</em> component. To understand these concepts further, let’s run through a specific example.</p>
+<p>While the mathematics behind multilevel models is a little more complex, they are essentially regression equations which control for variability in the higher-level structures. This variability occurs as variance in the slope and intercept of the plotted regression lines, which are fixed in a standard OLS regression. Thus, multilevel models are said to have a fixed and <em>random</em> component. To understand these concepts further, let’s run through a specific example from start to finish.</p>
 </div>
 </div>
 <div id="multilevel-models-in-action" class="section level3">
@@ -56,7 +56,7 @@ meta_img: /images/image.jpg
 <hr />
 <div id="cortisol-and-perfectionism" class="section level5">
 <h5>Cortisol and perfectionism</h5>
-<p>To understand and apply multilevel models, let’s model some data on perfectionism and cortisol I have collected for an on-going study using SPSS.</p>
+<p>To understand and apply multilevel models, let’s model some data using SPSS on perfectionism and cortisol I have collected as part of an ongoing study.</p>
 </div>
 <div id="the-variables" class="section level5">
 <h5>The variables</h5>
@@ -65,38 +65,146 @@ meta_img: /images/image.jpg
 </div>
 <div id="the-data" class="section level5">
 <h5>The data</h5>
-<p>The data we will use to create our models can be seen below:</p>
-<pre><code>## # A tibble: 40 x 9
-##       ID   SOP   SPP  SOPP  SPPP AUCg_Base AUCg_Comp AUCi_Base AUCi_Comp
-##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-##  1     1   2.8   2.2  3.75  1.75     25.7       22.3    17.0      -0.758
-##  2     2   5.6   4.4  6     4.25     17.3       35.4     5.12     -2.05 
-##  3     3   5     3    4.5   2         3.93      12.6     1.95      1.17 
-##  4     4   2.8   3.8  6.25  5.25     18.2       13.6    -0.244    -9.89 
-##  5     5   6.6   2.2  6.75  2.5      22.3       25.7    -1.04      2.84 
-##  6     6   5.8   4.6  5.5   2.5       8.59      22.0     0.804    -7.33 
-##  7     7   3.6   2.8  4.25  2.75     23.1       16.7     3.11      5.55 
-##  8     8   4     5    5     5.25     21.4       27.8     4.34      7.44 
-##  9     9   4.8   3.8  5.5   4.25      6.95      23.1     0.357     4.64 
-## 10    10   4.8   3.2  5.25  4        15.0       27.1     2.16     14.6  
-## # ... with 30 more rows</code></pre>
-<p>The data contains four perfectionism measures (SOP, SPP, SOPP, SPPP), both CAR metrics across the baseline day and competition day (AUCg_Base, AUCg_Comp, AUCi_Base, AUCi_comp) and a participant identifier (ID).</p>
+<p>A subset of the data we will use to create our models can be seen below:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">ID</th>
+<th align="right">SOP</th>
+<th align="right">SPP</th>
+<th align="right">SOPP</th>
+<th align="right">SPPP</th>
+<th align="right">AUCg_Base</th>
+<th align="right">AUCg_Comp</th>
+<th align="right">AUCi_Base</th>
+<th align="right">AUCi_Comp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">2.8</td>
+<td align="right">2.2</td>
+<td align="right">3.75</td>
+<td align="right">1.75</td>
+<td align="right">25.65300</td>
+<td align="right">22.27275</td>
+<td align="right">16.99950</td>
+<td align="right">-0.75825</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">5.6</td>
+<td align="right">4.4</td>
+<td align="right">6.00</td>
+<td align="right">4.25</td>
+<td align="right">17.28750</td>
+<td align="right">35.36925</td>
+<td align="right">5.11500</td>
+<td align="right">-2.04825</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">5.0</td>
+<td align="right">3.0</td>
+<td align="right">4.50</td>
+<td align="right">2.00</td>
+<td align="right">3.92670</td>
+<td align="right">12.62250</td>
+<td align="right">1.94985</td>
+<td align="right">1.17000</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">2.8</td>
+<td align="right">3.8</td>
+<td align="right">6.25</td>
+<td align="right">5.25</td>
+<td align="right">18.15600</td>
+<td align="right">13.64625</td>
+<td align="right">-0.24450</td>
+<td align="right">-9.89325</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">6.6</td>
+<td align="right">2.2</td>
+<td align="right">6.75</td>
+<td align="right">2.50</td>
+<td align="right">22.33275</td>
+<td align="right">25.71300</td>
+<td align="right">-1.04475</td>
+<td align="right">2.83950</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">5.8</td>
+<td align="right">4.6</td>
+<td align="right">5.50</td>
+<td align="right">2.50</td>
+<td align="right">8.58900</td>
+<td align="right">21.98700</td>
+<td align="right">0.80400</td>
+<td align="right">-7.32600</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">3.6</td>
+<td align="right">2.8</td>
+<td align="right">4.25</td>
+<td align="right">2.75</td>
+<td align="right">23.12925</td>
+<td align="right">16.66050</td>
+<td align="right">3.11325</td>
+<td align="right">5.54550</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">4.0</td>
+<td align="right">5.0</td>
+<td align="right">5.00</td>
+<td align="right">5.25</td>
+<td align="right">21.41775</td>
+<td align="right">27.80025</td>
+<td align="right">4.34475</td>
+<td align="right">7.44225</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="right">4.8</td>
+<td align="right">3.8</td>
+<td align="right">5.50</td>
+<td align="right">4.25</td>
+<td align="right">6.94950</td>
+<td align="right">23.14950</td>
+<td align="right">0.35700</td>
+<td align="right">4.63650</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">4.8</td>
+<td align="right">3.2</td>
+<td align="right">5.25</td>
+<td align="right">4.00</td>
+<td align="right">15.01275</td>
+<td align="right">27.06300</td>
+<td align="right">2.15625</td>
+<td align="right">14.56200</td>
+</tr>
+</tbody>
+</table>
+<p>The data contains four perfectionism measures (SOP, SPP, SOPP, SPPP), both CAR metrics across the baseline day and competition day (AUCg_Base, AUCg_Comp, AUCi_Base, AUCi_comp), and a participant identifier (ID).</p>
+<p>To model the data, it must be transformed into a longitudinal (or ‘tidy’; Wickham, 2014) format. Good guides on transforming data into a longitudinal format can be found in Bickel (2007) and Field (2009).</p>
 </div>
 <div id="growth-models" class="section level5">
 <h5>Growth models</h5>
-<p>To apply mulitlevel models to the data, we need to use a type of model called a growth model (because we are assessing changes over time - from baseline day to competition day). the growth models we will use will examine whether there were intra-individual changes in cortisol scores across days (level 1 or unconditional model including only time), and whether perfectionism measures can predict these changes (level 2 or conditional model that includes perfectionism dimensions; see Bickel, 2007).</p>
+<p>To apply mulitlevel models to the data, we need to use a type of model called a growth model (because we are assessing changes over time - from baseline day to competition day). the growth models we will use will examine whether there are intra-individual changes in cortisol scores across days (level 1 or unconditional model including only time), and whether perfectionism measures can predict these changes (level 2 or conditional model that includes perfectionism dimensions; see Bickel, 2007).</p>
 <p>The fixed components of level 1 models follow a normal regression equation structure and describe an individual’s score as a function of the intercept, the slope (i.e. the growth rate), and a time-specific residual. The random components of level 1 models examine whether there is individual variation in terms of the intercept and the slope.</p>
 <p>Typically, the level 1 growth rate is tested to establish if there is a relationships across time for the repeated measures. If a significant relationship is found, the variance components (intercept and slope) are then tested to establish if individuals differed in terms of their initial status and growth rates. If significant relationships are found for the intercept and slope, the model is then tested for fit using a chi-square likelihood ratio test. Providing adequate fit, level 2 predictor variables are then added to the model. Significant interaction terms at level 2 indicate whether the predictor variables are related to accelerated or decelerated growth in the repeated measures at level 1.</p>
 </div>
-</div>
-<div id="references" class="section level3">
-<h3>REFERENCES</h3>
-<p>Bickel, R. (2007). Multilevel Analysis for Applied Research: It’s Just Regression!. New York: Guilford Press.</p>
-<p>Field, A. P. (2009). Discovering Statistics Using SPSS: and Sex and Drugs and Rock ‘n’ Roll (third edition). London: Sage publications.</p>
-<p>Peugh, J.L., &amp; Enders, C.K. (2005). Using the SPSS mixed procedure to fit cross- sectional and longitudinal multilevel models. Educational and Psychological Measurement, 65 (5), 717-741.</p>
-</div>
-<div id="appendix" class="section level3">
-<h3>APPENDIX</h3>
+<div id="fitting-the-models" class="section level5">
+<h5>Fitting the models</h5>
+<p>To fit the growth models in SPSS let’s go beyond the point and click interface, which is convoluted and timely, and write some concise, reproducible snytax. As a guide, let’s use the syntax provided in Peugh and Enders (2005) to run our growth models (note that comments are indicated by an asterix). First, we need to write our level 1 uncoditional linear models to test whether there is a change in CAR over time, and whether there is individual varation in terms of the intercept and slope, for both CAR metrics (AUCi and AUCg):</p>
 <pre class="r"><code>* Level 1 unconditional linear growth models.
 * Model below is for AUCg
 MIXED AUCg WITH Time
@@ -109,9 +217,9 @@ MIXED AUCi WITH Time
 /PRINT = SOLUTION TESTCOV
 /METHOD =ML
 /FIXED = INTERCEPT Time
-/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)
-
-* Level 2 conditional linear growth models.
+/RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN)</code></pre>
+<p>Next, we need to build our level 2 models to assess whether the predictor variables are related to accelerated or decelerated growth in the repeated measures at level 1 for both CAR metrics (AUCi and AUCg). Note that in the models below the four perfectionism measures are added to the models in groups of two (e.g., SOP and SPP), this is beacause these pairs of perfectionism measures are subdomains of a perfectionism scale (consiting of multiple dimensions):</p>
+<pre class="r"><code>* Level 2 conditional linear growth models.
 * Model below is for AUCg with the HF-MPS
 MIXED AUCg WITH Time SOP SPP
 /PRINT = SOLUTION TESTCOV
@@ -139,4 +247,19 @@ MIXED AUCi WITH Time SOPP SPPP
 /METHOD = ML
 /FIXED = INTERCEPT Time SOPP SPPP Time*SOPP Time*SPPP
 /RANDOM INTERCEPT Time | SUBJECT(Participant) COVTYPE(UN).</code></pre>
+<p>That is it! That is the models built. Next, we run the syntax and inspect the results. Below, is a cleaned up, more digestiable version of the SPSS output for the level 1 and 2 models examing SOP and SPP:</p>
+<p><br/> <img src="/img/blog/SPSS/screen_shot.png" /> <br/></p>
+<p>For AUCi, the level 1 unconditional linear growth models showed that there were no significant changes in cortisol over time (<em>p</em> = .596). For AUCg, the level 1 unconditional linear growth models showed that there were significant changes in cortisol over time (<em>p</em> = .001). However, there was no significant variability between individuals in terms of both slope and intercept, therefore, the level 2 models need not be examined (as they have no variability to explain). In this case, a two step regression analyis would be an appropriate analysis to now run on the data to examine the significant hange in cortisol over time that was found.</p>
+</div>
+</div>
+<div id="summary" class="section level3">
+<h3>SUMMARY</h3>
+<hr />
+</div>
+<div id="references" class="section level3">
+<h3>REFERENCES</h3>
+<p>Bickel, R. (2007). Multilevel Analysis for Applied Research: It’s Just Regression!. New York: Guilford Press.</p>
+<p>Field, A. P. (2009). Discovering Statistics Using SPSS: and Sex and Drugs and Rock ‘n’ Roll (third edition). London: Sage publications.</p>
+<p>Peugh, J.L., &amp; Enders, C.K. (2005). Using the SPSS mixed procedure to fit cross- sectional and longitudinal multilevel models. Educational and Psychological Measurement, 65 (5), 717-741.</p>
+<p>Wickham, H. (2014). Tidy data. <em>Journal of Statistical Software</em>, 59.</p>
 </div>
