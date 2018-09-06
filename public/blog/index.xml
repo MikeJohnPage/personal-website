@@ -18,7 +18,7 @@
       
       <guid>/blog/phyllotaxis-project/</guid>
       <description>Michael Page 
-INFO This post isn’t so much a ‘blog’ post as it is a repository for me to store my code for the ‘Phyllotaxis: Draw flowers using mathematics’ project which can be found on DataCamp. Most of the code follows the standard solutions for the project, with the exception of using theme_void() to remove elements from a plot. Using theme_void() is a more elegant solution, in this case, than independetly assigning element_blank() to each element (e.</description>
+INFO This post isn’t so much a ‘blog’ post as it is a repository for me to store my code for the ‘Phyllotaxis: Draw flowers using mathematics’ project which can be found on DataCamp. Most of the code follows the standard solutions for the project, with the exception of using theme_void() to remove elements from a plot. In this case, using theme_void() is a more elegant solution (in my opinion) than independetly assigning element_blank() to each element (e.</description>
     </item>
     
     <item>
