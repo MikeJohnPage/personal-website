@@ -67,7 +67,7 @@ p <- ggplot(df, aes(x*t, y*t))
 p + geom_point(size = 8, alpha = 0.5, color = "darkgreen") +
 theme_void()
 
-# Map size to variable t and move legend
+# Map size to variable t and remove legend
 
 p <- ggplot(df, aes(x*t, y*t))
 p + geom_point(aes(size = t), alpha = 0.5, color = "black", shape = 8) +
