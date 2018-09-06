@@ -1,0 +1,116 @@
+---
+title: Phyllotaxis Project
+author: Mike Page
+date: '2018-09-06'
+slug: phyllotaxis-project
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align = "center")
+```
+
+<span style="color:grey">Michael Page</span>
+<br/>
+
+
+### INFO
+
+This post isn't so much a 'blog' post as it is a repository for me to store my code for the 'Phyllotaxis: Draw flowers using mathematics' project which can be found on [DataCamp](https://www.datacamp.com/projects/62). Most of the code follows the standard solutions for the project, with the exception of using theme_void() to remove elements from a plot. Using theme_void() is a more elegant solution, in this case, than independetly assigning element_blank() to each element (e.g, panel.grid, axis.title, axis.text.y, etc.)!
+
+
+***
+
+```{r}
+library(ggplot2)
+
+options(repr.plot.width = 4, repr.plot.height = 4)
+
+t <- seq(0, 2*pi, length.out = 50)
+x <- sin(t)
+y <- cos(t)
+df <- data.frame(t, x, y)
+
+# Make a scatter plot of points in a circle
+p <- ggplot(df, aes(x, y))
+p + geom_point()
+
+# Defining the number of points
+points <- 500
+
+# Defining the Golden Angle
+angle <- pi*(3-sqrt(5))
+
+t <- (1:points) * angle
+x <- sin(t)
+y <-cos(t)
+df <- data.frame(t, x, y)
+
+# Make a scatter plot of points in a spiral
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point()
+
+df <- data.frame(t, x, y)
+
+# Make a scatter plot of points in a spiral
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point() +
+theme_void()
+
+# Add colour, size, and transparency to plot
+
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point(size = 8, alpha = 0.5, color = "darkgreen") +
+theme_void()
+
+# Map size to variable t and move legend
+
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size = t), alpha = 0.5, color = "black", shape = 8) +
+theme_void() +
+theme(legend.position="none")
+
+# Plot sunflower
+
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size = t), alpha = 0.5, color = "yellow", shape = 17) +
+theme_void() +
+theme(legend.position="none", plot.background = element_rect(fill = "darkmagenta"))
+
+# Changle angle from golden angle (aprrox 2.4) to 2.0
+angle <- 2
+points <- 1000
+
+t <- (1:points)*angle
+x <- sin(t)
+y <- cos(t)
+
+df <- data.frame(t, x, y)
+
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size = t), alpha = 0.5, color = "yellow", shape = 17) +
+theme_void() +
+theme(legend.position="none", plot.background = element_rect(fill = "darkmagenta"))
+
+# Final plot
+
+angle <- 13*pi/180
+points <- 2000
+
+t <- (1:points)*angle
+x <- sin(t)
+y <- cos(t)
+
+df <- data.frame(t, x, y)
+
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size = t), alpha = 0.1, color = "magenta4", shape = 1, size = 80) +
+theme_void() +
+theme(legend.position="none")
+```
+

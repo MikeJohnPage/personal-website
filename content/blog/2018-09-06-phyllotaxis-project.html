@@ -1,0 +1,107 @@
+---
+title: Phyllotaxis Project
+author: Mike Page
+date: '2018-09-06'
+slug: phyllotaxis-project
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+
+<p><span style="color:grey">Michael Page</span> <br/></p>
+<div id="info" class="section level3">
+<h3>INFO</h3>
+<p>This post isn’t so much a ‘blog’ post as it is a repository for me to store my code for the ‘Phyllotaxis: Draw flowers using mathematics’ project which can be found on <a href="https://www.datacamp.com/projects/62">DataCamp</a>. Most of the code follows the standard solutions for the project, with the exception of using theme_void() to remove elements from a plot. Using theme_void() is a more elegant solution, in this case, than independetly assigning element_blank() to each element (e.g, panel.grid, axis.title, axis.text.y, etc.)!</p>
+<hr />
+<pre class="r"><code>library(ggplot2)
+
+options(repr.plot.width = 4, repr.plot.height = 4)
+
+t &lt;- seq(0, 2*pi, length.out = 50)
+x &lt;- sin(t)
+y &lt;- cos(t)
+df &lt;- data.frame(t, x, y)
+
+# Make a scatter plot of points in a circle
+p &lt;- ggplot(df, aes(x, y))
+p + geom_point()</code></pre>
+<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Defining the number of points
+points &lt;- 500
+
+# Defining the Golden Angle
+angle &lt;- pi*(3-sqrt(5))
+
+t &lt;- (1:points) * angle
+x &lt;- sin(t)
+y &lt;-cos(t)
+df &lt;- data.frame(t, x, y)
+
+# Make a scatter plot of points in a spiral
+p &lt;- ggplot(df, aes(x*t, y*t))
+p + geom_point()</code></pre>
+<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>df &lt;- data.frame(t, x, y)
+
+# Make a scatter plot of points in a spiral
+p &lt;- ggplot(df, aes(x*t, y*t))
+p + geom_point() +
+theme_void()</code></pre>
+<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Add colour, size, and transparency to plot
+
+p &lt;- ggplot(df, aes(x*t, y*t))
+p + geom_point(size = 8, alpha = 0.5, color = &quot;darkgreen&quot;) +
+theme_void()</code></pre>
+<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Map size to variable t and move legend
+
+p &lt;- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size = t), alpha = 0.5, color = &quot;black&quot;, shape = 8) +
+theme_void() +
+theme(legend.position=&quot;none&quot;)</code></pre>
+<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Plot sunflower
+
+p &lt;- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size = t), alpha = 0.5, color = &quot;yellow&quot;, shape = 17) +
+theme_void() +
+theme(legend.position=&quot;none&quot;, plot.background = element_rect(fill = &quot;darkmagenta&quot;))</code></pre>
+<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Changle angle from golden angle (aprrox 2.4) to 2.0
+angle &lt;- 2
+points &lt;- 1000
+
+t &lt;- (1:points)*angle
+x &lt;- sin(t)
+y &lt;- cos(t)
+
+df &lt;- data.frame(t, x, y)
+
+p &lt;- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size = t), alpha = 0.5, color = &quot;yellow&quot;, shape = 17) +
+theme_void() +
+theme(legend.position=&quot;none&quot;, plot.background = element_rect(fill = &quot;darkmagenta&quot;))</code></pre>
+<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Final plot
+
+angle &lt;- 13*pi/180
+points &lt;- 2000
+
+t &lt;- (1:points)*angle
+x &lt;- sin(t)
+y &lt;- cos(t)
+
+df &lt;- data.frame(t, x, y)
+
+p &lt;- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size = t), alpha = 0.1, color = &quot;magenta4&quot;, shape = 1, size = 80) +
+theme_void() +
+theme(legend.position=&quot;none&quot;)</code></pre>
+<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-8.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
