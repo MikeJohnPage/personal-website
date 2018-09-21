@@ -1,0 +1,201 @@
+---
+title: 'GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the
+  CO2 Emissions of Food'
+author: Mike Page
+date: '2018-09-21'
+slug: ggdot-hacknight-using-box-cox-transformations-and-regression-to-analyse-the-co2-emissions-of-food
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align = "center")
+```
+
+### GGDOT HACKNIGHT
+
+***
+
+The GGDOT project combines expertise in greenhouse gas emission calculations, nutrition, and data science to deliver a toolkit. This toolkit contains information on the greenhouse gas emissions and nutritional content on the food we eat. As part of the project, GGDOT host Hacknights to help develop their tools and analyse the data within them. I was fortunate enough to be able to attend the recent Manchester Hacknight, and this blog post will go through the analyses I performed from that session (and the day after). If you get the chance, I highly recommend attending one of their hacknights, it was a good group of people and good fun. More info can be found [here](https://www.ggdot.org/).
+
+### DATA WRANGLING
+
+***
+
+Although the GGDOT group provide a Jupyter notebook for Python to get started with the data, I choose to run all analysis in R (I really enjoy working within the tidyverse ecosystem!).
+
+First, the tidyverse libraries and GGDOT toolkit data sets were loaded into the work space:
+
+```{r}
+
+# Load libraries
+
+library(tidyverse)
+
+# Read in datasets
+
+GHG <- read_csv("/Users/mikepage/Documents/Data Science/intake24_20180920/hacknight/GHG_file_intake24_20180920.csv", col_names = TRUE)
+
+aisle_food_info <- read_csv("/Users/mikepage/Documents/Data Science/intake24_20180920/hacknight/eaten_table_aisle_intake24_20180920.csv", col_names = TRUE)
+
+individual_food_info <- read_csv("/Users/mikepage/Documents/Data Science/intake24_20180920/hacknight/eaten_table_intake24_20180920.csv", col_names = TRUE)
+
+nutrition_info <- read_csv("/Users/mikepage/Documents/Data Science/intake24_20180920/hacknight/foods_table_intake24_20180920.csv", col_names = TRUE)
+
+
+```
+
+
+The GGDOT toolkit contained **alot** of information! So, we won't be exploring the data sets in depth here. The key data set we will be exploring consists of a food diary over a period of days over which participants recorded individual meals (*individual_food_info*). Alongside the meals is a breakdown of their nutrient content and associated greenhouse gas emissions, among many other variables, as can be seen by using the 'glimpse()' function below:
+
+
+```{r}
+
+glimpse(individual_food_info)
+
+```
+
+I was curious to analyse how the age of participants and the total calories they consumes affects the greenhouse gas emissions associated with their dietary choices.
+Consequently a number for variables from the *individual_food_info* data set were selected including (i) the CO^2^ emissions of individually recorded meals (*CO2e*), (ii) participant age (*Age*), (iii) the day on which meals were recorded (*DayNo*), (iv) a participant identifier (*seriali*), (v) the total calories of all recorded foods on a given day (*KCALs_personday*).
+
+```{r}
+
+# select variables of interest from individual_food_info dataset
+
+trim_data <- select(individual_food_info, Age, DayNo, seriali, CO2e, KCALS_personday)
+
+```
+
+As individuals recorded a different number of calories and meals each day, it was decided that summing CO^2^ emissions alone for each individual per day would not provide a valid measure of the actual impact of their dietary choices on greenhouse gas emissions. This is because it tells little in the way of how their diets compare *relative* to one another. For example, it would be unsurprising to find that an individual who ate half the calories of another may have less greenhouse gas emissions associated with their diet (although admittedly there is a little more to it than that). Rather, a more valid measure may be the amount of CO^2^ emissions per calorie consumed. To calculate this, the total CO^2^ emissions over each day were summed and then divided by the total calories consumed that day. Lastly, as participants recorded meals over multiple days, their average CO^2^ emission per calorie per day was calculated:
+
+
+```{r}
+
+# Sum the CO2 emission over each day and create new 'index' variable that captures CO2 emissions per calorie eaten for each individual on each day
+
+index_data <- trim_data %>%
+  group_by(seriali, DayNo, KCALS_personday, Age)%>% 
+  summarise(CO2e = sum(CO2e)) %>%
+  ungroup() %>% 
+  mutate(CE_index = CO2e/KCALS_personday)
+
+# Find the mean calories and mean CO2 emissions per calorie for each individual per day
+
+mean_index_data <- index_data %>% 
+  group_by(seriali, Age) %>% 
+  summarise(mean_CE_index = mean(CE_index), mean_KCAL_day = mean(KCALS_personday))
+
+```
+
+
+### DATA ANALYSIS
+
+***
+
+**AGE vs. CO^2^:** to investigate whether age predicts mean CO^2^ emission per calorie (i.e., *mean_CE_index*) a simple linear regression model was built. As can be seen in the output and graphs below, there is clearly no significant relationships to be found in the data.
+
+```{r}
+
+# Does age predict the mean CO2 emissions per calorie for each individual across days (i.e., mean CE_index)?
+
+lm(mean_CE_index~Age, data = mean_index_data) %>%
+  summary()
+
+ggplot(mean_index_data, aes(x = Age, y = mean_CE_index)) +
+  geom_jitter(alpha = 0.3) +
+  geom_smooth(colour = "steelblue3")
+
+```
+
+The implications of the findings suggest that when it comes to our dietary choices and their impact on CO^2^ emissions, age has no bearing on the impact. In other words, young or old, our contributions to greenhouse gas emissions are uniform. This means we have a collective duty to reduce our impact, with no one age group to point the blame at. This finding was counter to my a priori beliefs that there may be a group of younger individuals in their twenties (depicted by a clustering of points on the above graph) whom feel more social responsibility. However, to further examine this idea, a clustering analysis or similar machine learning method is warranted before firm conclusions can be made.
+
+**KCAL vs. CO^2^:** to investigate whether the average number calories consumed on a given day(*mean_KCAL_day*) predicted the mean CO^2^ emission per calorie (i.e., *mean_CE_index*), another simple linear regression was built. Upon initially exploring the data and building a model, it was found that the data appeared to closer fit a polynomial function, than a strict linear model, as can be seen in the graph below:
+
+```{r, echo = FALSE}
+
+ggplot(mean_index_data, aes(x = mean_KCAL_day, y = mean_CE_index)) +
+  geom_jitter(colour = "steelblue2", alpha = 0.6) +
+  geom_smooth(color = "grey47") 
+
+```
+
+Consequently, the regression assumptions were checked via model plotting diagnostics. As can be seen in the histograms and Q-Q plots below, the data demonstrated a large positive skew. Furthermore the residuals vs fitted plot demonstrated a lack of linearity, and the trend line on the scale-location plot demonstrated a lack of heteroscedasticity.
+
+```{r}
+
+# Does the mean number of calories eaten per individual across days predict the mean CO2 emissions per calorie for each individual across days (i.e., mean CE_index)
+
+# Check data for normaility
+
+# Plot histogram of mean_KCAL_day
+
+ggplot(data = mean_index_data, aes(x = mean_KCAL_day)) +
+  geom_histogram(fill = "steelblue2", colour = "grey10", bins = 50, alpha = 0.5)
+
+# Plot histogram of mean_CE_index
+
+ggplot(data = mean_index_data, aes(x = mean_CE_index)) +
+  geom_histogram(fill = "steelblue2", colour = "grey10", bins = 50, alpha = 0.5)
+
+# Assumption plots
+
+mean_lm <- lm(mean_CE_index~mean_KCAL_day, data = mean_index_data)
+
+mean_lm %>% 
+  plot()
+
+```
+
+To correct for the violated assumptions, a Box-Cox transformation was run. A Box-Cox transformation is a method to transform non-normal variables into a normal distribution (this often takes care of other model assumptions too such as heteroscedasticity). It achieves this by iterating through a list of power transformations using a profile likelihood function. From this the optimum transformation can be found (denoted by the global optima on the graph below)
+
+```{r}
+
+# Run boxcox transformations to establish model fit
+
+bc_mean <- MASS::boxcox(mean_lm)
+
+# Extract best lambda
+
+best_lam <- bc_mean$x[which(bc_mean$y == max(bc_mean$y))]
+
+best_lam
+
+```
+
+Once the best (lambda) value for the transformation was found (-0.34) the dependent variable was transformed and the linear model was updated and assumptions rechecked:
+
+```{r}
+
+# Update model and re-check normality
+
+update_mean_lm <- lm((mean_CE_index)^best_lam~mean_KCAL_day, data = mean_index_data) 
+
+plot(update_mean_lm)
+
+```
+
+As can be seen in the plots above the data now demonstrated adequate linearity, heteroscedasticity, and a normal distribution. The model summary was then re-run and the relationship between the average number of calories consumed on a given day(*mean_KCAL_day*) and the mean CO^2^ emission per calorie (i.e., *mean_CE_index*) was re-plotted. Note that as *mean_CE_index* was transformed by raising it to the power of -0.34 (*best_lam*), its reciprocal was plotted in order to demonstrate the underlying direction of the trend:
+
+```{r}
+
+# Model summary
+
+update_mean_lm %>% summary()
+
+
+# Plot
+
+ggplot(mean_index_data, aes(x = mean_KCAL_day, y = 1/(mean_CE_index^best_lam))) +
+  geom_jitter(colour = "steelblue2", alpha = 0.6) +
+  stat_smooth(method = "lm") +
+  labs(x = "mean calories consumed per day", y = "mean CO2 emission per calorie")
+
+
+
+```
+
+As can be seen in the model summary above, the mean number calories consumed on a given day (*mean_KCAL_day*) was a significant negative predictor of the mean CO^2^ emission per calorie (i.e., *mean_CE_index*) (*p* < 0.001). Moreover, the adjusted R^2^ demonstrates a strong fit (R^2^ = 0.65), with the mean number calories consumed on a given day predicting 65% of the variance in the mean CO^2^ emission per calorie. The negative trend indicates that the higher the number of calories consumed on a given day, the lower the carbon emissions of CO^2^ per calorie of that food. This implies that those that eat higher calorie diets eat foods with a lower carbon footprint per calorie. An interesting finding to say the least!

@@ -59,7 +59,7 @@ p &lt;- ggplot(df, aes(x*t, y*t))
 p + geom_point(size = 8, alpha = 0.5, color = &quot;darkgreen&quot;) +
 theme_void()</code></pre>
 <p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># Map size to variable t and move legend
+<pre class="r"><code># Map size to variable t and remove legend
 
 p &lt;- ggplot(df, aes(x*t, y*t))
 p + geom_point(aes(size = t), alpha = 0.5, color = &quot;black&quot;, shape = 8) +

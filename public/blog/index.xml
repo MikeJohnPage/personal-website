@@ -6,10 +6,19 @@
     <description>Recent content in Blog on Mike John Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 06 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the CO2 Emissions of Food</title>
+      <link>/blog/ggdot-hacknight-using-box-cox-transformations-and-regression-to-analyse-the-co2-emissions-of-food/</link>
+      <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/ggdot-hacknight-using-box-cox-transformations-and-regression-to-analyse-the-co2-emissions-of-food/</guid>
+      <description>GGDOT HACKNIGHT The GGDOT project combines expertise in greenhouse gas emission calculations, nutrition, and data science to deliver a toolkit. This toolkit contains information on the greenhouse gas emissions and nutritional content on the food we eat. As part of the project, GGDOT host Hacknights to help develop their tools and analyse the data within them. I was fortunate enough to be able to attend the recent Manchester Hacknight, and this blog post will go through the analyses I performed from that session (and the day after).</description>
+    </item>
     
     <item>
       <title>Phyllotaxis Project</title>

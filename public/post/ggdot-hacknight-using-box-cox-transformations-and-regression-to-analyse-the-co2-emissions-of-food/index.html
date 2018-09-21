@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Mike John Page" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/phyllotaxis-project/" />
-<meta property="og:title" content="Phyllotaxis Project" />
-<meta property="twitter:title" content="Phyllotaxis Project">
+<meta property="og:url" content="/post/ggdot-hacknight-using-box-cox-transformations-and-regression-to-analyse-the-co2-emissions-of-food/" />
+<meta property="og:title" content="GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the CO2 Emissions of Food" />
+<meta property="twitter:title" content="GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the CO2 Emissions of Food">
 
     <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Mike John Page - Phyllotaxis Project 
+     Mike John Page - GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the CO2 Emissions of Food 
 
 </title>
-<link rel="canonical" href="/blog/phyllotaxis-project/">
+<link rel="canonical" href="/post/ggdot-hacknight-using-box-cox-transformations-and-regression-to-analyse-the-co2-emissions-of-food/">
 
 
 <style media="screen">
@@ -1083,6 +1083,12 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                     
                         
                             
+                            <li><a href="/post">post</a></li>
+                            
+                        
+                    
+                        
+                            
                             <li><a href="/projects">projects</a></li>
                             
                         
@@ -1104,183 +1110,21 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-
-
-<div class="main post non-narrow zero-top-spacing column">
+<div class="main column">
     <div class="container">
         <div class="content">
-            <div class="front-matter">
-                <div class="title-container">
-                    <div class="page-heading">
+            <div class="page-heading">
 
-    Phyllotaxis Project
+    GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the CO2 Emissions of Food
 
 </div>
 
-                </div>
-                <div class="meta">
-                    <div class="date" title="Thu Sep 6 2018 00:00:00 UTC">Sep 6, 2018</div>
-                    
-                        
-                        <div class="author middot" title="Mike Page">Mike Page</div>
-                        
-                    
-                    <div class="reading-time middot">2 minute read</div>
-                    <div class="tags">
-                        <ul>
-                          
-                        </ul>
-                    </div>
-                    <div class="tags">
-                        <ul>
-                          
-                            
-                          
-                          
-                            
-                          
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <div class="markdown">
                 
     
-    <p><span style="color:grey">Michael Page</span> <br/></p>
-<div id="info" class="section level3">
-<h3>INFO</h3>
-<hr />
-<p>This post isn’t so much a ‘blog’ post as it is a repository for me to store my code for the ‘Phyllotaxis: Draw flowers using mathematics’ project which can be found on <a href="https://www.datacamp.com/projects/62">DataCamp</a>. Most of the code follows the standard solutions for the project, with the exception of using theme_void() to remove elements from a plot. In this case, using theme_void() is a more elegant solution (in my opinion) than independetly assigning element_blank() to each element (e.g, panel.grid, axis.title, axis.text.y, etc.)!</p>
-<pre class="r"><code>library(ggplot2)
+    
 
-options(repr.plot.width = 4, repr.plot.height = 4)
-
-t &lt;- seq(0, 2*pi, length.out = 50)
-x &lt;- sin(t)
-y &lt;- cos(t)
-df &lt;- data.frame(t, x, y)
-
-# Make a scatter plot of points in a circle
-p &lt;- ggplot(df, aes(x, y))
-p + geom_point()</code></pre>
-<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># Defining the number of points
-points &lt;- 500
-
-# Defining the Golden Angle
-angle &lt;- pi*(3-sqrt(5))
-
-t &lt;- (1:points) * angle
-x &lt;- sin(t)
-y &lt;-cos(t)
-df &lt;- data.frame(t, x, y)
-
-# Make a scatter plot of points in a spiral
-p &lt;- ggplot(df, aes(x*t, y*t))
-p + geom_point()</code></pre>
-<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>df &lt;- data.frame(t, x, y)
-
-# Make a scatter plot of points in a spiral
-p &lt;- ggplot(df, aes(x*t, y*t))
-p + geom_point() +
-theme_void()</code></pre>
-<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># Add colour, size, and transparency to plot
-
-p &lt;- ggplot(df, aes(x*t, y*t))
-p + geom_point(size = 8, alpha = 0.5, color = &quot;darkgreen&quot;) +
-theme_void()</code></pre>
-<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># Map size to variable t and remove legend
-
-p &lt;- ggplot(df, aes(x*t, y*t))
-p + geom_point(aes(size = t), alpha = 0.5, color = &quot;black&quot;, shape = 8) +
-theme_void() +
-theme(legend.position=&quot;none&quot;)</code></pre>
-<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-5.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># Plot sunflower
-
-p &lt;- ggplot(df, aes(x*t, y*t))
-p + geom_point(aes(size = t), alpha = 0.5, color = &quot;yellow&quot;, shape = 17) +
-theme_void() +
-theme(legend.position=&quot;none&quot;, plot.background = element_rect(fill = &quot;darkmagenta&quot;))</code></pre>
-<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-6.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># Changle angle from golden angle (aprrox 2.4) to 2.0
-angle &lt;- 2
-points &lt;- 1000
-
-t &lt;- (1:points)*angle
-x &lt;- sin(t)
-y &lt;- cos(t)
-
-df &lt;- data.frame(t, x, y)
-
-p &lt;- ggplot(df, aes(x*t, y*t))
-p + geom_point(aes(size = t), alpha = 0.5, color = &quot;yellow&quot;, shape = 17) +
-theme_void() +
-theme(legend.position=&quot;none&quot;, plot.background = element_rect(fill = &quot;darkmagenta&quot;))</code></pre>
-<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-7.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># Final plot
-
-angle &lt;- 13*pi/180
-points &lt;- 2000
-
-t &lt;- (1:points)*angle
-x &lt;- sin(t)
-y &lt;- cos(t)
-
-df &lt;- data.frame(t, x, y)
-
-p &lt;- ggplot(df, aes(x*t, y*t))
-p + geom_point(aes(size = t), alpha = 0.1, color = &quot;magenta4&quot;, shape = 1, size = 80) +
-theme_void() +
-theme(legend.position=&quot;none&quot;)</code></pre>
-<p><img src="/blog/2018-09-06-phyllotaxis-project_files/figure-html/unnamed-chunk-1-8.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-
-
-                <br>
             </div>
-            
-            <div class="share">
-                  
-                  <a href="" class="ssk ssk-facebook"></a>
-                  
-                  
-                  <a href="" class="ssk ssk-twitter"></a>
-                  
-                  
-                  <a href="" class="ssk ssk-google-plus"></a>
-                  
-                  
-                  <a href="" class="ssk ssk-linkedin"></a>
-                  
-            </div>
-            
-            
-                <div class="navigation">
-                    
-                    <div>
-                        <img class="icon" src="/img/back.svg" alt="back" />
-                        <a href="/blog/multilevel-modelling-in-spss/">Multilevel Modelling in SPSS</a>
-                    </div>
-                    
-                    <div style="width: 100%;"></div>
-                    
-                    <div>
-                        <a href="/blog/ggdot-hacknight-using-box-cox-transformations-and-regression-to-analyse-the-co2-emissions-of-food/">GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the CO2 Emissions of Food</a>
-                        <img class="icon" src="/img/next.svg" alt="next" />
-                    </div>
-                    
-                </div>
-            
-            <br>
-            
-
-            
-
-            
         </div>
     </div>
 </div>
