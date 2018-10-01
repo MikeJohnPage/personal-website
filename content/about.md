@@ -7,7 +7,7 @@ title = "About"
 
 ## Personal Statement
 
-A junior data scientist that is innovative, analytical, and revels on intellectual challenges. Has a scientific publication record and experience delivering a data workflow, from data collection, to implementing statistical and machine learning methods, to relevant and meaningful delivery of results. Excellent communicator who thrives in creating a story from data and works diligently in interdisciplinary teams to deliver timely results.
+A junior data scientist that is highly motivated, analytical, and revels on intellectual challenges. Has significant experience delivering a data workflow, from data collection, to implementing statistical and machine learning methods, to relevant and meaningful delivery of results. Excellent communicator who thrives in creating a story from data and works diligently in interdisciplinary teams to deliver timely results.
 
 ## Relevant Skills
 
@@ -39,7 +39,7 @@ A junior data scientist that is innovative, analytical, and revels on intellectu
 - R, Data Wrangling, Analytics, and Data Storytelling  
 - Capstone project reviewed by an independent industry expert  
 
-**DataCamp** 2017-2018  
+**DataCamp** 2018  
 
 - Completed thirteen courses  
 - Python, R, Programming, Importing and Cleaning Data, Probability and Statistics  
