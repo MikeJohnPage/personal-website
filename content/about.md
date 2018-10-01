@@ -59,9 +59,9 @@ A junior data scientist that is innovative, analytical, and revels on intellectu
 
 *York St John University*
 
-**Lecturer and Module Director: Sport and Exercise Biomechanics** 2017-2018  
-**Technical Demonstrator: Biomechanics laboratory** 2016  
-**Research Assistant: Biomechanics** 2014  
+Lecturer and Module Director: Sport and Exercise Biomechanics 2017-2018  
+Technical Demonstrator: Biomechanics laboratory 2016  
+Research Assistant: Biomechanics 2014  
 
 
 ## Publications
