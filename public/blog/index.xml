@@ -6,10 +6,19 @@
     <description>Recent content in Blog on Mike John Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 21 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Dec 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ubuntu 18.04 LTS &#43; Thinkpad X1 Carbon 6th Generation</title>
+      <link>/blog/ubuntu-18-04-lts-thinkpad-x1-carbon-6th-generation/</link>
+      <pubDate>Thu, 20 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/ubuntu-18-04-lts-thinkpad-x1-carbon-6th-generation/</guid>
+      <description>In this blog post, I will be listing some of the steps I took to set up Ubuntu 18.04 LTS on a Lenovo ThinkPad X1 Carbon 6th Gen. This includes installation steps, as well as post-installations packages I have found that I now use in my daily workflow. This serves to both remind myself of how to set up Ubuntu on future machines in a way I now deem to be near-optimal, and to also help others who may be having difficulty getting Ubuntu to run the way they would like.</description>
+    </item>
     
     <item>
       <title>GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the CO2 Emissions of Food</title>

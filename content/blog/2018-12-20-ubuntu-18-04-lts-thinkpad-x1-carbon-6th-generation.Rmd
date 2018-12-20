@@ -1,0 +1,41 @@
+---
+title: Ubuntu 18.04 LTS + Thinkpad X1 Carbon 6th Generation
+author: Mike Page
+date: '2018-12-20'
+slug: ubuntu-18-04-lts-thinkpad-x1-carbon-6th-generation
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+In this blog post, I will be listing *some* of the steps I took to set up Ubuntu 18.04 LTS on a Lenovo ThinkPad X1 Carbon 6th Gen. This includes installation steps, as well as post-installations packages I have found that I now use in my daily workflow. This serves to both remind myself of how to set up Ubuntu on future machines in a way I now deem to be near-optimal, and to also help others who may be having difficulty getting Ubuntu to run the way they would like.
+
+As I continually find new hacks and tools to improve my Ubuntu workflow, this post will get updated over time to reflect these changes.
+
+### INSTALLATION
+
+***
+
+These installation steps are specific for Ubuntu 18.04 LTS on a Lenovo ThinkPad X1 Carbon 6th Gen (X1C6):
+
+* After partitioning the hard drive, install a copy of Ubuntu onto a bootable USB, and install Ubuntu onto your machine following the instructions found at the bottom of this [page](https://www.ubuntu.com/download/desktop).
+* Unfortunately, out of the box, S3 deep sleep did not work. Online guides suggested running the bash command 'fwupdmgr update', but this did not fix the issue and returned the error: 'Not compatible with firmware version 0.1.15, requires >= 0.1.27'. After a little experimenting, I found a working solution. First, download the 0.1.27 .cab file from the LVFS [website]( https://fwupd.org/lvfs/device/a4b51dca-8f97-4310-8821-3330f83c9135). Next open the .cab file in the Software Center to initiate the bios update. Then follow the same steps for latest 0.1.31 update. After restarting and changing the sleep state in the bios, everything should work. I did get an error after the first restart (something to do with the WLAN), but after another restart the error disappeared, and I have had no troubles since.
+
+### SET UP
+
+***
+
+* Install [Tilix](https://gnunn1.github.io/tilix-web/)
+* Install [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh)
+* Set up oh my zsh using [this](https://github.com/haccks/zsh-config) custom theme (nb: the instructions still work for Ubuntu despite being configured for MacOS - just replace the MacOS relevant steps with Ubuntu ones, e.g., Tilix instead of Iterm2).
+* Install [S-TUI](https://github.com/amanusk/s-tui) to monitor performance
+* Install h-top to monitor memory usage
+* Install [TLP](https://linrunner.de/en/tlp/tlp.html) to manage battery performance. *Thinkpad's only:* configure the start/stop charging [thresholds](https://linrunner.de/en/tlp/docs/tlp-configuration.html#chargethresholds) to improve battery life.
+* Install GNOME Tweaks and toggle 'topbar' as described [here](https://askubuntu.com/questions/1074625/remove-app-icon-from-title-bar-in-gnome-in-ubuntu-18-04).
+
+
+
+
