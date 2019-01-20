@@ -6,10 +6,19 @@
     <description>Recent content in Blog on Mike John Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 20 Dec 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 16 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Web Scraping JavaScript Using Python, a Headless Browser, and Selenium</title>
+      <link>/blog/web-scraping-using-python-a-headless-browser-and-selenium/</link>
+      <pubDate>Wed, 16 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/web-scraping-using-python-a-headless-browser-and-selenium/</guid>
+      <description>This post will demonstrate how to scrape data from the web renderd in JavaScript (JS), using Python and several other tools. To achieve this, we will build a scraper that collects weather data for the current day (rendered in JS) from Wunderground. Finally, we will run some quick bash commands to create a handy shortcut to the scraper, so that collecting weather information is as simple as typing in the command ‘weather’ into a terminal window.</description>
+    </item>
     
     <item>
       <title>Ubuntu 18.04 LTS &#43; Thinkpad X1 Carbon 6th Generation</title>
