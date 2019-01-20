@@ -6,18 +6,19 @@
     <description>Recent content in Blog on Mike John Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 16 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Web Scraping JavaScript Using Python, a Headless Browser, and Selenium</title>
-      <link>/blog/web-scraping-using-python-a-headless-browser-and-selenium/</link>
-      <pubDate>Wed, 16 Jan 2019 00:00:00 +0000</pubDate>
+      <title>Rendering JavaScript content using Python, Selenium, and a Headless Browser</title>
+      <link>/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/</link>
+      <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/blog/web-scraping-using-python-a-headless-browser-and-selenium/</guid>
-      <description>This post will demonstrate how to scrape data from the web renderd in JavaScript (JS), using Python and several other tools. To achieve this, we will build a scraper that collects weather data for the current day (rendered in JS) from Wunderground. Finally, we will run some quick bash commands to create a handy shortcut to the scraper, so that collecting weather information is as simple as typing in the command ‘weather’ into a terminal window.</description>
+      <guid>/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/</guid>
+      <description>This post will demonstrate how to scrape data from the web rendered in JavaScript (JS), using Python and several other tools. To achieve this, we will build a scraper that collects the current days weather forecast for a given location (rendered in JS) from Wunderground.
+First, the robots.txt file on the Wunderground site must be inspected, in addition to the Terms of Service of the site, to see if scraping information is permitted:</description>
     </item>
     
     <item>

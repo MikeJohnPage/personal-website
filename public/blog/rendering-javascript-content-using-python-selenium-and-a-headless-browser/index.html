@@ -15,24 +15,24 @@
 <meta property="og:site_name" content="Mike John Page" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/" />
-<meta property="og:title" content="Blog" />
-<meta property="twitter:title" content="Blog">
+<meta property="og:url" content="/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/" />
+<meta property="og:title" content="Rendering JavaScript content using Python, Selenium, and a Headless Browser" />
+<meta property="twitter:title" content="Rendering JavaScript content using Python, Selenium, and a Headless Browser">
 
-    <meta property="og:image" content="/img/banner.png">
+    <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="/img/banner.png">
+    <meta property="twitter:image" content="//images/image.jpg">
 
-<meta property="og:description" content="">
-<meta property="twitter:description" content="">
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
 
 <title>
 
 
-     Mike John Page - Blog 
+     Mike John Page - Rendering JavaScript content using Python, Selenium, and a Headless Browser 
 
 </title>
-<link rel="canonical" href="/blog/">
+<link rel="canonical" href="/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/">
 
 
 <style media="screen">
@@ -1056,8 +1056,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <link href="/blog/index.xml" rel="alternate" type="application/rss+xml" title="Mike John Page" />
-
 
 </head>
 
@@ -1065,7 +1063,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1104,60 +1102,201 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            <div class="posts">
-                <div class="page-heading">Blog</div>
-                <ul>
-                    
-                        <li class="groupby">Jan, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 21, 2019</span>
-    <a href="/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/"><span>Rendering JavaScript content using Python, Selenium, and a Headless Browser</span></a>
-</li>
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
-                        
-                    
-                        <li class="groupby">Dec, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 20, 2018</span>
-    <a href="/blog/ubuntu-18-04-lts-thinkpad-x1-carbon-6th-generation/"><span>Ubuntu 18.04 LTS &#43; Thinkpad X1 Carbon 6th Generation</span></a>
-</li>
+    Rendering JavaScript content using Python, Selenium, and a Headless Browser
 
+</div>
+
+                </div>
+                <div class="meta">
+                    <div class="date" title="Mon Jan 21 2019 00:00:00 UTC">Jan 21, 2019</div>
+                    
+                        
+                        <div class="author middot" title="Mike Page">Mike Page</div>
                         
                     
-                        <li class="groupby">Sep, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Sep 21, 2018</span>
-    <a href="/blog/ggdot-hacknight-using-box-cox-transformations-and-regression-to-analyse-the-co2-emissions-of-food/"><span>GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the CO2 Emissions of Food</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Sep 6, 2018</span>
-    <a href="/blog/phyllotaxis-project/"><span>Phyllotaxis Project</span></a>
-</li>
-
-                        
-                    
-                        <li class="groupby">Aug, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 8, 2018</span>
-    <a href="/blog/multilevel-modelling-in-spss/"><span>Multilevel Modelling in SPSS</span></a>
-</li>
-
-                        
-                    
-                </ul>
+                    <div class="reading-time middot">7 minute read</div>
+                    <div class="tags">
+                        <ul>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
+                </div>
             </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<p>This post will demonstrate how to scrape data from the web rendered in JavaScript (JS), using Python and several other tools. To achieve this, we will build a scraper that collects the current days weather forecast for a given location (rendered in JS) from <a href="https://www.wunderground.com/">Wunderground</a>.</p>
+<p>First, the robots.txt file on the Wunderground site must be inspected, in addition to the Terms of Service of the site, to see if scraping information is permitted:</p>
+<pre class="python"><code># Import modules
+import requests
+# Check Wunderground ToS - pass
+# HTTP request Wunderground robots.txt file and check permissions
+r = requests.get(&#39;https://www.wunderground.com/robots.txt&#39;)
+print(r.text)</code></pre>
+<p>As the robots.txt file returns a large list, the results have not been printed in this post. Upon inspection it can be seen that there are no restrictions placed on scraping <em>most</em> weather stations. The Terms of Service of the site also reveal no restrictions on scraping data for personal use. Nonetheless, if you intend to scrape data from Wunderground, it is your responsibility to check the robots.txt and Terms of Service of the site independently, and take responsibility for any data you may decide to scrape.</p>
+<div id="making-http-requests" class="section level3">
+<h3>Making HTTP Requests</h3>
+<p>Usually, to retrieve content from a webpage, a simple HTTP GET request can be made, more info can be found <a href="https://www.w3schools.com/tags/ref_httpmethods.asp">here</a>. Python has many modules for making such requests, such as <a href="http://docs.python-requests.org/en/master/">‘requests’</a>, as can been seen above when retrieving the robots.txt information. However, these libraries often only return the static Document Object Model (DOM), and are not capable of rendering dynamic JS content. This means that often not all content is returned when making the HTTP GET request.</p>
+</div>
+<div id="retrieving-js-rendered-content" class="section level3">
+<h3>Retrieving JS Rendered Content</h3>
+<p>In order to return the rendered JS content in Python, a web browser must be used. This is because it is the web browser itself that renders JS. Therefore, using a headless browser (headless meaning there is no GUI) in combination with <a href="https://docs.seleniumhq.org/">Selenium</a>, a tool that automates web browsing tasks, it is possible to return rendered JS content. First, a headless browser must be setup. To use a headless Firefox browser, the Firefox gecko driver must be installed from <a href="https://github.com/mozilla/geckodriver/releases">GitHub</a>. Once installed, selenium must be pointed to the directory where the gecko driver resides (I recommended placing it in ‘usr/local/bin’ if using Linux/Ubuntu):</p>
+<pre class="python"><code># Import modules
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support.wait import WebDriverWait
+# Requests library cannot return rendered javascript content, only the unmodified DOM (static web page). Use selenium and a web driver to automate a web browser and return rendered javascript content (dynamic web page). Initiate headless Firefox driver
+options = Options()
+options.headless = True
+driver = webdriver.Firefox(executable_path = &#39;/usr/local/bin/geckodriver&#39;, options = options)</code></pre>
+<p>Now that the headless driver has been initiated, Selenium can be used to automate any web browsing tasks. For this example, we will just make a very simple GET request to load a single URL, and then quit the headless browser.</p>
+<p>As only weather information for the current day is to be collected, the Wunderground site needs to be inspected to see which pages contains the current days weather information for any given location. It appears that this information can be found on the ‘hourly’ page for any given weather station. Moreover, the information for any given date in any city appears to follow the convenient formula of: ‘<a href="https://www.wunderground.com/hourly/insert_country_abbreviation/insert_city/date/insert_date" class="uri">https://www.wunderground.com/hourly/insert_country_abbreviation/insert_city/date/insert_date</a>’ . Therefore, to collect the current days weather in Rotorua, NZ, for example, the formula: <a href="https://www.wunderground.com/hourly/nz/rotorua/date/insert_todays_date" class="uri">https://www.wunderground.com/hourly/nz/rotorua/date/insert_todays_date</a>‘should be used. To automate the task of inserting the current date, the Python ’datetime’ module can be used to convert the current date into a string. This string can be appended into the URL of the headless browser GET request (using Selenium):</p>
+<pre class="python"><code># Import modules
+from datetime import datetime
+# Set todays date as a string
+current_date = datetime.today().date().isoformat()
+# Method 2 (more verbose) current_date = datetime.today().date().strftime(&#39;%Y-%m-%d&#39;)
+# Load relevant webpage containing info on current weather
+driver.get(&#39;https://www.wunderground.com/hourly/nz/rotorua/date/&#39; + current_date)</code></pre>
+</div>
+<div id="parsing-data-using-beautiful-soup" class="section level3">
+<h3>Parsing Data Using Beautiful Soup</h3>
+<p><strong>NB:</strong> as this post is focused upon retrieving rendered JS content, the following section is light on technical details (in order to keep the post brief). Nonetheless, the inline code comments should provide ample information to understand and run the code.</p>
+<p>Now that Selenium has been used to load the desired web page, the Beautiful Soup Python module (bs4) can be used to extract the required JS content into a parse tree of HTML tags:</p>
+<pre class="python"><code># Import modules
+from bs4 import BeautifulSoup
+import lxml
+# Retrieve page source
+soup = BeautifulSoup(driver.page_source, &#39;lxml&#39;)
+# Quit driver
+driver.quit()</code></pre>
+<p>From here, it is a simple case of extracting the relevant nodes from the parse tree. To find the correct nodes in Firefox, load the desired page, hover over the desired web page element, and then right-click and click ‘Inspect Element (Q)’. Alternatively, you can press ‘Ctrl’ + ‘Shift’ + ‘c’ on Linux/Ubuntu. In the case of the daily Wunderground weather information, it can be seen that it resides in a JS rendered table called ‘hourly-forecast-table’, comprised of a header and body. First, extract all the column names from the table:</p>
+<pre class="python"><code># Extract table header names
+# Method 1 | List comprehension - prefered method Python 3
+titles = [element.text for element in soup.find(id = &#39;hourly-forecast-table&#39;).thead.find_all(class_ = &#39;tablesaw-sortable-btn&#39;)]
+# Method 2 | for loop on list
+# for element in soup.find(id = &#39;hourly-forecast-table&#39;).thead.find_all(class_ = &#39;tablesaw-sortable-btn&#39;):
+#     print(element.text)
+# Method 3 | for loop on generator
+# for string in soup.find(id = &#39;hourly-forecast-table&#39;).thead.stripped_strings:
+#     print(string)</code></pre>
+<p>Next, extract the values contained within each row of the table:</p>
+<pre class="python"><code># Extract table values
+# Note: Table rows are denoted by &lt;tr&gt; tags
+# Extra table row values
+# First find all rows with table values and append to list
+tr_list = [element for element in soup.find(id = &#39;hourly-forecast-table&#39;).tbody.find_all(&#39;tr&#39;)]
+# Then, for each item in list, find each data point which can also be indexed as list (creating a list of lists)
+tr_row = [tr.find_all(&#39;td&#39;) for tr in tr_list]
+# Note tr_list != tr_row, i.e., len(tr_list[0]) != len(tr_row[0]). This is because each element of the list in tr_row has now been split differently. Each item in tr_list is indexed by each tag, whereas each item in tr_row is indexed by each &#39;td&#39; tag
+# Extract text elements for each row of data and clean up
+for i in range(len(tr_row)):
+    tr_row[i] = [element.text for element in tr_row[i]]
+    tr_row[i] = [value.replace(&#39;\n&#39;, &#39;&#39;) for value in tr_row[i]]
+    tr_row[i] = [value.strip() for value in tr_row[i]]</code></pre>
+<p>Finally, join the column names and table values in Pandas DataFrame, and print the object for inspection:</p>
+<pre class="python"><code># Import modules
+import pandas as pd
+# Create DataFrame
+weather_table = pd.DataFrame(tr_row, columns = titles)
+# Print DataFrame
+with pd.options_context(&#39;display.max_rows&#39;, None, &#39;display.max_columns&#39;, None):
+   print(weather_table)</code></pre>
+<pre><code>##         Time             Conditions  Temp. Feels Like Precip Amount  \
+## 0    1:00 pm  Mostly CloudyM Cloudy  72 °F      72 °F     0%   0 in   
+## 1    2:00 pm  Mostly CloudyM Cloudy  73 °F      73 °F     0%   0 in   
+## 2    3:00 pm  Mostly CloudyM Cloudy  73 °F      73 °F     0%   0 in   
+## 3    4:00 pm  Mostly CloudyM Cloudy  72 °F      72 °F     0%   0 in   
+## 4    5:00 pm  Mostly CloudyM Cloudy  71 °F      71 °F     1%   0 in   
+## 5    6:00 pm  Mostly CloudyM Cloudy  70 °F      70 °F     2%   0 in   
+## 6    7:00 pm  Mostly CloudyM Cloudy  68 °F      68 °F     2%   0 in   
+## 7    8:00 pm  Mostly CloudyM Cloudy  66 °F      66 °F     3%   0 in   
+## 8    9:00 pm  Mostly CloudyM Cloudy  63 °F      62 °F     3%   0 in   
+## 9   10:00 pm  Mostly CloudyM Cloudy  62 °F      60 °F     4%   0 in   
+## 10  11:00 pm  Mostly CloudyM Cloudy  60 °F      58 °F     4%   0 in   
+## 
+##    Cloud Cover Dew Point Humidity        Wind  Pressure  
+## 0          64%     55 °F      56%  15 mph WSW  29.80 in  
+## 1          67%     56 °F      55%  16 mph WSW  29.80 in  
+## 2          69%     56 °F      56%  17 mph WSW  29.79 in  
+## 3          70%     57 °F      59%  17 mph WSW  29.78 in  
+## 4          70%     57 °F      62%  17 mph WSW  29.78 in  
+## 5          71%     57 °F      65%  16 mph WSW  29.77 in  
+## 6          66%     57 °F      68%  15 mph WSW  29.76 in  
+## 7          64%     56 °F      71%  14 mph WSW  29.78 in  
+## 8          61%     54 °F      73%  13 mph WSW  29.81 in  
+## 9          61%     53 °F      73%  13 mph WSW  29.83 in  
+## 10         61%     52 °F      74%  14 mph WSW  29.85 in</code></pre>
+<p>That is it! to parse JS content It is as simple as using Selenium in combination with a headless browser and a powerful web parser such as Beautiful Soup. In the next post, I will show you how to create a bash alias to run the script simply from the command line.</p>
+</div>
+
+
+                <br>
+            </div>
+            
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+                <div class="navigation">
+                    
+                    <div>
+                        <img class="icon" src="/img/back.svg" alt="back" />
+                        <a href="/blog/ubuntu-18-04-lts-thinkpad-x1-carbon-6th-generation/">Ubuntu 18.04 LTS &#43; Thinkpad X1 Carbon 6th Generation</a>
+                    </div>
+                    
+                    <div style="width: 100%;"></div>
+                    
+                </div>
+            
+            <br>
+            
+
+            
+
+            
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 
