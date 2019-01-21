@@ -28,7 +28,7 @@
       <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/</guid>
-      <description>This post will demonstrate how to scrape data from the web rendered in JavaScript (JS), using Python and several other tools. To achieve this, we will build a scraper that collects the current days weather forecast for a given location (rendered in JS) from Wunderground.
+      <description>This post will demonstrate how to scrape data from the web rendered in JavaScript (JS), using Python and several other tools. To achieve this, we will build a scraper that collects the current dates weather forecast for a given location (rendered in JS) from Wunderground.
 First, the robots.txt file on the Wunderground site must be inspected, in addition to the Terms of Service of the site, to see if scraping information is permitted:</description>
     </item>
     
