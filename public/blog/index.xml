@@ -6,7 +6,7 @@
     <description>Recent content in Blog on Mike John Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 21 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Bash Aliases</title>
       <link>/blog/bash-alias/</link>
-      <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 22 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/blog/bash-alias/</guid>
       <description>In this quick post, I will show you how to make a bash alias. To understand what an alias does, Wikipedia provides a good definition:
