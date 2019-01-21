@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-	<meta name="generator" content="Hugo 0.53" />
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -16,24 +15,24 @@
 <meta property="og:site_name" content="Mike John Page" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/" />
-<meta property="og:title" content="Mike John Page" />
-<meta property="twitter:title" content="Mike John Page">
+<meta property="og:url" content="/blog/bash-alias/" />
+<meta property="og:title" content="Bash Aliases" />
+<meta property="twitter:title" content="Bash Aliases">
 
-    <meta property="og:image" content="/img/banner.png">
+    <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="/img/banner.png">
+    <meta property="twitter:image" content="//images/image.jpg">
 
-<meta property="og:description" content="Mike John Page">
-<meta property="twitter:description" content="Mike John Page">
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
 
 <title>
 
 
-    Mike John Page
+     Mike John Page - Bash Aliases 
 
 </title>
-<link rel="canonical" href="/">
+<link rel="canonical" href="/blog/bash-alias/">
 
 
 <style media="screen">
@@ -1057,8 +1056,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Mike John Page" />
-
 
 </head>
 
@@ -1066,7 +1063,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1105,84 +1102,121 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            
-                <div class="markdown">
-                
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
-<hr />
+    Bash Aliases
 
-<h1 id="data-scientist-question-asker-and-r-enthusiast">Data Scientist, Question Asker, and R Enthusiast.</h1>
-
-<hr />
+</div>
 
                 </div>
-            
-
-            
-                <div class="posts">
-                
-                
-                    <div class="page-heading">Latest posts</div>
-                    <ul>
+                <div class="meta">
+                    <div class="date" title="Mon Jan 21 2019 00:00:00 UTC">Jan 21, 2019</div>
                     
-                        <li class="groupby">Jan, 2019</li>
                         
-                            <li class="post-item">
-    <span class="meta">Jan 21, 2019</span>
-    <a href="/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/"><span>Rendering JavaScript content using Python, Selenium, and a Headless Browser</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 21, 2019</span>
-    <a href="/blog/bash-alias/"><span>Bash Aliases</span></a>
-</li>
-
+                        <div class="author middot" title="Mike Page">Mike Page</div>
                         
                     
-                        <li class="groupby">Dec, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 20, 2018</span>
-    <a href="/blog/ubuntu-18-04-lts-thinkpad-x1-carbon-6th-generation/"><span>Ubuntu 18.04 LTS &#43; Thinkpad X1 Carbon 6th Generation</span></a>
-</li>
-
-                        
-                    
-                        <li class="groupby">Sep, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Sep 21, 2018</span>
-    <a href="/blog/ggdot-hacknight-using-box-cox-transformations-and-regression-to-analyse-the-co2-emissions-of-food/"><span>GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the CO2 Emissions of Food</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Sep 6, 2018</span>
-    <a href="/blog/phyllotaxis-project/"><span>Phyllotaxis Project</span></a>
-</li>
-
-                        
-                    
-                    </ul>
-
-                    
-                        <a href="./blog/" class="see-more">See more ...</a>
-                    
-                
+                    <div class="reading-time middot">3 minute read</div>
+                    <div class="tags">
+                        <ul>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
                 </div>
-            
-
-            <div class="best-posts">
-            
-            
             </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<p>In this quick post, I will show you how to make a bash alias. To understand what an alias does, Wikipedia provides a good definition:</p>
+<blockquote>
+<p>In computing, aliasing describes a situation in which a data location in memory can be accessed through different symbolic names in the program.</p>
+</blockquote>
+<p>In short, creating an alias in bash (the unix shell command language) allows you to type some specific keyword to run whatever you choose to alias (e.g., a bash command, a script, etc.). For example, in the previous blog post ‘Rendering JavaScript content using Python, Selenium, and a Headless Browser’, a Python script was created that scraped weather data from the web and printed it to the console. The standard method to run this script from bash would be to type:</p>
+<pre class="r"><code>python - u script</code></pre>
+<p>Where Python is the path to the version of Python you wish to run (type ‘which python’ to find out this path), and script is the path to the script you wish to run. It is not unusual for both the Python and script path to be relatively long to type, especially if using a virtualenv/Conda. For example the command to execute the script in bash may take the form of:</p>
+<pre class="r"><code>/home/user/anaconda3/envs/my_virtualenv/bin/python -u /home/user/Documents/projects/weather_scraper/script.py</code></pre>
+<p>Suddenly, trying to quickly run the script in bash becomes difficult. This is okay if the script is only to be executed rarely, but in a scenario where you want to execute the script more frequently, say daily, an alternative solution is needed. One thing that can be done is to add a shebang to the top of the Python script you wish to execute. A shebang line is explained well in <a href="https://stackoverflow.com/questions/6908143/should-i-put-shebang-in-python-scripts-and-what-form-should-it-take">this</a> Stack Overflow post:</p>
+<blockquote>
+<p>The shebang line in any script determines the script’s ability to be executed like a standalone executable without typing python beforehand in the terminal or when double clicking it in a file manager (when configured properly).</p>
+</blockquote>
+<p>Therefore by adding a shebang line to the top of a Python script, the script can then be executed in bash by typing in the file name. In our example of the weather scraper, assuming we are using the Python path listed above, the following line would be added to the top of the weather scraping script:</p>
+<pre class="r"><code>#! /home/user/anaconda3/envs/my_virtualenv/bin/python</code></pre>
+<p>Then, to execute the script in bash, the name of the file would just be typed:</p>
+<pre class="r"><code> /home/user/Documents/projects/weather_scraper/script.py</code></pre>
+<p>As can be seen, this is a more elegant solution than typing in the path to both the Python version and the script. However, typing out a long file name can still be cumbersome if you wish to execute a script (or command etc.) frequently. Fortunately a less verbose method exists: create an alias.</p>
+<p>To create an alias in bash, the following syntax must be used:</p>
+<pre class="r"><code>alias name=value</code></pre>
+<p>Where ‘name’ is the name of the command you wish to type, and ‘value’ is the command to be executed. It is important that no spaces are added around ‘=’. To create an alias for our weather scraping script called ‘weather’, we simply need to point the name ‘weather’ to the path of the weather scraping script like so:</p>
+<pre class="r"><code>alias weather=&#39;/home/user/Documents/projects/weather_scraper/script.py&#39;</code></pre>
+<p>Now, typing ‘weather’ into the console will execute the script and print the weather.</p>
+<p>The file location to store the aliases is dependent upon you, the user, however, as recommended elsewhere, it is a good idea to create a new file in your home directory called .bash_alias in which to store them. If you are using a Zhs shell (like Oh My Zsh) don’t forget to source the .bash_aliases file:</p>
+<pre class="r"><code>source ~/.bash_aliases</code></pre>
+
+
+                <br>
+            </div>
+            
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+                <div class="navigation">
+                    
+                    <div>
+                        <img class="icon" src="/img/back.svg" alt="back" />
+                        <a href="/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/">Rendering JavaScript content using Python, Selenium, and a Headless Browser</a>
+                    </div>
+                    
+                    <div style="width: 100%;"></div>
+                    
+                </div>
+            
+            <br>
+            
+
+            
+
+            
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

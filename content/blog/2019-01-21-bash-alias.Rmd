@@ -1,0 +1,70 @@
+---
+title: Bash Aliases
+author: Mike Page
+date: '2019-01-21'
+slug: bash-alias
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE, echo = TRUE, message = FALSE, warning = FALSE, fig.align = "center")
+```
+
+In this quick post, I will show you how to make a bash alias. To understand what an alias does, Wikipedia provides a good definition:
+
+> In computing, aliasing describes a situation in which a data location in memory can be accessed through different symbolic names in the program. 
+
+In short, creating an alias in bash (the unix shell command language) allows you to type some specific keyword to run whatever you choose to alias (e.g., a bash command, a script, etc.). For example, in the previous blog post 'Rendering JavaScript content using Python, Selenium, and a Headless Browser', a Python script was created that scraped weather data from the web and printed it to the console. The standard method to run this script from bash would be to type:
+
+```{r}
+python - u script
+```
+
+Where Python is the path to the version of Python you wish to run (type 'which python' to find out this path), and script is the path to the script you wish to run. It is not unusual for both the Python and script path to be relatively long to type, especially if using a virtualenv/Conda. For example the command to execute the script in bash may take the form of:
+
+```{r}
+/home/user/anaconda3/envs/my_virtualenv/bin/python -u /home/user/Documents/projects/weather_scraper/script.py
+```
+
+Suddenly, trying to quickly run the script in bash becomes difficult. This is okay if the script is only to be executed rarely, but in a scenario where you want to execute the script more frequently, say daily, an alternative solution is needed. One thing that can be done is to add a shebang to the top of the Python script you wish to execute. A shebang line is explained well in [this](https://stackoverflow.com/questions/6908143/should-i-put-shebang-in-python-scripts-and-what-form-should-it-take) Stack Overflow post:
+
+> The shebang line in any script determines the script's ability to be executed like a standalone executable without typing python beforehand in the terminal or when double clicking it in a file manager (when configured properly).
+
+Therefore by adding a shebang line to the top of a Python script, the script can then be executed in bash by typing in the file name. In our example of the weather scraper, assuming we are using the Python path listed above, the following line would be added to the top of the weather scraping script:
+
+```{r}
+#! /home/user/anaconda3/envs/my_virtualenv/bin/python
+```
+
+Then, to execute the script in bash, the name of the file would just be typed:
+
+```{r}
+ /home/user/Documents/projects/weather_scraper/script.py
+```
+
+As can be seen, this is a more elegant solution than typing in the path to both the Python version and the script. However, typing out a long file name can still be cumbersome if you wish to execute a script (or command etc.) frequently. Fortunately a less verbose method exists: create an alias.
+
+To create an alias in bash, the following syntax must be used:
+
+```{r}
+alias name=value
+```
+
+Where 'name' is the name of the command you wish to type, and 'value' is the command to be executed. It is important that no spaces are added around '='. To create an alias for our weather scraping script called 'weather', we simply need to point the name 'weather' to the path of the weather scraping script like so:
+
+```{r}
+alias weather='/home/user/Documents/projects/weather_scraper/script.py'
+```
+
+Now, typing 'weather' into the console will execute the script and print the weather.
+
+The file location to store the aliases is dependent upon you, the user, however, as recommended elsewhere, it is a good idea to create a new file in your home directory called .bash_alias in which to store them. If you are using a Zhs shell (like Oh My Zsh) don't forget to source the .bash_aliases file:
+
+```{r}
+source ~/.bash_aliases
+```

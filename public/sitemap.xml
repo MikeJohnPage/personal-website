@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/blog/bash-alias/</loc>
+    <lastmod>2019-01-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/</loc>
     <lastmod>2019-01-21T00:00:00+00:00</lastmod>
   </url>

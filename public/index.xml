@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Bash Aliases</title>
+      <link>/blog/bash-alias/</link>
+      <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/bash-alias/</guid>
+      <description>In this quick post, I will show you how to make a bash alias. To understand what an alias does, Wikipedia provides a good definition:
+ In computing, aliasing describes a situation in which a data location in memory can be accessed through different symbolic names in the program.
+ In short, creating an alias in bash (the unix shell command language) allows you to type some specific keyword to run whatever you choose to alias (e.</description>
+    </item>
+    
+    <item>
       <title>Rendering JavaScript content using Python, Selenium, and a Headless Browser</title>
       <link>/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/</link>
       <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
