@@ -17,7 +17,7 @@ use_python("/home/mike/anaconda3/envs/nz_weather/bin/python")
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align = "center")
 ```
 
-This post will demonstrate how to scrape data from the web rendered in JavaScript (JS), using Python and several other tools. To achieve this, we will build a scraper that collects the current days weather forecast for a given location (rendered in JS) from [Wunderground](https://www.wunderground.com/).
+This post will demonstrate how to scrape data from the web rendered in JavaScript (JS), using Python and several other tools. To achieve this, we will build a scraper that collects the current dates weather forecast for a given location (rendered in JS) from [Wunderground](https://www.wunderground.com/).
 
 First, the robots.txt file on the Wunderground site must be inspected, in addition to the Terms of Service of the site, to see if scraping information is permitted:
 
@@ -55,7 +55,7 @@ driver = webdriver.Firefox(executable_path = '/usr/local/bin/geckodriver', optio
 
 Now that the headless driver has been initiated, Selenium can be used to automate any web browsing tasks. For this example, we will just make a very simple GET request to load a single URL, and then quit the headless browser. 
 
-As only weather information for the current day is to be collected, the Wunderground site needs to be inspected to see which pages contains the current days weather information for any given location. It appears that this information can be found on the 'hourly' page for any given weather station. Moreover, the information for any given date in any city appears to follow the convenient formula of: 'https://www.wunderground.com/hourly/insert_country_abbreviation/insert_city/date/insert_date' . Therefore, to collect the current days weather in Rotorua, NZ, for example, the formula: https://www.wunderground.com/hourly/nz/rotorua/date/insert_todays_date' should be used. To automate the task of inserting the current date, the Python 'datetime' module can be used to convert the current date into a string. This string can be appended into the URL of the headless browser GET request (using Selenium):
+As only weather information for the current day is to be collected, the Wunderground site needs to be inspected to see which pages contains the current dates weather information for any given location. It appears that this information can be found on the 'hourly' page for any given weather station. Moreover, the information for any given date in any city appears to follow the convenient formula of: 'https://www.wunderground.com/hourly/insert_country_abbreviation/insert_city/date/insert_date'. Therefore, to collect the current dates weather in Rotorua, NZ, for example, the formula: https://www.wunderground.com/hourly/nz/rotorua/date/insert_todays_date' should be used. To automate the task of inserting the current date, the Python 'datetime' module can be used to convert the current date into a string. This string can be appended into the URL of the headless browser GET request (using Selenium):
 
 
 ```{python, eval=FALSE}
@@ -131,7 +131,7 @@ for i in range(len(tr_row)):
 
 ```
 
-Finally, join the column names and table values in Pandas DataFrame, and print the object for inspection:
+Finally, join the column names and table values in a Pandas DataFrame, and print the object for inspection:
 
 ```{python, eval=FALSE}
 # Import modules
