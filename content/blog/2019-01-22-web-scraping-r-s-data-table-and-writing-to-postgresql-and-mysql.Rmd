@@ -1,0 +1,397 @@
+---
+title: Web Scraping, R's data.table, and Writing to PostgreSQL and MySQL
+author: Mike Page
+date: '2019-01-22'
+slug: web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align = "center")
+```
+
+### AIMS
+
+By the end of this post you should: (i) understand how to use the 'rvest' package to scrape web pages, (ii) understand the benefits of using the 'data.table' package to wrangle large data sets over other common packages such as 'dplyr', (iii) be able to write/read a data set from memory on your local machine to a SQL database (in this instance on a remote server).
+
+To achieve these aims, we are going to scrape movie scripts from [IMSDb](https://www.imsdb.com/) using 'rvest', wrangle the data using the 'data.table' package and finally write the data to a SQL database using the 'RPostgreSQL' and 'RMySQL' packages.
+
+This tutorial assumes a basic working knowledge of the R language and SQL.
+
+### WEB SCRAPING
+
+To begin with, let's load all the libraries we need (the use of 'robotstxt', 'stringi', and 'tidytext' will become apparent soon):
+
+```{r}
+# Load libraries 
+
+library(tidyverse)
+library(robotstxt)
+library(data.table)
+library(rvest)
+library(stringi)
+library(tidytext)
+library(RPostgreSQL)
+library(RMySQL)
+```
+
+Next, let's check the Terms of Service and robots.txt file of [IMSDb](https://www.imsdb.com/) to ensure scraping is permitted:
+
+```{r}
+# Check robots.txt permissions
+
+rtxt <- robotstxt("https://www.imsdb.com")
+rtxt$permissions
+
+# Additional check on a single example script
+
+paths_allowed("https://www.imsdb.com/scripts/10-Things-I-Hate-About-You.html")
+
+# Check Terms of Service of site - pass
+
+```
+
+In all instances, it appears there are no restrictions placed on scraping this particular site. **NB:** If you intend to scrape IMSDb, or any other site, it is your responsibility to check you have permission and you are responsible for any data you scrape.
+
+To scrape the movie scripts, we first need to establish the URL where they can be found:
+
+```{r}
+url <- "https://www.imsdb.com/all%20scripts/"
+```
+
+Next we need to create a list containing links to each article, in addition to the movie name (for reference). To achieve this, we need to inspect the HTML structure of the web page, and pull out the relevant tags. In Firefox, you can hover over the desired web page element, and then right-click and click 'Inspect Element (Q)'. Alternatively, you can press 'Ctrl' + 'Shift' + 'c' on Linux/Ubuntu. Doing this for the first movie script '10 Things I Hate About You' reveals that the link we want lies in an "a" HTML node with a HTML attribute "href". Accordingly, the names of the movies lie within the HTML text:
+
+```{r}
+# Get link to scripts
+
+links <- read_html(url) %>%
+  html_nodes("a") %>%
+  html_attr("href")
+
+# Get names of Scripts
+
+names <- read_html(url) %>%
+  html_nodes("a") %>%
+  html_text()
+
+```
+
+Now that we have a list of movie links and names, let's join them into a data.table and inspect the first and last few rows:
+
+```{r}
+# Create data.table of links and names of scripts
+
+movies_dt <- data.table(links = links, names = names)
+
+head(movies_dt)
+tail(movies_dt)
+```
+
+After inspecting the table output it becomes immediately apparent that during our web scraping, we picked up some unwanted "a" links. This is certainly not uncommon. As such, the data requires a little cleaning up. This is where the power of data.table comes in. While the tidyverse's 'dplyr' package provides a very nice API for wrangling data, with clean readable syntax, it becomes cumbersome and slow when wrangling large data sets. The 'data.table' package on the other hand remains fast and efficient, even when data sets get very large. This is because data.table allows one to modify/update columns by *reference*. For more information on the differences between 'dplyr' and 'data.table' and updating by *reference* see [this](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly) useful post from Stack Overflow.
+
+To clean the data, we need to retain only the movie links and remove repeat observations: 
+
+```{r}
+# Filter data.table to retrieve only links containing film information,
+# denoted by "/Movie", and use the data.table chain rule 
+# (DT[ ... ][ ... ]) to remove repeat observations
+
+movies_dt <- movies_dt[str_detect(links, "^/Movie")][!1:5]
+head(movies_dt)
+```
+
+As can now be seen, only the correct movie links have been retained.
+
+Next, we need to create relative HTML links, of the form 'my-movie-script.html', in order to paste/append the links to the URL 'https://www.imsdb.com/scripts/'. This is because each movie script is located in a unique URL of the form 'https://www.imsdb.com/scripts/my-movie-script.html' (a quick search on the IMSDb website reveals this):
+
+```{r}
+# Create relative HTML links
+
+names_replaced <- str_replace_all(movies_dt$names, " ", "-") %>% 
+  paste0(".html")
+
+```
+
+Now that we have cleaned the data, we are ready to scrape the scripts. To do this, we will first create a new column called script, and assign each value 'NA':
+
+```{r}
+# Iterate through a list of links and scrape script texts and append to links_names
+
+movies_dt$script = NA
+```
+
+Then, we will iterate through each movie script by creating a unique URL as described previously. At each iteration, we will extract the text from each movie script, which can be found in the "pre" html tags, and assign the output to the corresponding row of the newly created 'script' column. If a HTTP status code returns an error, or the link does not contain any text (e.g., the length of the script equals zero), the for loop will assign 'NA' to ensure it does not break:
+
+```{r, eval = FALSE}
+
+for(i in seq_along(names_replaced)) {
+  
+  temp_url <- paste0("https://www.imsdb.com/scripts/", names_replaced[i])
+  
+  if(html_session(temp_url)$response$status_code == 404) {
+    movies_dt$script[i] <- NA
+    next
+  }
+  
+  script_text <- temp_url %>%
+    read_html() %>% 
+    html_nodes("pre") %>% 
+    html_text()
+  
+  if(length(script_text) == 0) {
+    movies_dt$script[i] <- NA
+  }
+  
+  else{
+    movies_dt$script[i] <- script_text
+  }
+}
+```
+
+```{r, include = FALSE}
+movies_dt <- readRDS("/home/mike/Downloads/movies_dt.RDS")
+```
+
+Next, let's inspect the first few rows of the first script in 'movies_dt'. **Warning**: the 'movies_dt' data.table now contains a large amount of data, and if you attempt to print the whole data.table, it is more than likely that your R session will crash (unless you have a very large amount of RAM, or unlimited patience!):
+
+```{r, rows.print = 10}
+substring(movies_dt$script[1], 1, 1000) 
+```
+
+As can be seen in the output above, 'movies_dt' still needs a little cleaning up. Specifically,  the special characters '\n', '\t', and '\r' need removing. To see what these special characters do, try printing a movie scripting with the special characters escaped using 'cat()', like so:
+
+```{r}
+cat(substring(movies_dt$script[1], 1, 1000))
+```
+
+In addition, duplicates and NA values need removing. Note as '\\' is the escape character in strings, it needs to be escaped using '\\\\'. See [here](https://stringr.tidyverse.org/articles/regular-expressions.html) for more information:
+
+```{r}
+# Clean up movies_dt 
+# remove special characters
+
+movies_dt[, script := str_replace_all(movies_dt$script, "\\\n|\\\t|\\\r", "")]
+
+# remove duplicates (see unique.data.table documentation)
+
+movies_dt <- unique(movies_dt)
+
+# remove NA values (see na.omit.data.table documentation)
+
+movies_dt <- na.omit(movies_dt)
+```
+
+### PREPARING THE SCRIPTS
+
+The initial scraping and data wrangling steps are now complete. At this stage, we have a nice neat data.table containing all the cleaned up movie scripts. Next, let's perform some more wrangling steps to make the scripts more suitable for some NLP analysis. First let's transform all the scripts to lower case:
+
+```{r}
+# Trasnform scripts to lower case
+
+movies_dt[, script := str_to_lower(script)]
+```
+
+Then, let's transform all characters to ASCII. This will remove things such as accents, and mean that words can be compared like for like:
+
+```{r}
+# Transform all characters to ASCII to remove accents etc
+
+movies_dt[, script := stri_trans_general(movies_dt$script, "latin-ascii")]
+```
+
+After that, let's remove all non alphanumeric characters, but keep apostrophe's:
+
+```{r}
+# Remove non alphanumeric characters, keeping apostrophe's
+
+movies_dt[, script := str_replace_all(script, "[^[:alnum:]']", " ")]
+```
+
+Finally, let's unnest the scripts into a tidy data.table consisting of one word per row, and remove any stop words. For more information on unnesting and stop words, I recommend you read [*Text Mining with R: A Tidy Approach*](https://www.tidytextmining.com/):
+
+```{r}
+
+# Unnest movies_dt into a tidy data.table consisting of one word per row
+
+tidy_movies <- unnest_tokens(movies_dt, word, script, token = "words")
+
+# Remove stop words
+
+tidy_movies <- tidy_movies %>% anti_join(stop_words)
+```
+
+### WRITING TO A SQL DATABASE
+
+Now the movie scripts are in a tidy text format, let's write them to a SQL database for storage. First we will work with a MySQL database, but later we will introduce PostgreSQL databases, so you can see a few different varieties of SQL. To do this, we will first open a connection to a database, in this case I will be connecting to a personal remote server. You can change the parameters as you see fit (e.g., you may want to connect to a server hosted on your local machine):
+
+```{r, eval = FALSE}
+# Create connection
+
+con <- dbConnect(MySQL(),
+                 host = "localhost",
+                 dbname = "my_database",
+                 user = rstudioapi::askForPassword("Database user"),
+                 password = rstudioapi::askForPassword("Database password"))
+
+```
+
+The 'rstudioapi::askForPassword' in the 'user' and 'password' arguments above will prompt you for your login credentials. It is important you never save these in a script which may be accessible to others. For other, more secure, methods for managing your credentials, see [this](https://db.rstudio.com/best-practices/managing-credentials/) RStudio guide.
+
+Next, we simply need to use the 'dbWriteTable' command to write the 'movies_dt' data.table to the remote server, and close off the connection. It is important to **always** open a connection as late as possible, and close a connection as soon as possible. This will reduce resource expenditure, and increase security.
+
+```{r, eval = FALSE}
+# Write table to database
+
+dbWriteTable(conn = con,
+             name = "tidy_movies_mysql",
+             value = tidy_movies)
+
+# Disconnect connection - important to do at each stage
+
+dbDisconnect(con)
+```
+
+### COMPUTING AND READING FROM A SQL DATABASE
+
+For many purposes, SQL databases can be a powerful medium through which to perform calculations on your data. In the example below, we will retrieve the most common words of films beginning with the letter 's' from the database. Of course, we could perform this operation on our local machine (e.g., using dplyr), but as data sets get larger and larger, local machines may struggle to perform such computations. External servers with large amounts of RAM, on the other hand, may be much better suited to handle computational intensive tasks:
+
+```{r, eval = FALSE}
+
+# Recreate connection
+
+con <- dbConnect(MySQL(),
+                 host = "localhost",
+                 dbname = "my_database",
+                 user = rstudioapi::askForPassword("Database user"),
+                 password = rstudioapi::askForPassword("Database password"))
+
+# Retrieve most common words of films beginning with the letter 's' from database
+
+query <- dbSendQuery(conn = con,
+                     "SELECT names, word, COUNT(*) AS count
+                     FROM tidy_movies_mysql
+                     WHERE names LIKE 'S%'
+                     GROUP BY names, word
+                     ORDER BY count DESC;")
+
+tidy_movies_subset <- dbFetch(query, -1)
+
+# Disconnect
+
+dbDisconnect(con)
+```
+
+Now that we have performed an operation on the MySQL sever and retrieved back a new subset of data, let's make a simple plot. Let's first access a random subset of the films beginning with 's', and then inspect the most common words across each film (as computed in the MySQL server):
+
+```{r, eval = FALSE}
+# Plot most common words across random subset of films beginning with the letter 's'
+
+random_films = c("Silver Linings Playbook",
+                 "Scott Pilgrim vs the World",
+                 "Scarface",
+                 "Spartan",
+                 "Sex and the City",
+                 "Synecdoche, New York",
+                 "Station West",
+                 "Sideways",
+                 "Sherlock Holmes",
+                 "Sphere",
+                 "Secret Life of Walter Mitty, The",
+                 "Sleepy Hollow")
+
+tidy_movies_subset %>% 
+  filter(names %in% random_films) %>% 
+  group_by(names) %>%
+  top_n(5) %>%
+  ungroup() %>%
+  group_by(names, word) %>%                  
+  arrange(desc(count)) %>%                
+  ungroup() %>%
+  mutate(word = factor(paste(word, names, sep = "__"), levels = rev(paste(word, names, sep = "__")))) %>%
+  ggplot(aes(word, count, fill = count)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  facet_wrap(~ names, scales = "free") +
+  coord_flip() +
+  scale_x_discrete(labels = function(x) gsub("__.+$", "", x)) +
+  xlab(NULL)
+
+```
+
+```{r, echo = FALSE, fig.cap="Most common words of films beginning with the letter 's'."}
+knitr::include_graphics("/home/mike/Downloads/plot_1.png")
+```
+
+### SQL TAKE TWO
+
+Now that we have seen a full workflow on a SQL database using MySQL, let's read/write to a PostgreSQL database, just for comparisons sake. Again, I will write the 'movies_dt' database to a local remote server (you can write it to wherever you choose), but this time let's use the database to count the most common words from the 'Star Trek' script using a few simple PostgreSQL commands. After that, let's make a simple plot showing the most common words from the 'Star Trek' script:
+
+```{r, eval = FALSE}
+# Create connection
+
+con <- dbConnect(drv = dbDriver("PostgreSQL"),
+                 dbname = "mikep",
+                 host = "localhost", 
+                 port = 5432,
+                 user = rstudioapi::askForPassword("Database user"),
+                 password = rstudioapi::askForPassword("Database password"))
+
+# Write table to database
+
+dbWriteTable(conn = con,
+             name = "tidy_movies_postgresql",
+             value = tidy_movies)
+
+# Disconnect connection - important to do at each stage
+
+dbDisconnect(con)
+
+# Recreate connection
+
+con <- dbConnect(drv = dbDriver("PostgreSQL"),
+                 dbname = "mikep",
+                 host = "localhost", 
+                 port = 5432,
+                 user = rstudioapi::askForPassword("Database user"),
+                 password = rstudioapi::askForPassword("Database password"))
+
+# Retrieve and count most common words from 'Star Trek' script from database
+
+query <- dbSendQuery(conn = con,
+                     "SELECT word, COUNT(*) AS count
+                     FROM tidy_movies_postgresql
+                     WHERE names = 'Star Trek'
+                     GROUP BY word
+                     ORDER BY count DESC;")
+
+tidy_movies_st <- dbFetch(query, -1)
+
+# Disconnect
+
+dbDisconnect(con)
+
+# Plot most common words in Star Trek script
+
+tidy_movies_st %>% 
+  top_n(20) %>% 
+  mutate(word = reorder(word, count)) %>% 
+  ggplot(aes(word, count)) +
+  geom_col() +
+  xlab(NULL) +
+  coord_flip() +
+  labs(y = "Word Frequency (n)")
+```
+
+```{r, echo = FALSE, fig.cap="Most common words in Star Trek."}
+knitr::include_graphics("/home/mike/Downloads/plot_2.png")
+```
+
+### SUMMARY
+
+In this post, we have learnt: (i) how to scrape data from the web in R by locating elements of a HTML parse tree, (ii) why the 'data.table' package is a powerful tool to wrangle and manage data frame type objects in R, (iii) how to read to a SQL database, perform a computation, and the retrieve the results back.
+
+

@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-	<meta name="generator" content="Hugo 0.53" />
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -16,24 +15,24 @@
 <meta property="og:site_name" content="Mike John Page" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/" />
-<meta property="og:title" content="Mike John Page" />
-<meta property="twitter:title" content="Mike John Page">
+<meta property="og:url" content="/blog/web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql/" />
+<meta property="og:title" content="Web Scraping, R&#39;s data.table, and Writing to PostgreSQL and MySQL" />
+<meta property="twitter:title" content="Web Scraping, R&#39;s data.table, and Writing to PostgreSQL and MySQL">
 
-    <meta property="og:image" content="/img/banner.png">
+    <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="/img/banner.png">
+    <meta property="twitter:image" content="//images/image.jpg">
 
-<meta property="og:description" content="Mike John Page">
-<meta property="twitter:description" content="Mike John Page">
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
 
 <title>
 
 
-    Mike John Page
+     Mike John Page - Web Scraping, R&#39;s data.table, and Writing to PostgreSQL and MySQL 
 
 </title>
-<link rel="canonical" href="/">
+<link rel="canonical" href="/blog/web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql/">
 
 
 <style media="screen">
@@ -1057,8 +1056,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Mike John Page" />
-
 
 </head>
 
@@ -1066,7 +1063,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1105,84 +1102,445 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            
-                <div class="markdown">
-                
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
-<hr />
+    Web Scraping, R&#39;s data.table, and Writing to PostgreSQL and MySQL
 
-<h1 id="data-scientist-question-asker-and-r-enthusiast">Data Scientist, Question Asker, and R Enthusiast.</h1>
-
-<hr />
+</div>
 
                 </div>
-            
-
-            
-                <div class="posts">
-                
-                
-                    <div class="page-heading">Latest posts</div>
-                    <ul>
+                <div class="meta">
+                    <div class="date" title="Tue Jan 22 2019 00:00:00 UTC">Jan 22, 2019</div>
                     
-                        <li class="groupby">Jan, 2019</li>
                         
-                            <li class="post-item">
-    <span class="meta">Jan 22, 2019</span>
-    <a href="/blog/web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql/"><span>Web Scraping, R&#39;s data.table, and Writing to PostgreSQL and MySQL</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 21, 2019</span>
-    <a href="/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/"><span>Rendering JavaScript content using Python, Selenium, and a Headless Browser</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 21, 2019</span>
-    <a href="/blog/bash-alias/"><span>Bash Aliases</span></a>
-</li>
-
+                        <div class="author middot" title="Mike Page">Mike Page</div>
                         
                     
-                        <li class="groupby">Dec, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 20, 2018</span>
-    <a href="/blog/ubuntu-18-04-lts-thinkpad-x1-carbon-6th-generation/"><span>Ubuntu 18.04 LTS &#43; Thinkpad X1 Carbon 6th Generation</span></a>
-</li>
-
-                        
-                    
-                        <li class="groupby">Sep, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Sep 21, 2018</span>
-    <a href="/blog/ggdot-hacknight-using-box-cox-transformations-and-regression-to-analyse-the-co2-emissions-of-food/"><span>GGDOT Hacknight: using Box-Cox Transformations and Regression to Analyse the CO2 Emissions of Food</span></a>
-</li>
-
-                        
-                    
-                    </ul>
-
-                    
-                        <a href="./blog/" class="see-more">See more ...</a>
-                    
-                
+                    <div class="reading-time middot">13 minute read</div>
+                    <div class="tags">
+                        <ul>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
                 </div>
-            
-
-            <div class="best-posts">
-            
-            
             </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<div id="aims" class="section level3">
+<h3>AIMS</h3>
+<p>By the end of this post you should: (i) understand how to use the ‘rvest’ package to scrape web pages, (ii) understand the benefits of using the ‘data.table’ package to wrangle large data sets over other common packages such as ‘dplyr’, (iii) be able to write/read a data set from memory on your local machine to a SQL database (in this instance on a remote server).</p>
+<p>To achieve these aims, we are going to scrape movie scripts from <a href="https://www.imsdb.com/">IMSDb</a> using ‘rvest’, wrangle the data using the ‘data.table’ package and finally write the data to a SQL database using the ‘RPostgreSQL’ and ‘RMySQL’ packages.</p>
+<p>This tutorial assumes a basic working knowledge of the R language and SQL.</p>
+</div>
+<div id="web-scraping" class="section level3">
+<h3>WEB SCRAPING</h3>
+<p>To begin with, let’s load all the libraries we need (the use of ‘robotstxt’, ‘stringi’, and ‘tidytext’ will become apparent soon):</p>
+<pre class="r"><code># Load libraries 
+
+library(tidyverse)
+library(robotstxt)
+library(data.table)
+library(rvest)
+library(stringi)
+library(tidytext)
+library(RPostgreSQL)
+library(RMySQL)</code></pre>
+<p>Next, let’s check the Terms of Service and robots.txt file of <a href="https://www.imsdb.com/">IMSDb</a> to ensure scraping is permitted:</p>
+<pre class="r"><code># Check robots.txt permissions
+
+rtxt &lt;- robotstxt(&quot;https://www.imsdb.com&quot;)
+rtxt$permissions</code></pre>
+<pre><code>##      field useragent                  value
+## 1 Disallow         *               /ext.php
+## 2 Disallow         *                   /out
+## 3 Disallow         * /software/download.php
+## 4 Disallow         *      /software/rnc.php</code></pre>
+<pre class="r"><code># Additional check on a single example script
+
+paths_allowed(&quot;https://www.imsdb.com/scripts/10-Things-I-Hate-About-You.html&quot;)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># Check Terms of Service of site - pass</code></pre>
+<p>In all instances, it appears there are no restrictions placed on scraping this particular site. <strong>NB:</strong> If you intend to scrape IMSDb, or any other site, it is your responsibility to check you have permission and you are responsible for any data you scrape.</p>
+<p>To scrape the movie scripts, we first need to establish the URL where they can be found:</p>
+<pre class="r"><code>url &lt;- &quot;https://www.imsdb.com/all%20scripts/&quot;</code></pre>
+<p>Next we need to create a list containing links to each article, in addition to the movie name (for reference). To achieve this, we need to inspect the HTML structure of the web page, and pull out the relevant tags. In Firefox, you can hover over the desired web page element, and then right-click and click ‘Inspect Element (Q)’. Alternatively, you can press ‘Ctrl’ + ‘Shift’ + ‘c’ on Linux/Ubuntu. Doing this for the first movie script ‘10 Things I Hate About You’ reveals that the link we want lies in an “a” HTML node with a HTML attribute “href”. Accordingly, the names of the movies lie within the HTML text:</p>
+<pre class="r"><code># Get link to scripts
+
+links &lt;- read_html(url) %&gt;%
+  html_nodes(&quot;a&quot;) %&gt;%
+  html_attr(&quot;href&quot;)
+
+# Get names of Scripts
+
+names &lt;- read_html(url) %&gt;%
+  html_nodes(&quot;a&quot;) %&gt;%
+  html_text()</code></pre>
+<p>Now that we have a list of movie links and names, let’s join them into a data.table and inspect the first and last few rows:</p>
+<pre class="r"><code># Create data.table of links and names of scripts
+
+movies_dt &lt;- data.table(links = links, names = names)
+
+head(movies_dt)</code></pre>
+<pre><code>##                    links names
+## 1: https://www.imsdb.com      
+## 2: https://www.imsdb.com      
+## 3: https://www.imsdb.com      
+## 4:       /alphabetical/0     #
+## 5:       /alphabetical/A     A
+## 6:       /alphabetical/B     B</code></pre>
+<pre class="r"><code>tail(movies_dt)</code></pre>
+<pre><code>##          links          names
+## 1:     /submit         Submit
+## 2:      /links          Links
+## 3: /link to us     Link to us
+## 4:      /feeds      RSS Feeds
+## 5: /disclaimer     Disclaimer
+## 6:    /privacy Privacy policy</code></pre>
+<p>After inspecting the table output it becomes immediately apparent that during our web scraping, we picked up some unwanted “a” links. This is certainly not uncommon. As such, the data requires a little cleaning up. This is where the power of data.table comes in. While the tidyverse’s ‘dplyr’ package provides a very nice API for wrangling data, with clean readable syntax, it becomes cumbersome and slow when wrangling large data sets. The ‘data.table’ package on the other hand remains fast and efficient, even when data sets get very large. This is because data.table allows one to modify/update columns by <em>reference</em>. For more information on the differences between ‘dplyr’ and ‘data.table’ and updating by <em>reference</em> see <a href="https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly">this</a> useful post from Stack Overflow.</p>
+<p>To clean the data, we need to retain only the movie links and remove repeat observations:</p>
+<pre class="r"><code># Filter data.table to retrieve only links containing film information,
+# denoted by &quot;/Movie&quot;, and use the data.table chain rule 
+# (DT[ ... ][ ... ]) to remove repeat observations
+
+movies_dt &lt;- movies_dt[str_detect(links, &quot;^/Movie&quot;)][!1:5]
+head(movies_dt)</code></pre>
+<pre><code>##                                                    links
+## 1: /Movie Scripts/10 Things I Hate About You Script.html
+## 2:                         /Movie Scripts/12 Script.html
+## 3:             /Movie Scripts/12 and Holding Script.html
+## 4:                 /Movie Scripts/12 Monkeys Script.html
+## 5:           /Movie Scripts/12 Years a Slave Script.html
+## 6:                  /Movie Scripts/127 Hours Script.html
+##                         names
+## 1: 10 Things I Hate About You
+## 2:                         12
+## 3:             12 and Holding
+## 4:                 12 Monkeys
+## 5:           12 Years a Slave
+## 6:                  127 Hours</code></pre>
+<p>As can now be seen, only the correct movie links have been retained.</p>
+<p>Next, we need to create relative HTML links, of the form ‘my-movie-script.html’, in order to paste/append the links to the URL ‘<a href="https://www.imsdb.com/scripts/" class="uri">https://www.imsdb.com/scripts/</a>’. This is because each movie script is located in a unique URL of the form ‘<a href="https://www.imsdb.com/scripts/my-movie-script.html" class="uri">https://www.imsdb.com/scripts/my-movie-script.html</a>’ (a quick search on the IMSDb website reveals this):</p>
+<pre class="r"><code># Create relative HTML links
+
+names_replaced &lt;- str_replace_all(movies_dt$names, &quot; &quot;, &quot;-&quot;) %&gt;% 
+  paste0(&quot;.html&quot;)</code></pre>
+<p>Now that we have cleaned the data, we are ready to scrape the scripts. To do this, we will first create a new column called script, and assign each value ‘NA’:</p>
+<pre class="r"><code># Iterate through a list of links and scrape script texts and append to links_names
+
+movies_dt$script = NA</code></pre>
+<p>Then, we will iterate through each movie script by creating a unique URL as described previously. At each iteration, we will extract the text from each movie script, which can be found in the “pre” html tags, and assign the output to the corresponding row of the newly created ‘script’ column. If a HTTP status code returns an error, or the link does not contain any text (e.g., the length of the script equals zero), the for loop will assign ‘NA’ to ensure it does not break:</p>
+<pre class="r"><code>for(i in seq_along(names_replaced)) {
+  
+  temp_url &lt;- paste0(&quot;https://www.imsdb.com/scripts/&quot;, names_replaced[i])
+  
+  if(html_session(temp_url)$response$status_code == 404) {
+    movies_dt$script[i] &lt;- NA
+    next
+  }
+  
+  script_text &lt;- temp_url %&gt;%
+    read_html() %&gt;% 
+    html_nodes(&quot;pre&quot;) %&gt;% 
+    html_text()
+  
+  if(length(script_text) == 0) {
+    movies_dt$script[i] &lt;- NA
+  }
+  
+  else{
+    movies_dt$script[i] &lt;- script_text
+  }
+}</code></pre>
+<p>Next, let’s inspect the first few rows of the first script in ‘movies_dt’. <strong>Warning</strong>: the ‘movies_dt’ data.table now contains a large amount of data, and if you attempt to print the whole data.table, it is more than likely that your R session will crash (unless you have a very large amount of RAM, or unlimited patience!):</p>
+<pre class="r"><code>substring(movies_dt$script[1], 1, 1000) </code></pre>
+<pre><code>## [1] &quot;\n\n\n&lt;b&gt;&lt;!--\n&lt;/b&gt;if (window!= top)\ntop.location.href=location.href\n&lt;b&gt;// --&gt;\n&lt;/b&gt;Ten Things I Hate About You - by Karen McCullah Lutz &amp; Kirsten Smith\n                               TEN THINGS I HATE ABOUT YOU\n          \n                written by Karen McCullah Lutz &amp; Kirsten Smith\n          \n              based on &#39;Taming of the Shrew\&quot; by William Shakespeare\n          \n          Revision November 12, 1997\n          \n          \n          PADUA HIGH SCHOOL - DAY\n          \n          Welcome to Padua High School,, your typical urban-suburban \n          high school in Portland, Oregon.  Smarties, Skids, Preppies, \n          Granolas. Loners, Lovers, the In and the Out Crowd rub sleep \n          out of their eyes and head for the main building.\n          \n          PADUA HIGH PARKING LOT - DAY\n          \n          KAT STRATFORD, eighteen, pretty -- but trying hard not to be \n          -- in a baggy granny dress and glasses, balances a cup of \n          coffee and a backpack as she climbs out&quot;</code></pre>
+<p>As can be seen in the output above, ‘movies_dt’ still needs a little cleaning up. Specifically, the special characters ‘’, ‘’, and ‘’ need removing. To see what these special characters do, try printing a movie scripting with the special characters escaped using ‘cat()’, like so:</p>
+<pre class="r"><code>cat(substring(movies_dt$script[1], 1, 1000))</code></pre>
+<pre><code>## 
+## 
+## 
+## &lt;b&gt;&lt;!--
+## &lt;/b&gt;if (window!= top)
+## top.location.href=location.href
+## &lt;b&gt;// --&gt;
+## &lt;/b&gt;Ten Things I Hate About You - by Karen McCullah Lutz &amp; Kirsten Smith
+##                                TEN THINGS I HATE ABOUT YOU
+##           
+##                 written by Karen McCullah Lutz &amp; Kirsten Smith
+##           
+##               based on &#39;Taming of the Shrew&quot; by William Shakespeare
+##           
+##           Revision November 12, 1997
+##           
+##           
+##           PADUA HIGH SCHOOL - DAY
+##           
+##           Welcome to Padua High School,, your typical urban-suburban 
+##           high school in Portland, Oregon.  Smarties, Skids, Preppies, 
+##           Granolas. Loners, Lovers, the In and the Out Crowd rub sleep 
+##           out of their eyes and head for the main building.
+##           
+##           PADUA HIGH PARKING LOT - DAY
+##           
+##           KAT STRATFORD, eighteen, pretty -- but trying hard not to be 
+##           -- in a baggy granny dress and glasses, balances a cup of 
+##           coffee and a backpack as she climbs out</code></pre>
+<p>In addition, duplicates and NA values need removing. Note as ‘\’ is the escape character in strings, it needs to be escaped using ‘\\’. See <a href="https://stringr.tidyverse.org/articles/regular-expressions.html">here</a> for more information:</p>
+<pre class="r"><code># Clean up movies_dt 
+# remove special characters
+
+movies_dt[, script := str_replace_all(movies_dt$script, &quot;\\\n|\\\t|\\\r&quot;, &quot;&quot;)]
+
+# remove duplicates (see unique.data.table documentation)
+
+movies_dt &lt;- unique(movies_dt)
+
+# remove NA values (see na.omit.data.table documentation)
+
+movies_dt &lt;- na.omit(movies_dt)</code></pre>
+</div>
+<div id="preparing-the-scripts" class="section level3">
+<h3>PREPARING THE SCRIPTS</h3>
+<p>The initial scraping and data wrangling steps are now complete. At this stage, we have a nice neat data.table containing all the cleaned up movie scripts. Next, let’s perform some more wrangling steps to make the scripts more suitable for some NLP analysis. First let’s transform all the scripts to lower case:</p>
+<pre class="r"><code># Trasnform scripts to lower case
+
+movies_dt[, script := str_to_lower(script)]</code></pre>
+<p>Then, let’s transform all characters to ASCII. This will remove things such as accents, and mean that words can be compared like for like:</p>
+<pre class="r"><code># Transform all characters to ASCII to remove accents etc
+
+movies_dt[, script := stri_trans_general(movies_dt$script, &quot;latin-ascii&quot;)]</code></pre>
+<p>After that, let’s remove all non alphanumeric characters, but keep apostrophe’s:</p>
+<pre class="r"><code># Remove non alphanumeric characters, keeping apostrophe&#39;s
+
+movies_dt[, script := str_replace_all(script, &quot;[^[:alnum:]&#39;]&quot;, &quot; &quot;)]</code></pre>
+<p>Finally, let’s unnest the scripts into a tidy data.table consisting of one word per row, and remove any stop words. For more information on unnesting and stop words, I recommend you read <a href="https://www.tidytextmining.com/"><em>Text Mining with R: A Tidy Approach</em></a>:</p>
+<pre class="r"><code># Unnest movies_dt into a tidy data.table consisting of one word per row
+
+tidy_movies &lt;- unnest_tokens(movies_dt, word, script, token = &quot;words&quot;)
+
+# Remove stop words
+
+tidy_movies &lt;- tidy_movies %&gt;% anti_join(stop_words)</code></pre>
+</div>
+<div id="writing-to-a-sql-database" class="section level3">
+<h3>WRITING TO A SQL DATABASE</h3>
+<p>Now the movie scripts are in a tidy text format, let’s write them to a SQL database for storage. First we will work with a MySQL database, but later we will introduce PostgreSQL databases, so you can see a few different varieties of SQL. To do this, we will first open a connection to a database, in this case I will be connecting to a personal remote server. You can change the parameters as you see fit (e.g., you may want to connect to a server hosted on your local machine):</p>
+<pre class="r"><code># Create connection
+
+con &lt;- dbConnect(MySQL(),
+                 host = &quot;localhost&quot;,
+                 dbname = &quot;my_database&quot;,
+                 user = rstudioapi::askForPassword(&quot;Database user&quot;),
+                 password = rstudioapi::askForPassword(&quot;Database password&quot;))</code></pre>
+<p>The ‘rstudioapi::askForPassword’ in the ‘user’ and ‘password’ arguments above will prompt you for your login credentials. It is important you never save these in a script which may be accessible to others. For other, more secure, methods for managing your credentials, see <a href="https://db.rstudio.com/best-practices/managing-credentials/">this</a> RStudio guide.</p>
+<p>Next, we simply need to use the ‘dbWriteTable’ command to write the ‘movies_dt’ data.table to the remote server, and close off the connection. It is important to <strong>always</strong> open a connection as late as possible, and close a connection as soon as possible. This will reduce resource expenditure, and increase security.</p>
+<pre class="r"><code># Write table to database
+
+dbWriteTable(conn = con,
+             name = &quot;tidy_movies_mysql&quot;,
+             value = tidy_movies)
+
+# Disconnect connection - important to do at each stage
+
+dbDisconnect(con)</code></pre>
+</div>
+<div id="computing-and-reading-from-a-sql-database" class="section level3">
+<h3>COMPUTING AND READING FROM A SQL DATABASE</h3>
+<p>For many purposes, SQL databases can be a powerful medium through which to perform calculations on your data. In the example below, we will retrieve the most common words of films beginning with the letter ‘s’ from the database. Of course, we could perform this operation on our local machine (e.g., using dplyr), but as data sets get larger and larger, local machines may struggle to perform such computations. External servers with large amounts of RAM, on the other hand, may be much better suited to handle computational intensive tasks:</p>
+<pre class="r"><code># Recreate connection
+
+con &lt;- dbConnect(MySQL(),
+                 host = &quot;localhost&quot;,
+                 dbname = &quot;my_database&quot;,
+                 user = rstudioapi::askForPassword(&quot;Database user&quot;),
+                 password = rstudioapi::askForPassword(&quot;Database password&quot;))
+
+# Retrieve most common words of films beginning with the letter &#39;s&#39; from database
+
+query &lt;- dbSendQuery(conn = con,
+                     &quot;SELECT names, word, COUNT(*) AS count
+                     FROM tidy_movies_mysql
+                     WHERE names LIKE &#39;S%&#39;
+                     GROUP BY names, word
+                     ORDER BY count DESC;&quot;)
+
+tidy_movies_subset &lt;- dbFetch(query, -1)
+
+# Disconnect
+
+dbDisconnect(con)</code></pre>
+<p>Now that we have performed an operation on the MySQL sever and retrieved back a new subset of data, let’s make a simple plot. Let’s first access a random subset of the films beginning with ‘s’, and then inspect the most common words across each film (as computed in the MySQL server):</p>
+<pre class="r"><code># Plot most common words across random subset of films beginning with the letter &#39;s&#39;
+
+random_films = c(&quot;Silver Linings Playbook&quot;,
+                 &quot;Scott Pilgrim vs the World&quot;,
+                 &quot;Scarface&quot;,
+                 &quot;Spartan&quot;,
+                 &quot;Sex and the City&quot;,
+                 &quot;Synecdoche, New York&quot;,
+                 &quot;Station West&quot;,
+                 &quot;Sideways&quot;,
+                 &quot;Sherlock Holmes&quot;,
+                 &quot;Sphere&quot;,
+                 &quot;Secret Life of Walter Mitty, The&quot;,
+                 &quot;Sleepy Hollow&quot;)
+
+tidy_movies_subset %&gt;% 
+  filter(names %in% random_films) %&gt;% 
+  group_by(names) %&gt;%
+  top_n(5) %&gt;%
+  ungroup() %&gt;%
+  group_by(names, word) %&gt;%                  
+  arrange(desc(count)) %&gt;%                
+  ungroup() %&gt;%
+  mutate(word = factor(paste(word, names, sep = &quot;__&quot;), levels = rev(paste(word, names, sep = &quot;__&quot;)))) %&gt;%
+  ggplot(aes(word, count, fill = count)) +
+  geom_bar(stat = &quot;identity&quot;, show.legend = FALSE) +
+  facet_wrap(~ names, scales = &quot;free&quot;) +
+  coord_flip() +
+  scale_x_discrete(labels = function(x) gsub(&quot;__.+$&quot;, &quot;&quot;, x)) +
+  xlab(NULL)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
+<figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="/home/mike/Downloads/plot_1.png" src="/home/mike/Downloads/low/plot_1.png" alt="Most common words of films beginning with the letter 's'."  /></figure>
+<p class="caption">
+Figure 1: Most common words of films beginning with the letter ‘s’.
+</p>
+</div>
+</div>
+<div id="sql-take-two" class="section level3">
+<h3>SQL TAKE TWO</h3>
+<p>Now that we have seen a full workflow on a SQL database using MySQL, let’s read/write to a PostgreSQL database, just for comparisons sake. Again, I will write the ‘movies_dt’ database to a local remote server (you can write it to wherever you choose), but this time let’s use the database to count the most common words from the ‘Star Trek’ script using a few simple PostgreSQL commands. After that, let’s make a simple plot showing the most common words from the ‘Star Trek’ script:</p>
+<pre class="r"><code># Create connection
+
+con &lt;- dbConnect(drv = dbDriver(&quot;PostgreSQL&quot;),
+                 dbname = &quot;mikep&quot;,
+                 host = &quot;localhost&quot;, 
+                 port = 5432,
+                 user = rstudioapi::askForPassword(&quot;Database user&quot;),
+                 password = rstudioapi::askForPassword(&quot;Database password&quot;))
+
+# Write table to database
+
+dbWriteTable(conn = con,
+             name = &quot;tidy_movies_postgresql&quot;,
+             value = tidy_movies)
+
+# Disconnect connection - important to do at each stage
+
+dbDisconnect(con)
+
+# Recreate connection
+
+con &lt;- dbConnect(drv = dbDriver(&quot;PostgreSQL&quot;),
+                 dbname = &quot;mikep&quot;,
+                 host = &quot;localhost&quot;, 
+                 port = 5432,
+                 user = rstudioapi::askForPassword(&quot;Database user&quot;),
+                 password = rstudioapi::askForPassword(&quot;Database password&quot;))
+
+# Retrieve and count most common words from &#39;Star Trek&#39; script from database
+
+query &lt;- dbSendQuery(conn = con,
+                     &quot;SELECT word, COUNT(*) AS count
+                     FROM tidy_movies_postgresql
+                     WHERE names = &#39;Star Trek&#39;
+                     GROUP BY word
+                     ORDER BY count DESC;&quot;)
+
+tidy_movies_st &lt;- dbFetch(query, -1)
+
+# Disconnect
+
+dbDisconnect(con)
+
+# Plot most common words in Star Trek script
+
+tidy_movies_st %&gt;% 
+  top_n(20) %&gt;% 
+  mutate(word = reorder(word, count)) %&gt;% 
+  ggplot(aes(word, count)) +
+  geom_col() +
+  xlab(NULL) +
+  coord_flip() +
+  labs(y = &quot;Word Frequency (n)&quot;)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
+<figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="/home/mike/Downloads/plot_2.png" src="/home/mike/Downloads/low/plot_2.png" alt="Most common words in Star Trek."  /></figure>
+<p class="caption">
+Figure 2: Most common words in Star Trek.
+</p>
+</div>
+</div>
+<div id="summary" class="section level3">
+<h3>SUMMARY</h3>
+<p>In this post, we have learnt: (i) how to scrape data from the web in R by locating elements of a HTML parse tree, (ii) why the ‘data.table’ package is a powerful tool to wrangle and manage data frame type objects in R, (iii) how to read to a SQL database, perform a computation, and the retrieve the results back.</p>
+</div>
+
+
+                <br>
+            </div>
+            
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+                <div class="navigation">
+                    
+                    <div>
+                        <img class="icon" src="/img/back.svg" alt="back" />
+                        <a href="/blog/bash-alias/">Bash Aliases</a>
+                    </div>
+                    
+                    <div style="width: 100%;"></div>
+                    
+                </div>
+            
+            <br>
+            
+
+            
+
+            
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

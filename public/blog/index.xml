@@ -6,10 +6,20 @@
     <description>Recent content in Blog on Mike John Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 21 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Web Scraping, R&#39;s data.table, and Writing to PostgreSQL and MySQL</title>
+      <link>/blog/web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql/</link>
+      <pubDate>Tue, 22 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql/</guid>
+      <description>AIMS By the end of this post you should: (i) understand how to use the ‘rvest’ package to scrape web pages, (ii) understand the benefits of using the ‘data.table’ package to wrangle large data sets over other common packages such as ‘dplyr’, (iii) be able to write/read a data set from memory on your local machine to a SQL database (in this instance on a remote server).
+To achieve these aims, we are going to scrape movie scripts from IMSDb using ‘rvest’, wrangle the data using the ‘data.</description>
+    </item>
     
     <item>
       <title>Bash Aliases</title>
