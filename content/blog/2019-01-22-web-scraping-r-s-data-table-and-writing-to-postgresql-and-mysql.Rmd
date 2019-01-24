@@ -1,7 +1,7 @@
 ---
 title: Web Scraping, R's data.table, and Writing to PostgreSQL and MySQL
 author: Mike Page
-date: '2019-01-22'
+date: '2019-01-23'
 slug: web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql
 categories: []
 tags: []
