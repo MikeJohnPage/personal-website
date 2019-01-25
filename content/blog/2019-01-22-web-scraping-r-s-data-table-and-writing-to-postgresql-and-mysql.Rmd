@@ -325,10 +325,6 @@ tidy_movies_subset %>%
 
 ```
 
-```{r, echo = FALSE, fig.cap="Most common words of films beginning with the letter 's'."}
-knitr::include_graphics("/img/plot_1.png")
-```
-
 ### SQL TAKE TWO
 
 Now that we have seen a full workflow on a SQL database using MySQL, let's read/write to a PostgreSQL database, just for comparisons sake. Again, I will write the 'movies_dt' database to a local remote server (you can write it to wherever you choose), but this time let's use the database to count the most common words from the 'Star Trek' script using a few simple PostgreSQL commands. After that, let's make a simple plot showing the most common words from the 'Star Trek' script:
@@ -387,10 +383,6 @@ tidy_movies_st %>%
   xlab(NULL) +
   coord_flip() +
   labs(y = "Word Frequency (n)")
-```
-
-```{r, echo = FALSE, fig.cap="Most common words in Star Trek."}
-knitr::include_graphics("/img/plot_2.png")
 ```
 
 ### SUMMARY
