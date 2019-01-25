@@ -325,6 +325,8 @@ tidy_movies_subset %>%
 
 ```
 
+![Most frequent words in a subset of films beginning with the letter 's'.](/blog/2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/23_01_19_plot1.png)
+
 ### SQL TAKE TWO
 
 Now that we have seen a full workflow on a SQL database using MySQL, let's read/write to a PostgreSQL database, just for comparisons sake. Again, I will write the 'movies_dt' database to a local remote server (you can write it to wherever you choose), but this time let's use the database to count the most common words from the 'Star Trek' script using a few simple PostgreSQL commands. After that, let's make a simple plot showing the most common words from the 'Star Trek' script:
@@ -384,6 +386,8 @@ tidy_movies_st %>%
   coord_flip() +
   labs(y = "Word Frequency (n)")
 ```
+
+![Most frequent words in the film 'Star Trek'.](/blog/2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/23_01_19_plot2.png)
 
 ### SUMMARY
 

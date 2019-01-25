@@ -290,6 +290,10 @@ tidy_movies_subset %&gt;%
   coord_flip() +
   scale_x_discrete(labels = function(x) gsub(&quot;__.+$&quot;, &quot;&quot;, x)) +
   xlab(NULL)</code></pre>
+<div class="figure">
+<img src="/blog/2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/23_01_19_plot1.png" alt="Most frequent words in a subset of films beginning with the letter s." />
+<p class="caption">Most frequent words in a subset of films beginning with the letter ‘s’.</p>
+</div>
 </div>
 <div id="sql-take-two" class="section level3">
 <h3>SQL TAKE TWO</h3>
@@ -347,6 +351,10 @@ tidy_movies_st %&gt;%
   xlab(NULL) +
   coord_flip() +
   labs(y = &quot;Word Frequency (n)&quot;)</code></pre>
+<div class="figure">
+<img src="/blog/2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/23_01_19_plot2.png" alt="Most frequent words in the film Star Trek." />
+<p class="caption">Most frequent words in the film ‘Star Trek’.</p>
+</div>
 </div>
 <div id="summary" class="section level3">
 <h3>SUMMARY</h3>
