@@ -1,16 +1,195 @@
----
-title: Web Scraping, R's data.table, and Writing to PostgreSQL and MySQL
-author: Mike Page
-date: '2019-01-23'
-slug: web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql
-categories: []
-tags: []
-description: Desc
-hacker_news_id: ''
-lobsters_id: ''
-meta_img: /images/image.jpg
----
+<!DOCTYPE html>
 
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Mike Page" />
+
+<meta name="date" content="2019-01-23" />
+
+<title>Web Scraping, R’s data.table, and Writing to PostgreSQL and MySQL</title>
+
+<script src="2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/navigation-1.1/tabsets.js"></script>
+<link href="2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="2019-01-22-web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Web Scraping, R’s data.table, and Writing to PostgreSQL and MySQL</h1>
+<h4 class="author"><em>Mike Page</em></h4>
+<h4 class="date"><em>2019-01-23</em></h4>
+
+</div>
 
 
 <div id="aims" class="section level3">
@@ -287,10 +466,10 @@ tidy_movies_subset %&gt;%
   coord_flip() +
   scale_x_discrete(labels = function(x) gsub(&quot;__.+$&quot;, &quot;&quot;, x)) +
   xlab(NULL)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
-<img src="/home/mike/Downloads/plot_1.png" alt="Most common words of films beginning with the letter 's'."  />
+<div class="figure" style="text-align: center">
+<img src="/img/plot_1.png" alt="Most common words of films beginning with the letter 's'."  />
 <p class="caption">
-Figure 1: Most common words of films beginning with the letter ‘s’.
+Most common words of films beginning with the letter ‘s’.
 </p>
 </div>
 </div>
@@ -350,10 +529,10 @@ tidy_movies_st %&gt;%
   xlab(NULL) +
   coord_flip() +
   labs(y = &quot;Word Frequency (n)&quot;)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
-<img src="/home/mike/Downloads/plot_2.png" alt="Most common words in Star Trek."  />
+<div class="figure" style="text-align: center">
+<img src="/img/plot_2.png" alt="Most common words in Star Trek."  />
 <p class="caption">
-Figure 2: Most common words in Star Trek.
+Most common words in Star Trek.
 </p>
 </div>
 </div>
@@ -361,3 +540,34 @@ Figure 2: Most common words in Star Trek.
 <h3>SUMMARY</h3>
 <p>In this post, we have learnt: (i) how to scrape data from the web in R by locating elements of a HTML parse tree, (ii) why the ‘data.table’ package is a powerful tool to wrangle and manage data frame type objects in R, (iii) how to read to a SQL database, perform a computation, and the retrieve the results back.</p>
 </div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

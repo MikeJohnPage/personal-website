@@ -9,6 +9,9 @@ description: Desc
 hacker_news_id: ''
 lobsters_id: ''
 meta_img: /images/image.jpg
+output: 
+  html_document:
+    self_contained: no
 ---
 
 ```{r setup, include=FALSE}
@@ -171,7 +174,7 @@ cat(substring(movies_dt$script[1], 1, 1000))
 
 In addition, duplicates and NA values need removing. Note as '\\' is the escape character in strings, it needs to be escaped using '\\\\'. See [here](https://stringr.tidyverse.org/articles/regular-expressions.html) for more information:
 
-```{r}
+```{r, eval = FALSE}
 # Clean up movies_dt 
 # remove special characters
 
@@ -190,7 +193,7 @@ movies_dt <- na.omit(movies_dt)
 
 The initial scraping and data wrangling steps are now complete. At this stage, we have a nice neat data.table containing all the cleaned up movie scripts. Next, let's perform some more wrangling steps to make the scripts more suitable for some NLP analysis. First let's transform all the scripts to lower case:
 
-```{r}
+```{r, eval = FALSE}
 # Trasnform scripts to lower case
 
 movies_dt[, script := str_to_lower(script)]
@@ -198,7 +201,7 @@ movies_dt[, script := str_to_lower(script)]
 
 Then, let's transform all characters to ASCII. This will remove things such as accents, and mean that words can be compared like for like:
 
-```{r}
+```{r, eval = FALSE}
 # Transform all characters to ASCII to remove accents etc
 
 movies_dt[, script := stri_trans_general(movies_dt$script, "latin-ascii")]
@@ -206,7 +209,7 @@ movies_dt[, script := stri_trans_general(movies_dt$script, "latin-ascii")]
 
 After that, let's remove all non alphanumeric characters, but keep apostrophe's:
 
-```{r}
+```{r, eval = FALSE}
 # Remove non alphanumeric characters, keeping apostrophe's
 
 movies_dt[, script := str_replace_all(script, "[^[:alnum:]']", " ")]
@@ -214,7 +217,7 @@ movies_dt[, script := str_replace_all(script, "[^[:alnum:]']", " ")]
 
 Finally, let's unnest the scripts into a tidy data.table consisting of one word per row, and remove any stop words. For more information on unnesting and stop words, I recommend you read [*Text Mining with R: A Tidy Approach*](https://www.tidytextmining.com/):
 
-```{r}
+```{r, eval = FALSE}
 
 # Unnest movies_dt into a tidy data.table consisting of one word per row
 
@@ -323,7 +326,7 @@ tidy_movies_subset %>%
 ```
 
 ```{r, echo = FALSE, fig.cap="Most common words of films beginning with the letter 's'."}
-knitr::include_graphics("/home/mike/Downloads/plot_1.png")
+knitr::include_graphics("/img/plot_1.png")
 ```
 
 ### SQL TAKE TWO
@@ -387,7 +390,7 @@ tidy_movies_st %>%
 ```
 
 ```{r, echo = FALSE, fig.cap="Most common words in Star Trek."}
-knitr::include_graphics("/home/mike/Downloads/plot_2.png")
+knitr::include_graphics("/img/plot_2.png")
 ```
 
 ### SUMMARY
