@@ -30,11 +30,12 @@ These installation steps are specific for Ubuntu 18.04 LTS on a Lenovo ThinkPad 
 
 * Install [Tilix](https://gnunn1.github.io/tilix-web/)
 * Install [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh)
-* Set up oh my zsh using [this](https://github.com/haccks/zsh-config) custom theme (nb: the instructions still work for Ubuntu despite being configured for MacOS - just replace the MacOS relevant steps with Ubuntu ones, e.g., Tilix instead of Iterm2).
+* Set up oh my zsh using [this](https://github.com/haccks/zsh-config) custom theme (nb: the instructions still work for Ubuntu despite being configured for MacOS - just replace the MacOS relevant steps with Ubuntu ones, e.g., Tilix instead of Iterm2)
 * Install [S-TUI](https://github.com/amanusk/s-tui) to monitor performance
 * Install h-top to monitor memory usage
-* Install [TLP](https://linrunner.de/en/tlp/tlp.html) to manage battery performance. *Thinkpad's only:* configure the start/stop charging [thresholds](https://linrunner.de/en/tlp/docs/tlp-configuration.html#chargethresholds) to improve battery life.
-* Install GNOME Tweaks and toggle 'topbar' as described [here](https://askubuntu.com/questions/1074625/remove-app-icon-from-title-bar-in-gnome-in-ubuntu-18-04).
+* Install [TLP](https://linrunner.de/en/tlp/tlp.html) to manage battery performance. *Thinkpad's only:* configure the start/stop charging [thresholds](https://linrunner.de/en/tlp/docs/tlp-configuration.html#chargethresholds) to improve battery life
+* Install GNOME Tweaks and toggle 'topbar' as described [here](https://askubuntu.com/questions/1074625/remove-app-icon-from-title-bar-in-gnome-in-ubuntu-18-04)
+* Make Bluetooth mouse [autoconnect after reboot](https://ubuntuforums.org/showthread.php?t=2390542)
 
 
 
