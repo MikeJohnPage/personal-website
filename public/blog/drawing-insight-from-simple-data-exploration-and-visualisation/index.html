@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-	<meta name="generator" content="Hugo 0.53" />
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -16,24 +15,24 @@
 <meta property="og:site_name" content="Mike John Page" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/" />
-<meta property="og:title" content="Mike John Page" />
-<meta property="twitter:title" content="Mike John Page">
+<meta property="og:url" content="/blog/drawing-insight-from-simple-data-exploration-and-visualisation/" />
+<meta property="og:title" content="Drawing Insight from Simple Data Exploration and Visualisation, Including Dodged Bars and Choropleth Maps" />
+<meta property="twitter:title" content="Drawing Insight from Simple Data Exploration and Visualisation, Including Dodged Bars and Choropleth Maps">
 
-    <meta property="og:image" content="/img/banner.png">
+    <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="/img/banner.png">
+    <meta property="twitter:image" content="//images/image.jpg">
 
-<meta property="og:description" content="Mike John Page">
-<meta property="twitter:description" content="Mike John Page">
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
 
 <title>
 
 
-    Mike John Page
+     Mike John Page - Drawing Insight from Simple Data Exploration and Visualisation, Including Dodged Bars and Choropleth Maps 
 
 </title>
-<link rel="canonical" href="/">
+<link rel="canonical" href="/blog/drawing-insight-from-simple-data-exploration-and-visualisation/">
 
 
 <style media="screen">
@@ -1057,8 +1056,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Mike John Page" />
-
 
 </head>
 
@@ -1066,7 +1063,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1105,84 +1102,1099 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            
-                <div class="markdown">
-                
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
-<hr />
+    Drawing Insight from Simple Data Exploration and Visualisation, Including Dodged Bars and Choropleth Maps
 
-<h1 id="data-scientist-question-asker-and-r-enthusiast">Data Scientist, Question Asker, and R Enthusiast.</h1>
-
-<hr />
+</div>
 
                 </div>
-            
-
-            
-                <div class="posts">
-                
-                
-                    <div class="page-heading">Latest posts</div>
-                    <ul>
+                <div class="meta">
+                    <div class="date" title="Wed Mar 6 2019 00:00:00 UTC">Mar 6, 2019</div>
                     
-                        <li class="groupby">Mar, 2019</li>
                         
-                            <li class="post-item">
-    <span class="meta">Mar 6, 2019</span>
-    <a href="/blog/drawing-insight-from-simple-data-exploration-and-visualisation/"><span>Drawing Insight from Simple Data Exploration and Visualisation, Including Dodged Bars and Choropleth Maps</span></a>
-</li>
-
+                        <div class="author middot" title="Mike Page">Mike Page</div>
                         
                     
-                        <li class="groupby">Jan, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 23, 2019</span>
-    <a href="/blog/web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql/"><span>Web Scraping, R&#39;s data.table, and Writing to PostgreSQL and MySQL</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 21, 2019</span>
-    <a href="/blog/rendering-javascript-content-using-python-selenium-and-a-headless-browser/"><span>Rendering JavaScript content using Python, Selenium, and a Headless Browser</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 21, 2019</span>
-    <a href="/blog/bash-alias/"><span>Bash Aliases</span></a>
-</li>
-
-                        
-                    
-                        <li class="groupby">Dec, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 20, 2018</span>
-    <a href="/blog/ubuntu-18-04-lts-thinkpad-x1-carbon-6th-generation/"><span>Ubuntu 18.04 LTS &#43; Thinkpad X1 Carbon 6th Generation</span></a>
-</li>
-
-                        
-                    
-                    </ul>
-
-                    
-                        <a href="./blog/" class="see-more">See more ...</a>
-                    
-                
+                    <div class="reading-time middot">13 minute read</div>
+                    <div class="tags">
+                        <ul>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
                 </div>
-            
-
-            <div class="best-posts">
-            
-            
             </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<div id="introduction" class="section level3">
+<h3>INTRODUCTION</h3>
+<hr />
+<p>Recently, I got approached by a client starting a company that specialises in company formations and related services. They asked if I could source and analyse data regarding the number of companies formed in the UK each year, in addition to any information on competitor companies in that sector. This information was to be merged into a business plan. I took on the challenge as I reasoned it would be a good opportunity to practice data wrangling and simple data exploration and visualisation. Below is a brief account of some of the steps I took to complete the report, as well as a snapshot at some of the data used.</p>
+</div>
+<div id="the-data" class="section level3">
+<h3>THE DATA</h3>
+<hr />
+<p>The journey began by exploring official government reports and data repositories for the required information. Six repositories were found that contained the required information. These included: (i) BIS - Business Population Estimates; (ii) ONS - UK Business; (iii) ONS - Business Demography; (iv) devolved country administrations; (v) Insolvency Service; and (vi) Companies House. A breakdown on the differences between the six repositories can be read <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/16418/guide_to_the_uk_business_population_and_demography.pdf">here</a>.</p>
+<p>The accompanying documentation and data sets for the six resources outlined above was large. In brief, Business Population Estimates (BIS) data was used. This is because these were the only data to provide: (a) consistent data across a wide date range, (b) information on the whole business landscape (i.e., public and private sectors), and (c) a breakdown of businesses by area, industry, and formation type (e.g., partnership, non-profit, etc.). Additionally, data from business birth and death rates taken from the UK Business (ONS) repository was used in section one (details below).</p>
+<p>The steps taken to wrangle the data are too vast to be included in this blog post (the data was split across hundreds of spreadsheets, many of which were in different formats), so at each stage below (where applicable) data is imported in a wrangled, <a href="https://vita.had.co.nz/papers/tidy-data.pdf">tidy</a> format.</p>
+</div>
+<div id="the-report" class="section level3">
+<h3>THE REPORT</h3>
+<hr />
+<p>The report was broken down into five key sections:</p>
+<ol style="list-style-type: decimal">
+<li>Change in the number of UK businesses<br />
+</li>
+<li>Change in the number of UK businesses broken down by company type<br />
+</li>
+<li>Change in the number of UK businesses broken down by industry<br />
+</li>
+<li>Change in the number of UK businesses broken down by area (national and regional)<br />
+</li>
+<li>Change in the number of UK businesses specialising in company formations (competitor analysis)</li>
+</ol>
+<p>In order of conciseness and to minimise repetition, below, I have cherry-picked data and visualisations from each section of the report. Indeed, the finished report contained more information than listed below. But the aim of this blog post is not to learn about the data used, rather, to learn about how I uses the data to draw insight.</p>
+</div>
+<div id="data-exploration-and-visualisation" class="section level3">
+<h3>DATA EXPLORATION AND VISUALISATION</h3>
+<hr />
+<p>First, lets load the libraries that will be used throughout:</p>
+<pre class="r"><code>library(tidyverse)
+library(wesanderson)
+library(maptools)
+library(rgeos)
+library(ggmap)
+library(rgdal)</code></pre>
+<p>Next, lets go through each section examining different visualisations and techniques:</p>
+<p><strong>Section 1:</strong> In order to understand the difference in business birth and death rates (i.e., the number of companies formed and dissolved each year), a simple line graph most effectively demonstrates the difference:</p>
+<pre class="r"><code># Birth:death rates
+# Import data set
+birth_death_rates &lt;- read_csv(&quot;/home/mike/Documents/r_projects/ggr/data_sets/wrangled/birth_death_rates.csv&quot;)
+
+# Tidy birth_death_rates
+birth_death_rates &lt;- gather(birth_death_rates, key = &quot;year&quot;, value = &quot;count&quot;, `2012`, `2013`, `2014`, `2015`, `2016`, `2017`)
+
+# Plot annual birth and death rates for UK
+birth_death_rates %&gt;%
+    filter(area == &quot;UNITED KINGDOM&quot;) %&gt;%
+    ggplot(aes(x = year, y = count/1000, group = rate, colour = rate)) +
+    geom_point(size = 2) +
+    geom_line(size = 1) +
+    scale_colour_manual(values = c(&quot;steelblue&quot;, &quot;steelblue1&quot;)) +
+    ylab(&quot;No. of businesses (thousands)&quot;)</code></pre>
+<p><img src="/blog/2019-03-06-drawing-insight-from-simple-data-exploration-and-visualisation_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The accompanying data:</p>
+<pre class="r"><code># Table of UK birth and death rates
+tmp4 &lt;- birth_death_rates %&gt;%
+    filter(area == &quot;UNITED KINGDOM&quot;) %&gt;%
+    spread(rate, count) %&gt;%
+    select(-area) %&gt;%
+    rename(birth_rate = birth, death_rate = death)
+
+library(knitr)
+kable(tmp4, caption = &quot;Annual company birth and death rates&quot;)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-3">Table 1: </span>Annual company birth and death rates</caption>
+<thead>
+<tr class="header">
+<th align="left">year</th>
+<th align="right">birth_rate</th>
+<th align="right">death_rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2012</td>
+<td align="right">269250</td>
+<td align="right">252085</td>
+</tr>
+<tr class="even">
+<td align="left">2013</td>
+<td align="right">346275</td>
+<td align="right">237025</td>
+</tr>
+<tr class="odd">
+<td align="left">2014</td>
+<td align="right">350305</td>
+<td align="right">246190</td>
+</tr>
+<tr class="even">
+<td align="left">2015</td>
+<td align="right">382755</td>
+<td align="right">281995</td>
+</tr>
+<tr class="odd">
+<td align="left">2016</td>
+<td align="right">413900</td>
+<td align="right">287805</td>
+</tr>
+<tr class="even">
+<td align="left">2017</td>
+<td align="right">381885</td>
+<td align="right">356815</td>
+</tr>
+</tbody>
+</table>
+<p>To better understand the accompanying data, the annual growth in birth and death rates can be expressed as a percentage of previous year. To do this, the ‘lag()’ function can be used:</p>
+<pre class="r"><code>tmp5 &lt;- birth_death_rates %&gt;%
+    filter(area == &quot;UNITED KINGDOM&quot;) %&gt;%
+    group_by(rate) %&gt;%
+    mutate(count = (count / lag(count) - 1) * 100) %&gt;%
+    ungroup() %&gt;%
+    spread(rate, count) %&gt;%
+    filter(year != &quot;2012&quot;) %&gt;%
+    select(-area) %&gt;%
+    rename(birth_rate = birth, death_rate = death)
+
+library(knitr)
+kable(tmp5, caption = &quot;Annual company birth and death rates as a percentage of the previous year&quot;)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-4">Table 2: </span>Annual company birth and death rates as a percentage of the previous year</caption>
+<thead>
+<tr class="header">
+<th align="left">year</th>
+<th align="right">birth_rate</th>
+<th align="right">death_rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2013</td>
+<td align="right">28.607242</td>
+<td align="right">-5.974175</td>
+</tr>
+<tr class="even">
+<td align="left">2014</td>
+<td align="right">1.163815</td>
+<td align="right">3.866681</td>
+</tr>
+<tr class="odd">
+<td align="left">2015</td>
+<td align="right">9.263356</td>
+<td align="right">14.543645</td>
+</tr>
+<tr class="even">
+<td align="left">2016</td>
+<td align="right">8.137059</td>
+<td align="right">2.060320</td>
+</tr>
+<tr class="odd">
+<td align="left">2017</td>
+<td align="right">-7.734960</td>
+<td align="right">23.978041</td>
+</tr>
+</tbody>
+</table>
+<p><em>Insights:</em> Despite the decrease in the number of businesses in 2018, there was still a large number of businesses being formed in 2018 with only a small decrease from 2017 (-7.7%). This is because the number of businesses being formed (births) still exceeded the number of those being dissolved (deaths).</p>
+<p><strong>Section 2:</strong> In order to understand the change in the number of UK businesses broken down by company type, a dodged bar plot was chosen:</p>
+<pre class="r"><code># Import data set
+comp_types &lt;- read_csv(&quot;/home/mike/Documents/r_projects/ggr/data_sets/wrangled/company_types_2012_2018.csv&quot;)
+
+# Calculate the yearly difference in company types as both absolute and relative values (as a percentage) of the previous year
+
+comp_types &lt;- comp_types %&gt;%
+    group_by(comp_type) %&gt;%
+    mutate(diff = diff(c(0, count))) %&gt;%
+    mutate(perc_diff = (count / lag(count) - 1) * 100)
+
+# Set the difference score(s) to NA for 2012
+comp_types$diff[1:5] &lt;- NA
+
+# Plot
+ggplot(comp_types, aes(x = year, y = count / 1000000, fill = comp_type)) +
+    scale_x_continuous(breaks = 2012:2018) +
+    scale_y_continuous(breaks = seq(0, 3.5, by = .5)) +
+    geom_col(position = &quot;dodge&quot;, colour = &quot;black&quot;) +
+    scale_fill_brewer(labels = c(&quot;Governmental&quot;, &quot;Company&quot;, &quot;Non Profit&quot;, &quot;Partnership&quot;, &quot;Sole Trader&quot;)) +
+    ylab(&quot;Number (millions)&quot;) +
+    labs(fill = &quot;Company Type&quot;)</code></pre>
+<p><img src="/blog/2019-03-06-drawing-insight-from-simple-data-exploration-and-visualisation_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Accompanying data:</p>
+<pre class="r"><code>tmp2 &lt;- comp_types %&gt;%
+    filter(year != 2012) %&gt;%
+    select(year, comp_type, diff) %&gt;%
+    spread(comp_type, diff) %&gt;%
+    rename(Governmental = central_and_local_gov,
+           Company = companies,
+           Non_Profit = non_profit_org,
+           Partnership = partnernships,
+           Sole_Trader = sole_proprietorships)
+
+library(knitr)
+kable(tmp2, caption = &quot;Annual change in company type&quot;)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-6">Table 3: </span>Annual change in company type</caption>
+<thead>
+<tr class="header">
+<th align="right">year</th>
+<th align="right">Governmental</th>
+<th align="right">Company</th>
+<th align="right">Non_Profit</th>
+<th align="right">Partnership</th>
+<th align="right">Sole_Trader</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2013</td>
+<td align="right">1670</td>
+<td align="right">54390</td>
+<td align="right">-2465</td>
+<td align="right">-13630</td>
+<td align="right">60790</td>
+</tr>
+<tr class="even">
+<td align="right">2014</td>
+<td align="right">1230</td>
+<td align="right">115265</td>
+<td align="right">80</td>
+<td align="right">22305</td>
+<td align="right">209910</td>
+</tr>
+<tr class="odd">
+<td align="right">2015</td>
+<td align="right">420</td>
+<td align="right">117480</td>
+<td align="right">-310</td>
+<td align="right">-20700</td>
+<td align="right">49535</td>
+</tr>
+<tr class="even">
+<td align="right">2016</td>
+<td align="right">295</td>
+<td align="right">124665</td>
+<td align="right">7265</td>
+<td align="right">-15105</td>
+<td align="right">-1340</td>
+</tr>
+<tr class="odd">
+<td align="right">2017</td>
+<td align="right">270</td>
+<td align="right">127540</td>
+<td align="right">3375</td>
+<td align="right">-7325</td>
+<td align="right">76625</td>
+</tr>
+<tr class="even">
+<td align="right">2018</td>
+<td align="right">205</td>
+<td align="right">30745</td>
+<td align="right">60</td>
+<td align="right">-8515</td>
+<td align="right">-49225</td>
+</tr>
+</tbody>
+</table>
+<p>Accompanying data expressed as a percentage of the previous year:</p>
+<pre class="r"><code>tmp3 &lt;- comp_types %&gt;%
+    filter(year != 2012) %&gt;%
+    select(year, comp_type, perc_diff) %&gt;%
+    spread(comp_type, perc_diff) %&gt;%
+    rename(Governmental = central_and_local_gov,
+           Company = companies,
+           Non_Profit = non_profit_org,
+           Partnership = partnernships,
+           Sole_Trader = sole_proprietorships)
+
+library(knitr)
+kable(tmp3, caption = &quot;Relative annual change in company type as a percentage of previous year&quot;)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-7">Table 4: </span>Relative annual change in company type as a percentage of previous year</caption>
+<thead>
+<tr class="header">
+<th align="right">year</th>
+<th align="right">Governmental</th>
+<th align="right">Company</th>
+<th align="right">Non_Profit</th>
+<th align="right">Partnership</th>
+<th align="right">Sole_Trader</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2013</td>
+<td align="right">19.716647</td>
+<td align="right">4.055581</td>
+<td align="right">-3.0524426</td>
+<td align="right">-3.042275</td>
+<td align="right">2.0229819</td>
+</tr>
+<tr class="even">
+<td align="right">2014</td>
+<td align="right">12.130178</td>
+<td align="right">8.259734</td>
+<td align="right">0.1021842</td>
+<td align="right">5.134787</td>
+<td align="right">6.8469156</td>
+</tr>
+<tr class="odd">
+<td align="right">2015</td>
+<td align="right">3.693931</td>
+<td align="right">7.776167</td>
+<td align="right">-0.3955595</td>
+<td align="right">-4.532565</td>
+<td align="right">1.5122097</td>
+</tr>
+<tr class="even">
+<td align="right">2016</td>
+<td align="right">2.502120</td>
+<td align="right">7.656379</td>
+<td align="right">9.3069434</td>
+<td align="right">-3.464489</td>
+<td align="right">-0.0402983</td>
+</tr>
+<tr class="odd">
+<td align="right">2017</td>
+<td align="right">2.234175</td>
+<td align="right">7.275881</td>
+<td align="right">3.9554644</td>
+<td align="right">-1.740360</td>
+<td align="right">2.3052982</td>
+</tr>
+<tr class="even">
+<td align="right">2018</td>
+<td align="right">1.659247</td>
+<td align="right">1.634977</td>
+<td align="right">0.0676437</td>
+<td align="right">-2.058927</td>
+<td align="right">-1.4475855</td>
+</tr>
+</tbody>
+</table>
+<p><em>Insights:</em> Sole traders remain the largest sector of the businesses landscape consisting of 3,351,265 companies in 2018. In the private sector, companies, as defined as <em>public corporations and nationalised bodies</em>, are the fastest growing segment, with an average annual growth of approximately 6%.</p>
+<p><strong>Section 3:</strong> In order to understand the change in the number of UK businesses broken down by industry, a plot of the the annual change in industries as a percentage of all industries can be used. This demonstrates a large amount of information, from the size of industry sectors to their relative growth and performance in the whole market:</p>
+<pre class="r"><code># Import data set
+industry &lt;- read_csv(&quot;/home/mike/Documents/r_projects/ggr/data_sets/wrangled/industry_time_series.csv&quot;)
+
+# Tidy industry data set
+industry &lt;- industry %&gt;% gather(key = &quot;year&quot;, value = &quot;count&quot;, `2012`, `2013`, `2014`, `2015`, `2016`, `2017`, `2018`) %&gt;%
+    select(- industry)
+
+# Plot
+
+industry %&gt;%
+    group_by(year) %&gt;%
+    mutate(percent_change = count/sum(count)*100) %&gt;%
+    ungroup() %&gt;%
+    ggplot(aes(x = year, y = percent_change, colour = industry_key, group = industry_key)) +
+    geom_line() +
+    geom_point(position = &quot;dodge&quot;) +
+    ylab(&quot;Percentage&quot;)</code></pre>
+<p><img src="/blog/2019-03-06-drawing-insight-from-simple-data-exploration-and-visualisation_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Accompanying data set:</p>
+<pre class="r"><code># Print absolute industry numbers for each year
+tmp6 &lt;- industry %&gt;%
+    spread(year, count)
+
+kable(tmp6, caption = &quot;Annual change in the number of businesses per industry sector&quot;)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-9">Table 5: </span>Annual change in the number of businesses per industry sector</caption>
+<thead>
+<tr class="header">
+<th align="left">industry_key</th>
+<th align="right">2012</th>
+<th align="right">2013</th>
+<th align="right">2014</th>
+<th align="right">2015</th>
+<th align="right">2016</th>
+<th align="right">2017</th>
+<th align="right">2018</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A</td>
+<td align="right">152085</td>
+<td align="right">153620</td>
+<td align="right">151695</td>
+<td align="right">153360</td>
+<td align="right">153640</td>
+<td align="right">155795</td>
+<td align="right">157580</td>
+</tr>
+<tr class="even">
+<td align="left">B_D_E</td>
+<td align="right">25655</td>
+<td align="right">28160</td>
+<td align="right">33695</td>
+<td align="right">29390</td>
+<td align="right">28285</td>
+<td align="right">38125</td>
+<td align="right">34275</td>
+</tr>
+<tr class="odd">
+<td align="left">C</td>
+<td align="right">230970</td>
+<td align="right">274295</td>
+<td align="right">261395</td>
+<td align="right">275565</td>
+<td align="right">265735</td>
+<td align="right">265775</td>
+<td align="right">290100</td>
+</tr>
+<tr class="even">
+<td align="left">F</td>
+<td align="right">907480</td>
+<td align="right">890850</td>
+<td align="right">950220</td>
+<td align="right">956105</td>
+<td align="right">974625</td>
+<td align="right">1007500</td>
+<td align="right">991620</td>
+</tr>
+<tr class="odd">
+<td align="left">G</td>
+<td align="right">514805</td>
+<td align="right">496370</td>
+<td align="right">538530</td>
+<td align="right">522690</td>
+<td align="right">544490</td>
+<td align="right">542150</td>
+<td align="right">555810</td>
+</tr>
+<tr class="even">
+<td align="left">H</td>
+<td align="right">269945</td>
+<td align="right">275290</td>
+<td align="right">284975</td>
+<td align="right">274840</td>
+<td align="right">313860</td>
+<td align="right">345285</td>
+<td align="right">325565</td>
+</tr>
+<tr class="odd">
+<td align="left">I</td>
+<td align="right">166555</td>
+<td align="right">169325</td>
+<td align="right">178700</td>
+<td align="right">183180</td>
+<td align="right">185510</td>
+<td align="right">202060</td>
+<td align="right">185955</td>
+</tr>
+<tr class="even">
+<td align="left">J</td>
+<td align="right">289075</td>
+<td align="right">305610</td>
+<td align="right">320895</td>
+<td align="right">338905</td>
+<td align="right">337850</td>
+<td align="right">351485</td>
+<td align="right">362825</td>
+</tr>
+<tr class="odd">
+<td align="left">K</td>
+<td align="right">76380</td>
+<td align="right">89960</td>
+<td align="right">83785</td>
+<td align="right">84140</td>
+<td align="right">89215</td>
+<td align="right">86410</td>
+<td align="right">86615</td>
+</tr>
+<tr class="even">
+<td align="left">L</td>
+<td align="right">91810</td>
+<td align="right">88890</td>
+<td align="right">99605</td>
+<td align="right">105045</td>
+<td align="right">105700</td>
+<td align="right">111870</td>
+<td align="right">116065</td>
+</tr>
+<tr class="odd">
+<td align="left">M</td>
+<td align="right">665625</td>
+<td align="right">686850</td>
+<td align="right">779725</td>
+<td align="right">792885</td>
+<td align="right">823560</td>
+<td align="right">855625</td>
+<td align="right">816685</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="right">378735</td>
+<td align="right">379685</td>
+<td align="right">419120</td>
+<td align="right">443400</td>
+<td align="right">459860</td>
+<td align="right">478810</td>
+<td align="right">491055</td>
+</tr>
+<tr class="odd">
+<td align="left">P</td>
+<td align="right">243220</td>
+<td align="right">255890</td>
+<td align="right">258945</td>
+<td align="right">267550</td>
+<td align="right">312220</td>
+<td align="right">296305</td>
+<td align="right">283470</td>
+</tr>
+<tr class="even">
+<td align="left">Q</td>
+<td align="right">303540</td>
+<td align="right">333310</td>
+<td align="right">336530</td>
+<td align="right">371375</td>
+<td align="right">347700</td>
+<td align="right">362115</td>
+<td align="right">360140</td>
+</tr>
+<tr class="odd">
+<td align="left">R</td>
+<td align="right">209430</td>
+<td align="right">204730</td>
+<td align="right">234230</td>
+<td align="right">268365</td>
+<td align="right">252495</td>
+<td align="right">276300</td>
+<td align="right">276185</td>
+</tr>
+<tr class="even">
+<td align="left">S</td>
+<td align="right">268805</td>
+<td align="right">262815</td>
+<td align="right">311090</td>
+<td align="right">322655</td>
+<td align="right">302925</td>
+<td align="right">318905</td>
+<td align="right">333555</td>
+</tr>
+</tbody>
+</table>
+<p>Accompanying legend:</p>
+<pre class="r"><code># Import data set
+industry &lt;- read_csv(&quot;/home/mike/Documents/r_projects/ggr/data_sets/wrangled/industry_time_series.csv&quot;)
+
+industry_legend &lt;- industry %&gt;%
+    select(industry_key, industry)
+
+industry_legend$industry[2] &lt;- &quot;Quarrying; Electricity and Gas; Water Supply; Waste Management&quot;
+    
+kable(industry_legend, caption = &quot;Industry legend&quot;)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-10">Table 6: </span>Industry legend</caption>
+<thead>
+<tr class="header">
+<th align="left">industry_key</th>
+<th align="left">industry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A</td>
+<td align="left">Agriculture, Forestry and Fishing</td>
+</tr>
+<tr class="even">
+<td align="left">B_D_E</td>
+<td align="left">Quarrying; Electricity and Gas; Water Supply; Waste Management</td>
+</tr>
+<tr class="odd">
+<td align="left">C</td>
+<td align="left">Manufacturing</td>
+</tr>
+<tr class="even">
+<td align="left">F</td>
+<td align="left">Construction</td>
+</tr>
+<tr class="odd">
+<td align="left">G</td>
+<td align="left">Wholesale and Retail Trade; Repair of Motor Vehicles and Motorcycles</td>
+</tr>
+<tr class="even">
+<td align="left">H</td>
+<td align="left">Transportation and Storage</td>
+</tr>
+<tr class="odd">
+<td align="left">I</td>
+<td align="left">Accommodation and Food Service Activities</td>
+</tr>
+<tr class="even">
+<td align="left">J</td>
+<td align="left">Information and Communication</td>
+</tr>
+<tr class="odd">
+<td align="left">K</td>
+<td align="left">Financial and Insurance Activities</td>
+</tr>
+<tr class="even">
+<td align="left">L</td>
+<td align="left">Real Estate Activities</td>
+</tr>
+<tr class="odd">
+<td align="left">M</td>
+<td align="left">Professional, Scientific and Technical Activities</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">Administrative and Support Service Activities</td>
+</tr>
+<tr class="odd">
+<td align="left">P</td>
+<td align="left">Education</td>
+</tr>
+<tr class="even">
+<td align="left">Q</td>
+<td align="left">Human Health and Social Work Activities</td>
+</tr>
+<tr class="odd">
+<td align="left">R</td>
+<td align="left">Arts, Entertainment and Recreation</td>
+</tr>
+<tr class="even">
+<td align="left">S</td>
+<td align="left">Other Service Activities</td>
+</tr>
+</tbody>
+</table>
+<p><em>Insight:</em> Industries C, L, N, &amp; S have demonstrated relative stability and/or growth over time, even in face of the recent decline in the number of businesses in 2018. Industry N is the only industry to show positive annual growth <em>each</em> year. Each year, industry F remains the largest industry sector.</p>
+<p><strong>Section 4:</strong> In order to understand the change in the number of UK businesses broken down by area (national and regional), a choropleth map was plotted using a UK shapefile. This plot took some hacking to get to work, so perhaps there will be a blog post covering the code below in the future:</p>
+<pre class="r"><code># Import data
+regional &lt;- read_csv(&quot;/home/mike/Documents/r_projects/ggr/data_sets/wrangled/regional_time_series.csv&quot;)
+
+national &lt;- read_csv(&quot;/home/mike/Documents/r_projects/ggr/data_sets/wrangled/national_time_series.csv&quot;)
+
+# Tidy data
+regional_tidy &lt;- regional  %&gt;%
+    gather(year, count, `2012`, `2013`, `2014`, `2015`, `2016`, `2017`, `2018`)
+
+national_tidy &lt;- national  %&gt;%
+    gather(year, count, `2012`, `2013`, `2014`, `2015`, `2016`, `2017`, `2018`)
+
+# Import shapefile
+shp &lt;- readOGR(dsn = &quot;/home/mike/Documents/r_projects/ggr/shapefile&quot;, layer = &quot;NUTS_Level_1_January_2018_Full_Extent_Boundaries_in_the_United_Kingdom&quot;, stringsAsFactors = FALSE)</code></pre>
+<pre><code>## OGR data source with driver: ESRI Shapefile 
+## Source: &quot;/home/mike/Documents/r_projects/ggr/shapefile&quot;, layer: &quot;NUTS_Level_1_January_2018_Full_Extent_Boundaries_in_the_United_Kingdom&quot;
+## with 12 features
+## It has 9 fields
+## Integer64 fields read as strings:  objectid bng_e bng_n</code></pre>
+<pre class="r"><code>shp_df &lt;- fortify(shp, region = &quot;nuts118nm&quot;)
+
+# Bind national and regional tables
+nat_reg &lt;- bind_rows(regional_tidy, rename(national_tidy, region = nation))  %&gt;% filter(region != &quot;England&quot;)
+
+# Recode regional
+nat_reg &lt;- nat_reg %&gt;%
+    mutate(id = recode(nat_reg$region, &quot;North East&quot; = &quot;North East (England)&quot;, &quot;North West&quot; = &quot;North West (England)&quot;, &quot;Yorkshire and the Humber&quot; = &quot;Yorkshire and The Humber&quot;, &quot;East Midlands&quot; = &quot;East Midlands (England)&quot;, &quot;West Midlands&quot; = &quot;West Midlands (England)&quot;, &quot;East of England&quot; = &quot;East of England&quot;, &quot;London&quot; = &quot;London&quot;, &quot;South East&quot; = &quot;South East (England)&quot;, &quot;South West&quot; = &quot;South West (England)&quot;, &quot;Wales&quot; = &quot;Wales&quot;, &quot;Scotland&quot; = &quot;Scotland&quot;, &quot;Northern Ireland&quot; = &quot;Northern Ireland&quot;))
+
+# Merge nat_reg and shp_df
+shp_merge &lt;- merge(shp_df, nat_reg, by = &quot;id&quot;)
+
+# Plot map showing number of businesses per area in 2018
+shp_merge %&gt;%
+    filter(year == &quot;2018&quot;) %&gt;%
+    ggplot(aes(x = long, y = lat, group = group)) +
+    geom_polygon(aes(fill = count/1000000), color = &#39;black&#39;, size = 0.1) +
+    scale_fill_gradient(high = &quot;steelblue4&quot;, low = &quot;lightskyblue1&quot;, guide = &quot;colorbar&quot;) +
+    guides(fill = guide_colorbar(title = &quot;Businesses\n(millions)&quot;)) +
+    theme_void()</code></pre>
+<p><img src="/blog/2019-03-06-drawing-insight-from-simple-data-exploration-and-visualisation_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Accompanying data:</p>
+<pre class="r"><code># Print change in number of businesses per year
+combined &lt;-  bind_rows(regional, rename(national, region = nation))  %&gt;% rename(area = region)
+
+kable(combined, caption = &quot;Annual number of businesses broken down by area&quot;)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-12">Table 7: </span>Annual number of businesses broken down by area</caption>
+<thead>
+<tr class="header">
+<th align="left">area</th>
+<th align="right">2012</th>
+<th align="right">2013</th>
+<th align="right">2014</th>
+<th align="right">2015</th>
+<th align="right">2016</th>
+<th align="right">2017</th>
+<th align="right">2018</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">North East</td>
+<td align="right">132300</td>
+<td align="right">134500</td>
+<td align="right">150600</td>
+<td align="right">135000</td>
+<td align="right">146400</td>
+<td align="right">142500</td>
+<td align="right">162800</td>
+</tr>
+<tr class="even">
+<td align="left">North West</td>
+<td align="right">437500</td>
+<td align="right">485400</td>
+<td align="right">506800</td>
+<td align="right">531200</td>
+<td align="right">521700</td>
+<td align="right">529800</td>
+<td align="right">544800</td>
+</tr>
+<tr class="odd">
+<td align="left">Yorkshire and the Humber</td>
+<td align="right">343000</td>
+<td align="right">349900</td>
+<td align="right">353200</td>
+<td align="right">380900</td>
+<td align="right">391300</td>
+<td align="right">419200</td>
+<td align="right">400700</td>
+</tr>
+<tr class="even">
+<td align="left">East Midlands</td>
+<td align="right">324900</td>
+<td align="right">315700</td>
+<td align="right">330900</td>
+<td align="right">356400</td>
+<td align="right">370300</td>
+<td align="right">370800</td>
+<td align="right">367700</td>
+</tr>
+<tr class="odd">
+<td align="left">West Midlands</td>
+<td align="right">373500</td>
+<td align="right">386200</td>
+<td align="right">412600</td>
+<td align="right">399700</td>
+<td align="right">412600</td>
+<td align="right">449800</td>
+<td align="right">448200</td>
+</tr>
+<tr class="even">
+<td align="left">East of England</td>
+<td align="right">507400</td>
+<td align="right">499000</td>
+<td align="right">549000</td>
+<td align="right">529100</td>
+<td align="right">554900</td>
+<td align="right">572400</td>
+<td align="right">564800</td>
+</tr>
+<tr class="odd">
+<td align="left">London</td>
+<td align="right">820900</td>
+<td align="right">857900</td>
+<td align="right">939300</td>
+<td align="right">987400</td>
+<td align="right">1016600</td>
+<td align="right">1062300</td>
+<td align="right">1096100</td>
+</tr>
+<tr class="even">
+<td align="left">South East</td>
+<td align="right">771600</td>
+<td align="right">792400</td>
+<td align="right">837300</td>
+<td align="right">879200</td>
+<td align="right">899000</td>
+<td align="right">928900</td>
+<td align="right">873600</td>
+</tr>
+<tr class="odd">
+<td align="left">South West</td>
+<td align="right">478200</td>
+<td align="right">467600</td>
+<td align="right">513000</td>
+<td align="right">531900</td>
+<td align="right">514900</td>
+<td align="right">532000</td>
+<td align="right">546300</td>
+</tr>
+<tr class="even">
+<td align="left">England</td>
+<td align="right">4189200</td>
+<td align="right">4288700</td>
+<td align="right">4592600</td>
+<td align="right">4730700</td>
+<td align="right">4827600</td>
+<td align="right">5007700</td>
+<td align="right">5004800</td>
+</tr>
+<tr class="odd">
+<td align="left">Wales</td>
+<td align="right">195000</td>
+<td align="right">189500</td>
+<td align="right">213200</td>
+<td align="right">212800</td>
+<td align="right">221500</td>
+<td align="right">209000</td>
+<td align="right">198600</td>
+</tr>
+<tr class="even">
+<td align="left">Scotland</td>
+<td align="right">319100</td>
+<td align="right">326100</td>
+<td align="right">322700</td>
+<td align="right">341000</td>
+<td align="right">324800</td>
+<td align="right">346200</td>
+<td align="right">331400</td>
+</tr>
+<tr class="odd">
+<td align="left">Northern Ireland</td>
+<td align="right">114500</td>
+<td align="right">110200</td>
+<td align="right">118500</td>
+<td align="right">116700</td>
+<td align="right">124000</td>
+<td align="right">131700</td>
+<td align="right">132700</td>
+</tr>
+</tbody>
+</table>
+<p><em>Insight:</em> Each year, London remains the area with the largest number of businesses. With the exception of London, the North West is the fastest growing region. The South East experienced the largest decrease in the number of businesses in 2018. England has shown the fastest rate of growth as a nation.</p>
+<p><strong>Section 5:</strong> In order to understand the change in the number of UK businesses specialising in company formations, a simple dodged bar plot was used. The Standard Industrial Classification (SIC) codes used below are a means to classify businesses by an industry category. More information can be read <a href="https://www.gov.uk/government/publications/standard-industrial-classification-of-economic-activities-sic">here</a>:</p>
+<pre class="r"><code># Import data set
+sic &lt;- read_csv(&quot;/home/mike/Documents/r_projects/ggr/data_sets/wrangled/sic_codes.csv&quot;)
+
+# Change SIC codes to factors
+sic  &lt;- sic %&gt;% mutate_at(&quot;SIC&quot;, factor)
+
+# Plot change in absolute competitor growth per annum
+ggplot(sic, aes(x = year, y = businesses/1000, group = SIC, fill = SIC)) +
+    geom_col(position = &quot;dodge&quot;, colour = &quot;black&quot;) +
+    scale_fill_brewer(name = &quot;SIC Code&quot;) +
+    ylab(&quot;No. Businesses (thousands)&quot;) +
+    scale_y_continuous(breaks = seq(0, 60, by = 10))</code></pre>
+<p><img src="/blog/2019-03-06-drawing-insight-from-simple-data-exploration-and-visualisation_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The accompanying data:</p>
+<pre class="r"><code>kable(sic, caption = &quot;Annual change in number of businesses, employment, and turnover for comeptitor formation companies broken down by three digit SIC code&quot;)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-14">Table 8: </span>Annual change in number of businesses, employment, and turnover for comeptitor formation companies broken down by three digit SIC code</caption>
+<thead>
+<tr class="header">
+<th align="left">SIC</th>
+<th align="right">year</th>
+<th align="right">businesses</th>
+<th align="right">employ_thousands</th>
+<th align="right">turnover_millions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">649</td>
+<td align="right">2012</td>
+<td align="right">3935</td>
+<td align="right">59</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">702</td>
+<td align="right">2012</td>
+<td align="right">43510</td>
+<td align="right">277</td>
+<td align="right">37446</td>
+</tr>
+<tr class="odd">
+<td align="left">829</td>
+<td align="right">2012</td>
+<td align="right">35880</td>
+<td align="right">239</td>
+<td align="right">29856</td>
+</tr>
+<tr class="even">
+<td align="left">649</td>
+<td align="right">2013</td>
+<td align="right">3830</td>
+<td align="right">66</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">702</td>
+<td align="right">2013</td>
+<td align="right">41345</td>
+<td align="right">276</td>
+<td align="right">40866</td>
+</tr>
+<tr class="even">
+<td align="left">829</td>
+<td align="right">2013</td>
+<td align="right">34185</td>
+<td align="right">237</td>
+<td align="right">31296</td>
+</tr>
+<tr class="odd">
+<td align="left">649</td>
+<td align="right">2014</td>
+<td align="right">2410</td>
+<td align="right">60</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">702</td>
+<td align="right">2014</td>
+<td align="right">47680</td>
+<td align="right">299</td>
+<td align="right">43677</td>
+</tr>
+<tr class="odd">
+<td align="left">829</td>
+<td align="right">2014</td>
+<td align="right">40340</td>
+<td align="right">267</td>
+<td align="right">37468</td>
+</tr>
+<tr class="even">
+<td align="left">649</td>
+<td align="right">2015</td>
+<td align="right">2580</td>
+<td align="right">59</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">702</td>
+<td align="right">2015</td>
+<td align="right">51110</td>
+<td align="right">341</td>
+<td align="right">48645</td>
+</tr>
+<tr class="even">
+<td align="left">829</td>
+<td align="right">2015</td>
+<td align="right">43420</td>
+<td align="right">292</td>
+<td align="right">45322</td>
+</tr>
+<tr class="odd">
+<td align="left">649</td>
+<td align="right">2016</td>
+<td align="right">2735</td>
+<td align="right">62</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">702</td>
+<td align="right">2016</td>
+<td align="right">52840</td>
+<td align="right">347</td>
+<td align="right">53655</td>
+</tr>
+<tr class="odd">
+<td align="left">829</td>
+<td align="right">2016</td>
+<td align="right">45405</td>
+<td align="right">298</td>
+<td align="right">54840</td>
+</tr>
+<tr class="even">
+<td align="left">649</td>
+<td align="right">2017</td>
+<td align="right">2985</td>
+<td align="right">65</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">702</td>
+<td align="right">2017</td>
+<td align="right">57145</td>
+<td align="right">354</td>
+<td align="right">63639</td>
+</tr>
+<tr class="even">
+<td align="left">829</td>
+<td align="right">2017</td>
+<td align="right">54225</td>
+<td align="right">327</td>
+<td align="right">54684</td>
+</tr>
+<tr class="odd">
+<td align="left">649</td>
+<td align="right">2018</td>
+<td align="right">3275</td>
+<td align="right">71</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">702</td>
+<td align="right">2018</td>
+<td align="right">58240</td>
+<td align="right">411</td>
+<td align="right">76172</td>
+</tr>
+<tr class="odd">
+<td align="left">829</td>
+<td align="right">2018</td>
+<td align="right">53670</td>
+<td align="right">356</td>
+<td align="right">65195</td>
+</tr>
+</tbody>
+</table>
+<p><em>Insights:</em> Combined, there was a total of 115,185 companies operating in the landscape of formation companies in 2018 (see details below). Overall, since 2012 there was a positive annual growth in the number of formation companies with a decrease in growth in 2018. This is inline with the overall industry landscape detailed in section one.</p>
+</div>
+<div id="conclusion" class="section level3">
+<h3>CONCLUSION</h3>
+<hr />
+<p>Using a variety of data exploration and visualisation methods (e.g., using the ‘lag()’ function, choropleth maps, dodged bar charts, etc.) one can gain basic insight into complex data. The choice of which method to use depends upon the nature of the data being studied, and the questions you would like to answer.</p>
+</div>
+
+
+                <br>
+            </div>
+            
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+                <div class="navigation">
+                    
+                    <div>
+                        <img class="icon" src="/img/back.svg" alt="back" />
+                        <a href="/blog/web-scraping-r-s-data-table-and-writing-to-postgresql-and-mysql/">Web Scraping, R&#39;s data.table, and Writing to PostgreSQL and MySQL</a>
+                    </div>
+                    
+                    <div style="width: 100%;"></div>
+                    
+                </div>
+            
+            <br>
+            
+
+            
+
+            
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

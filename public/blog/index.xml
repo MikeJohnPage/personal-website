@@ -6,10 +6,19 @@
     <description>Recent content in Blog on Mike John Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 23 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 06 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Drawing Insight from Simple Data Exploration and Visualisation, Including Dodged Bars and Choropleth Maps</title>
+      <link>/blog/drawing-insight-from-simple-data-exploration-and-visualisation/</link>
+      <pubDate>Wed, 06 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/drawing-insight-from-simple-data-exploration-and-visualisation/</guid>
+      <description>INTRODUCTION Recently, I got approached by a client starting a company that specialises in company formations and related services. They asked if I could source and analyse data regarding the number of companies formed in the UK each year, in addition to any information on competitor companies in that sector. This information was to be merged into a business plan. I took on the challenge as I reasoned it would be a good opportunity to practice data wrangling and simple data exploration and visualisation.</description>
+    </item>
     
     <item>
       <title>Web Scraping, R&#39;s data.table, and Writing to PostgreSQL and MySQL</title>

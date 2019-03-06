@@ -1,0 +1,328 @@
+---
+title: Drawing Insight from Simple Data Exploration and Visualisation, Including Dodged Bars and Choropleth Maps
+author: Mike Page
+date: '2019-03-06'
+slug: drawing-insight-from-simple-data-exploration-and-visualisation
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align = "center")
+```
+
+
+### INTRODUCTION
+
+***
+
+Recently, I got approached by a client starting a company that specialises in company formations and related services. They asked if I could source and analyse data regarding the number of companies formed in the UK each year, in addition to any information on competitor companies in that sector. This information was to be merged into a business plan. I took on the challenge as I reasoned it would be a good opportunity to practice data wrangling and simple data exploration and visualisation. Below is a brief account of some of the steps I took to complete the report, as well as a snapshot at some of the data used.
+
+### THE DATA
+
+***
+
+The journey began by exploring official government reports and data repositories for the required information. Six repositories were found that contained the required information. These included: (i) BIS - Business Population Estimates; (ii) ONS - UK Business; (iii) ONS - Business Demography; (iv) devolved country administrations; (v) Insolvency Service; and (vi) Companies House. A breakdown on the differences between the six repositories can be read [here](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/16418/guide_to_the_uk_business_population_and_demography.pdf).
+
+The accompanying documentation and data sets for the six resources outlined above was large. In brief, Business Population Estimates (BIS) data was used. This is because these were the only data to provide: (a) consistent data across a wide date range, (b) information on the whole business landscape (i.e., public and private sectors), and (c) a breakdown of businesses by area, industry, and formation type (e.g., partnership, non-profit, etc.). Additionally, data from business birth and death rates taken from the UK Business (ONS) repository was used in section one (details below).
+
+The steps taken to wrangle the data are too vast to be included in this blog post (the data was split across hundreds of spreadsheets, many of which were in different formats), so at each stage below (where applicable) data is imported in a wrangled, [tidy](https://vita.had.co.nz/papers/tidy-data.pdf) format.
+
+### THE REPORT
+
+***
+
+The report was broken down into five key sections:  
+
+1. Change in the number of UK businesses  
+2. Change in the number of UK businesses broken down by company type  
+3. Change in the number of UK businesses broken down by industry  
+4. Change in the number of UK businesses broken down by area (national and regional)  
+5. Change in the number of UK businesses specialising in company formations (competitor analysis)
+
+In order of conciseness and to minimise repetition, below, I have cherry-picked data and visualisations from each section of the report. Indeed, the finished report contained more information than listed below. But the aim of this blog post is not to learn about the data used, rather, to learn about how I uses the data to draw insight.
+
+### DATA EXPLORATION AND VISUALISATION
+
+***
+
+First, lets load the libraries that will be used throughout:
+
+```{r}
+library(tidyverse)
+library(wesanderson)
+library(maptools)
+library(rgeos)
+library(ggmap)
+library(rgdal)
+```
+
+Next, lets go through each section examining different visualisations and techniques:
+
+**Section 1:** In order to understand the difference in business birth and death rates (i.e., the number of companies formed and dissolved each year), a simple line graph most effectively demonstrates the difference:
+
+```{r}
+
+# Birth:death rates
+# Import data set
+birth_death_rates <- read_csv("/home/mike/Documents/r_projects/ggr/data_sets/wrangled/birth_death_rates.csv")
+
+# Tidy birth_death_rates
+birth_death_rates <- gather(birth_death_rates, key = "year", value = "count", `2012`, `2013`, `2014`, `2015`, `2016`, `2017`)
+
+# Plot annual birth and death rates for UK
+birth_death_rates %>%
+    filter(area == "UNITED KINGDOM") %>%
+    ggplot(aes(x = year, y = count/1000, group = rate, colour = rate)) +
+    geom_point(size = 2) +
+    geom_line(size = 1) +
+    scale_colour_manual(values = c("steelblue", "steelblue1")) +
+    ylab("No. of businesses (thousands)")
+```
+
+
+The accompanying data: 
+
+```{r}
+# Table of UK birth and death rates
+tmp4 <- birth_death_rates %>%
+    filter(area == "UNITED KINGDOM") %>%
+    spread(rate, count) %>%
+    select(-area) %>%
+    rename(birth_rate = birth, death_rate = death)
+
+library(knitr)
+kable(tmp4, caption = "Annual company birth and death rates")
+
+```
+
+To better understand the accompanying data, the annual growth in birth and death rates can be expressed as a percentage of previous year. To do this, the 'lag()' function can be used:
+
+```{r}
+tmp5 <- birth_death_rates %>%
+    filter(area == "UNITED KINGDOM") %>%
+    group_by(rate) %>%
+    mutate(count = (count / lag(count) - 1) * 100) %>%
+    ungroup() %>%
+    spread(rate, count) %>%
+    filter(year != "2012") %>%
+    select(-area) %>%
+    rename(birth_rate = birth, death_rate = death)
+
+library(knitr)
+kable(tmp5, caption = "Annual company birth and death rates as a percentage of the previous year")
+```
+
+*Insights:* Despite the decrease in the number of businesses in 2018, there was still a large number of businesses being formed in 2018 with only a small decrease from 2017 (-7.7%). This is because the number of businesses being formed (births) still exceeded the number of those being dissolved (deaths).
+
+**Section 2:** In order to understand the change in the number of UK businesses broken down by company type, a dodged bar plot was chosen:
+
+```{r}
+# Import data set
+comp_types <- read_csv("/home/mike/Documents/r_projects/ggr/data_sets/wrangled/company_types_2012_2018.csv")
+
+# Calculate the yearly difference in company types as both absolute and relative values (as a percentage) of the previous year
+
+comp_types <- comp_types %>%
+    group_by(comp_type) %>%
+    mutate(diff = diff(c(0, count))) %>%
+    mutate(perc_diff = (count / lag(count) - 1) * 100)
+
+# Set the difference score(s) to NA for 2012
+comp_types$diff[1:5] <- NA
+
+# Plot
+ggplot(comp_types, aes(x = year, y = count / 1000000, fill = comp_type)) +
+    scale_x_continuous(breaks = 2012:2018) +
+    scale_y_continuous(breaks = seq(0, 3.5, by = .5)) +
+    geom_col(position = "dodge", colour = "black") +
+    scale_fill_brewer(labels = c("Governmental", "Company", "Non Profit", "Partnership", "Sole Trader")) +
+    ylab("Number (millions)") +
+    labs(fill = "Company Type")
+```
+
+Accompanying data:
+
+```{r}
+tmp2 <- comp_types %>%
+    filter(year != 2012) %>%
+    select(year, comp_type, diff) %>%
+    spread(comp_type, diff) %>%
+    rename(Governmental = central_and_local_gov,
+           Company = companies,
+           Non_Profit = non_profit_org,
+           Partnership = partnernships,
+           Sole_Trader = sole_proprietorships)
+
+library(knitr)
+kable(tmp2, caption = "Annual change in company type")
+```
+
+Accompanying data expressed as a percentage of the previous year:
+
+```{r}
+tmp3 <- comp_types %>%
+    filter(year != 2012) %>%
+    select(year, comp_type, perc_diff) %>%
+    spread(comp_type, perc_diff) %>%
+    rename(Governmental = central_and_local_gov,
+           Company = companies,
+           Non_Profit = non_profit_org,
+           Partnership = partnernships,
+           Sole_Trader = sole_proprietorships)
+
+library(knitr)
+kable(tmp3, caption = "Relative annual change in company type as a percentage of previous year")
+```
+
+*Insights:* Sole traders remain the largest sector of the businesses landscape consisting of 3,351,265 companies in 2018. In the private sector, companies, as defined as *public corporations and nationalised bodies*, are the fastest growing segment, with an average annual growth of approximately 6%.  
+
+**Section 3:** In order to understand the change in the number of UK businesses broken down by industry, a plot of the the annual change in industries as a percentage of all industries can be used. This demonstrates a large amount of information, from the size of industry sectors to their relative growth and performance in the whole market:
+
+```{r}
+# Import data set
+industry <- read_csv("/home/mike/Documents/r_projects/ggr/data_sets/wrangled/industry_time_series.csv")
+
+# Tidy industry data set
+industry <- industry %>% gather(key = "year", value = "count", `2012`, `2013`, `2014`, `2015`, `2016`, `2017`, `2018`) %>%
+    select(- industry)
+
+# Plot
+
+industry %>%
+    group_by(year) %>%
+    mutate(percent_change = count/sum(count)*100) %>%
+    ungroup() %>%
+    ggplot(aes(x = year, y = percent_change, colour = industry_key, group = industry_key)) +
+    geom_line() +
+    geom_point(position = "dodge") +
+    ylab("Percentage")
+
+
+```
+
+Accompanying data set:
+
+```{r}
+# Print absolute industry numbers for each year
+tmp6 <- industry %>%
+    spread(year, count)
+
+kable(tmp6, caption = "Annual change in the number of businesses per industry sector")
+```
+
+Accompanying legend:
+
+```{r}
+# Import data set
+industry <- read_csv("/home/mike/Documents/r_projects/ggr/data_sets/wrangled/industry_time_series.csv")
+
+industry_legend <- industry %>%
+    select(industry_key, industry)
+
+industry_legend$industry[2] <- "Quarrying; Electricity and Gas; Water Supply; Waste Management"
+    
+kable(industry_legend, caption = "Industry legend")
+```
+
+*Insight:* Industries C, L, N, & S have demonstrated relative stability and/or growth over time, even in face of the recent decline in the number of businesses in 2018. Industry N is the only industry to show positive annual growth *each* year. Each year, industry F remains the largest industry sector. 
+
+**Section 4:** In order to understand the change in the number of UK businesses broken down by area (national and regional), a choropleth map was plotted using a UK shapefile. This plot took some hacking to get to work, so perhaps there will be a blog post covering the code below in the future:
+
+```{r}
+# Import data
+regional <- read_csv("/home/mike/Documents/r_projects/ggr/data_sets/wrangled/regional_time_series.csv")
+
+national <- read_csv("/home/mike/Documents/r_projects/ggr/data_sets/wrangled/national_time_series.csv")
+
+# Tidy data
+regional_tidy <- regional  %>%
+    gather(year, count, `2012`, `2013`, `2014`, `2015`, `2016`, `2017`, `2018`)
+
+national_tidy <- national  %>%
+    gather(year, count, `2012`, `2013`, `2014`, `2015`, `2016`, `2017`, `2018`)
+
+# Import shapefile
+shp <- readOGR(dsn = "/home/mike/Documents/r_projects/ggr/shapefile", layer = "NUTS_Level_1_January_2018_Full_Extent_Boundaries_in_the_United_Kingdom", stringsAsFactors = FALSE)
+
+shp_df <- fortify(shp, region = "nuts118nm")
+
+# Bind national and regional tables
+nat_reg <- bind_rows(regional_tidy, rename(national_tidy, region = nation))  %>% filter(region != "England")
+
+# Recode regional
+nat_reg <- nat_reg %>%
+    mutate(id = recode(nat_reg$region, "North East" = "North East (England)", "North West" = "North West (England)", "Yorkshire and the Humber" = "Yorkshire and The Humber", "East Midlands" = "East Midlands (England)", "West Midlands" = "West Midlands (England)", "East of England" = "East of England", "London" = "London", "South East" = "South East (England)", "South West" = "South West (England)", "Wales" = "Wales", "Scotland" = "Scotland", "Northern Ireland" = "Northern Ireland"))
+
+# Merge nat_reg and shp_df
+shp_merge <- merge(shp_df, nat_reg, by = "id")
+
+# Plot map showing number of businesses per area in 2018
+shp_merge %>%
+    filter(year == "2018") %>%
+    ggplot(aes(x = long, y = lat, group = group)) +
+    geom_polygon(aes(fill = count/1000000), color = 'black', size = 0.1) +
+    scale_fill_gradient(high = "steelblue4", low = "lightskyblue1", guide = "colorbar") +
+    guides(fill = guide_colorbar(title = "Businesses\n(millions)")) +
+    theme_void()
+```
+
+Accompanying data:
+
+```{r}
+# Print change in number of businesses per year
+combined <-  bind_rows(regional, rename(national, region = nation))  %>% rename(area = region)
+
+kable(combined, caption = "Annual number of businesses broken down by area")
+```
+
+*Insight:* Each year, London remains the area with the largest number of businesses. With the exception of London, the North West is the fastest growing region. The South East experienced the largest decrease in the number of businesses in 2018. England has shown the fastest rate of growth as a nation.
+
+**Section 5:** In order to understand the change in the number of UK businesses specialising in company formations, a simple dodged bar plot was used. The Standard Industrial Classification (SIC) codes used below are a means to classify businesses by an industry category. More information can be read [here](https://www.gov.uk/government/publications/standard-industrial-classification-of-economic-activities-sic):
+
+```{r}
+# Import data set
+sic <- read_csv("/home/mike/Documents/r_projects/ggr/data_sets/wrangled/sic_codes.csv")
+
+# Change SIC codes to factors
+sic  <- sic %>% mutate_at("SIC", factor)
+
+# Plot change in absolute competitor growth per annum
+ggplot(sic, aes(x = year, y = businesses/1000, group = SIC, fill = SIC)) +
+    geom_col(position = "dodge", colour = "black") +
+    scale_fill_brewer(name = "SIC Code") +
+    ylab("No. Businesses (thousands)") +
+    scale_y_continuous(breaks = seq(0, 60, by = 10))
+```
+ 
+The accompanying data:
+
+```{r}
+kable(sic, caption = "Annual change in number of businesses, employment, and turnover for comeptitor formation companies broken down by three digit SIC code")
+```
+
+*Insights:* Combined, there was a total of 115,185 companies operating in the landscape of formation companies in 2018 (see details below). Overall, since 2012 there was a positive annual growth in the number of formation companies with a decrease in growth in 2018. This is inline with the overall industry landscape detailed in section one.
+
+### CONCLUSION
+
+***
+
+Using a variety of data exploration and visualisation methods (e.g., using the 'lag()' function, choropleth maps, dodged bar charts, etc.) one can gain basic insight into complex data. The choice of which method to use depends upon the nature of the data being studied, and the questions you would like to answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
