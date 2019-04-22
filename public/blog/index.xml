@@ -6,10 +6,19 @@
     <description>Recent content in Blog on Mike John Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 06 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Code Snippet: News API Function</title>
+      <link>/blog/code-snippet-news-api-function/</link>
+      <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/code-snippet-news-api-function/</guid>
+      <description># Load Libraries library(tidyverse) library(httr) library(jsonlite) # news_api function that returns tibble of news for given parameters news_api &amp;lt;- function(query, apiKey, from, to) { # Create a list of query parameters, calls are limited to one month query_params &amp;lt;- list(q = query, language = &amp;quot;en&amp;quot;, from = from, to = to, pageSize = &amp;quot;100&amp;quot;, page = &amp;quot;1&amp;quot;, apiKey = apiKey) # Make a GET request to the News API with the query paramaters response &amp;lt;- GET(&amp;quot;https://newsapi.</description>
+    </item>
     
     <item>
       <title>Drawing Insight from Simple Data Exploration and Visualisation, Including Dodged Bars and Choropleth Maps</title>

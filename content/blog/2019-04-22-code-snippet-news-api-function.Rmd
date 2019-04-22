@@ -1,0 +1,52 @@
+---
+title: 'Code Snippet: News API Function'
+author: Mike Page
+date: '2019-04-22'
+slug: code-snippet-news-api-function
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+```{r, eval=FALSE}
+# Load Libraries
+library(tidyverse)
+library(httr)
+library(jsonlite)
+
+# news_api function that returns tibble of news for given parameters
+
+news_api <- function(query, apiKey, from, to) {
+
+    # Create a list of query parameters, calls are limited to one month
+    query_params <- list(q = query,
+        language = "en",
+        from = from,
+        to = to,
+        pageSize = "100",
+        page = "1",
+        apiKey = apiKey)
+
+    # Make a GET request to the News API with the query paramaters
+    response <- GET("https://newsapi.org/v2/everything",
+                    query = query_params)
+
+    # Parse response object into tibble, remove the status and totalResults
+    # elements, then unnest the tibble
+    news_tibble <- fromJSON(content(response,
+        as = "text",
+        encoding = "UTF-8"),
+        flatten = TRUE) %>%
+        as_tibble() %>%
+        select(-status, -totalResults) %>%
+        flatten() %>%
+        rename_all(.funs = funs(gsub("^articles[.]", "", .)))
+
+    return(news_tibble)
+
+}
+```
+
