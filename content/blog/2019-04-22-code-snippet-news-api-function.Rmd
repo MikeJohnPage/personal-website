@@ -44,7 +44,8 @@ news_api <- function(query, apiKey, from, to) {
         select(-status, -totalResults) %>%
         flatten() %>%
         rename_all(.funs = funs(gsub("^articles[.]", "", .)))
-
+    
+    # Return the tibble
     return(news_tibble)
 
 }

@@ -1175,7 +1175,8 @@ news_api &lt;- function(query, apiKey, from, to) {
         select(-status, -totalResults) %&gt;%
         flatten() %&gt;%
         rename_all(.funs = funs(gsub(&quot;^articles[.]&quot;, &quot;&quot;, .)))
-
+    
+    # Return the tibble
     return(news_tibble)
 
 }</code></pre>
