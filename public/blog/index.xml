@@ -6,10 +6,20 @@
     <description>Recent content in Blog on Mike John Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 22 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Jun 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Returning Tweets on a Schedule in R, using AWS (EC2 &#43; RDS) and Cron</title>
+      <link>/blog/returning-tweets-on-a-schedule-in-r-using-aws-ec2-rds-and-cron/</link>
+      <pubDate>Sun, 30 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/returning-tweets-on-a-schedule-in-r-using-aws-ec2-rds-and-cron/</guid>
+      <description>Intro In this post, you will learn how to run R scripts on a schedule using Amazon Web Services (AWS). Specifically, you learn how to deploy R on an Amazon Elastic Cloud Computing (EC2) instance, how to write data collected in R to an Amazon Relational Database (RDS), and how to to schedule tasks on EC2 using cron.
+The R code you will be deploying on the EC2 instance is a script that returns Tweets from the Twitter API and then appends them to a MySQL database hosted on an RDS instance.</description>
+    </item>
     
     <item>
       <title>Code Snippet: News API Function</title>

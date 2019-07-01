@@ -1,0 +1,117 @@
+---
+title: Returning Tweets on a Schedule in R, using AWS (EC2 + RDS) and Cron
+author: Mike Page
+date: '2019-06-30'
+slug: returning-tweets-on-a-schedule-in-r-using-aws-ec2-rds-and-cron
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+
+<div id="intro" class="section level3">
+<h3>Intro</h3>
+<p>In this post, you will learn how to run R scripts on a schedule using Amazon Web Services (AWS). Specifically, you learn how to deploy R on an Amazon Elastic Cloud Computing (EC2) instance, how to write data collected in R to an Amazon Relational Database (RDS), and how to to schedule tasks on EC2 using cron.</p>
+<p>The R code you will be deploying on the EC2 instance is a script that returns Tweets from the Twitter API and then appends them to a MySQL database hosted on an RDS instance. This code (and workflow) comes from an R script I wrote to build a data set of Tweets for <a href="https://github.com/opt-out-tool/">Opt Out</a>, an open source project that helps people avoid sexual harassment and sexist hate speech online. <em>Note:</em> as the search terms used to return the Tweets contains offensive material, the script has been tweaked (more details below).</p>
+<p><em>Warning:</em> To follow along with this guide, you will need to register for an AWS account. Fortunately, AWS provides a <a href="https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&amp;all-free-tier.sort-order=asc">free tier</a> of access to their services which will suffice for this task. To avoid incurring any costs, ensure you select the ‘free tier eligible’ option when appropriate.</p>
+</div>
+<div id="ec2-r" class="section level3">
+<h3>EC2 (+ R)</h3>
+<p>In short, AWS is a cloud computing platform that provides a large array of web services that can stacked together like building blocks. The freedom to arrange these building blocks allows users to build highly customisable, cost effective, and powerful computing platforms in the cloud. Of course, there is a down side to this flexibility: it is accompanied by a large cognitive overhead. Trying to select, deploy, and communicate the correct services is no easy feat for the uninitiated (and I would argue even for the initiated).</p>
+<p>The first building block you will deploy is an EC2 instance. An EC2 instance is just a virtual server in which you deploy an Amazon Machine Image (AMI). An AMI is just, as the name suggests, a virtual machine image, of which you have a vast array of options to choose from. Typically you build an AMI from scratch, selecting your desired operating system, technical specification, and so on, as specified in <a href="https://aws.amazon.com/getting-started/tutorials/launch-a-virtual-machine/?trk=gs_card">this</a> short AWS tutorial. Once your AMI has been built, you can download any required software (such as R) by connecting to the server remotely via SSH.</p>
+<p>Fortunately for any R developers out there, Louis Aslett has pre-built <a href="http://www.louisaslett.com/RStudio_AMI/">AMI images</a> containing R and RStudio, among other tools, to save users the hassle of building an image themselves (if you would like to build a similar image from scratch, see <a href="https://gist.github.com/jaeddy/5d564005c39aa608b4c28850e03fcb45">this</a> tutorial). To get started with one of these pre-built images, click the link to an AMI image in your desired region and follow the AWS instructions to complete the build. Once the build has completed and you have saved your SSH key pair, open a terminal window and check the connection to the server (note in this instance you use ‘ubuntu@’ as the AMI image you have just built uses Ubuntu):</p>
+<pre><code>ssh -i {full path of your .pem file} ubuntu@{instance IP address}
+</code></pre>
+<p>Once a successful connection has been made, next check that R functions correctly by opening up a new R session (you use sudo here so that you can download R packages in the next step):</p>
+<pre><code>sudo R</code></pre>
+<p>Once connected, download the R packages required for the rest of the tutorial:</p>
+<pre class="r"><code>install.packages(&quot;RMySQL&quot;)
+install.packages(&quot;DBI&quot;)
+install.packages(&quot;rtweet&quot;)</code></pre>
+</div>
+<div id="rds" class="section level3">
+<h3>RDS</h3>
+<p>The next building block you will deploy is an RDS instance, a distributed relational database service. Login to the RDS Dashboard on the AWS Management Console and select ‘Create database’. Create a MySQL database, selecting your requirements as necessary. Make sure you note down the username, password, and database name, as these will be required later.</p>
+<p>Now comes the crucial part: once created, you need to edit the security settings on your RDS database to allow it to communicate with your EC2 instance. To do this, follow the instructions under the ‘To create a rule in a VPC security group that allows connections from another security group, do the following’ subheading of <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Scenarios.html">this</a> AWS guide. Essentially, you want the security group of your RDS database to allow inbound access from the security group of your EC2 instance.</p>
+<p>To test if your EC2 instance can communicate with your RDS database, connect to your EC2 instance as was done previously and open up a new R session. Once in the R session run the following code, tweaking the connection details as necessary:</p>
+<pre class="r"><code>library(DBI)
+
+con &lt;- dbConnect(drv     = RMySQL::MySQL(),
+                username = &quot;insert_username&quot;,
+                password = &quot;insert_password&quot;,
+                host     = &quot;example_host.rds.amazonaws.com&quot;,
+                port     = 3306,
+                dbname   = &quot;insert_dbname&quot;)</code></pre>
+<p>Set the <code>username</code>, <code>password</code> and <code>dbname</code> to those your noted down previously. To find the RDS <code>host</code>, while on your AWS Management Console, click ‘RDS’, then ‘DB Instances’, then the name of your database. In the ‘Connectivity &amp; Security’ panel, you can then find your <code>host</code> labelled under the ‘Endpoint’ subheading.</p>
+<p>If your connection was successful, the above code should be run with no errors thrown. Be sure to disconnect the connection once you are done:</p>
+<pre class="r"><code>dbDisconnect(con)</code></pre>
+</div>
+<div id="cron" class="section level3">
+<h3>Cron</h3>
+<p>At this stage you should have a virtual server with R (EC2) running that can communicate to a MYSQL database (RDS). The next step is to write an R script and set a run schedule for it using <a href="https://en.wikipedia.org/wiki/Cron">cron</a>, the Unix-like job scheduler.</p>
+<p>In this instance, you will create an R script that returns Tweets from the Twitter API, matched by search terms, using the rtweet package (you downloaded previously). Before you can use the rtweet package on your EC2 instance, you need to create and store personal authorisation tokens to access the Twitter API. To do this, follow along with the rtweet <a href="https://rtweet.info/articles/auth.html">auth</a> vignette, selecting the ‘2. Access token/secret method’ option.</p>
+<p>Once you have your access tokens stored, you want to create a script that when runs, opens a connection to the RDS database, appends the new Tweets, and then closes the connection. To create this script, first open a connection to your EC2 instance, <code>cd</code> into the desired directory (I recommend just sticking in the home directory) and then create and edit a file using your editor of choice. For example:</p>
+<pre><code>nano twitter_script.R</code></pre>
+<p>Next copy and paste the following script into the editor, amending the <code>search_terms</code> and <code>con</code> settings as necessary (see the <a href="https://rtweet.info/reference/search_tweets.html"><code>search_tweets()</code></a> documentation for info on valid search terms):</p>
+<pre class="r"><code>library(tidyverse)
+library(rtweet)
+library(DBI)
+
+# list of search terms to pass into search_tweets q argument
+search_terms &lt;- c(
+  &quot;search_term_1&quot;,
+  &quot;search_term_2&quot;,
+  &quot;search_term_3&quot;
+)
+
+# create get_tweets func that iterates over search_terms and returns tweets
+get_tweets &lt;- function() {
+
+  tweets &lt;- tibble()
+
+  for(term in search_terms) {
+    more_tweets &lt;- search_tweets(q = term,
+                                 n = 100,
+                                 include_rts = FALSE,
+                                 retyonratelimit = TRUE)
+
+    tweets &lt;- bind_rows(tweets, more_tweets)
+  }
+
+  return(tweets)
+}
+
+# call get_tweets
+new_tweets &lt;- get_tweets()
+
+# connect to RDS database
+con &lt;- dbConnect(drv     = RMySQL::MySQL(),
+                username = &quot;insert_username&quot;,
+                password = &quot;insert_password&quot;,
+                host     = &quot;example_host.rds.amazonaws.com&quot;,
+                port     = 3306,
+                dbname   = &quot;insert_dbname&quot;)
+
+# write to database
+dbWriteTable(conn = con,
+            name = &quot;tweets&quot;,
+            value = new_tweets,
+            append = TRUE)
+
+# disconncet database
+dbDisconnect(con)</code></pre>
+<p>The Twitter search API imposes a return rate limit of 18,000 tweets per 15 minute window. To return the maximum number of Tweets per search term while respecting the rate limit in the script above, divide 18,000 by the number of search terms and set this value to the <code>n</code> argument of the <code>search_tweets()</code> function. For example, if you want to search across 20 search terms, set <code>n</code> equal to 900 (18000/20 = 900).</p>
+<p>Once finished, save the file and exit the editor. Next, set a cron schedule by opening up crontab, the file which contains the list of cron entries. The <code>-e</code> tag below just stands for ‘edit’:</p>
+<pre><code>crontab -e</code></pre>
+<p>Once in the crontab file, set the Twitter script to run every 15 minutes (to respect the rate limit window). Be sure that the you include the full path to the script (the script below just lives in the home directory):</p>
+<pre><code>*/15 * * * * Rscript twitter_script.R &gt; temp.log 2&gt;&amp;1 || cat temp.log</code></pre>
+<p>You are all done! Now let AWS do the hard work of collecting data for you.</p>
+</div>
+<div id="outro" class="section level3">
+<h3>Outro</h3>
+<p>To recap: you set up a virtual machine in the cloud using an AWS EC2 instance loaded with a pre-built machine image (AMI) containing R and RStudio (and more). You then set up a MySQL database on an RDS server, and altered the security group settings to allow inbound access from the EC2 instance. Next you loaded an R script on the EC2 instance and set a run schedule for the script using cron. Now, every 15 minutes, your R script automatically runs and appends new data to your RDS database.</p>
+</div>
