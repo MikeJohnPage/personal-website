@@ -7,5 +7,5 @@ title = "About"
 
 Data scientist, R enthusiast, mountain biker, rock climber, surfer, musician, photographer.
 
-Click [here](/pdf/mjpcv.pdf) for my CV.
+Click [here](/pdf/one_page_mjpcv.pdf) for my CV.
 
