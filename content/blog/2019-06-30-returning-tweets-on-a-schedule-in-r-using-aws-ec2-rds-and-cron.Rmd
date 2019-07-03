@@ -42,11 +42,10 @@ Once a successful connection has been made, next check that R functions correctl
 sudo R
 ```
 
-Once connected, download the R packages required for the rest of the tutorial:
+Once connected, download the R packages required for the rest of the tutorial that aren't pre-installed on the AMI:
 
 ```{r}
 install.packages("RMySQL")
-install.packages("DBI")
 install.packages("rtweet")
 ```
 
