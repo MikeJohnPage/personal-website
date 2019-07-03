@@ -80,9 +80,9 @@ dbDisconnect(con)
 
 At this stage you should have a virtual server with R (EC2) running that can communicate to a MYSQL database (RDS). The next step is to write an R script and set a run schedule for it using [cron](https://en.wikipedia.org/wiki/Cron), the Unix-like job scheduler.
 
-In this instance, you will create an R script that returns Tweets from the Twitter API, matched by search terms, using the rtweet package (you downloaded previously). Before you can use the rtweet package on your EC2 instance, you need to create and store personal authorisation tokens to access the Twitter API. To do this, follow along with the rtweet [auth](https://rtweet.info/articles/auth.html) vignette, selecting the '2. Access token/secret method' option.
+In this instance, you will create an R script that returns Tweets from the Twitter API, matched by search terms, using the rtweet package (you downloaded previously). Before you can use the rtweet package on your EC2 instance, you need to create and store personal authorisation tokens to access the Twitter API. To do this, open up an R session on your EC2 instance and follow along with the rtweet [auth](https://rtweet.info/articles/auth.html) vignette, selecting the '2. Access token/secret method' option. Be sure to close the R session once done.
 
-Once you have your access tokens stored, you want to create a script that when runs, opens a connection to the RDS database, appends the new Tweets, and then closes the connection. To create this script, first open a connection to your EC2 instance, `cd` into the desired directory (I recommend just sticking in the home directory) and then create and edit a file using your editor of choice. For example:
+Once you have your access tokens stored, you want to create a script that when runs, opens a connection to the RDS database, appends the new Tweets, and then closes the connection. To create this script, make sure you have an open connection to your EC2 instance, `cd` into the desired directory (I recommend just sticking in the home directory) and then create and edit a file using your editor of choice. For example:
 
 ```
 nano twitter_script.R
