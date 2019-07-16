@@ -1,0 +1,41 @@
+---
+title: Exporting a MySQL Database from an AWS RDS Instance to a Local Instance
+author: Mike Page
+date: '2019-07-16'
+slug: exporting-a-mysql-database-from-an-aws-rds-instance-to-a-local-instance
+categories: []
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+
+<div id="intro" class="section level3">
+<h3>Intro</h3>
+<p>In this brief post, you will learn how export a MySQL database hosted on an AWS RDS instance to a local instance on your machine. To do this, you will first update the rules of the security group on your RDS instance hosting your MySQL database, then you will export a dump file locally, and finally you will import the dump file to your local machine.</p>
+<p>To follow along with this tutorial, it is assumed you have a MySQL database hosted on an RDS instance and you have MySQL installed on your local machine.</p>
+</div>
+<div id="rds-security-group" class="section level3">
+<h3>RDS Security Group</h3>
+<p>To get started, first you need to grant your local machine permission to access your RDS instance hosting a database. To do this, locate the security group associated with your RDS instance and add a new inbound rule. For this rule, set the ‘Type’ to ‘Custom TCP Rule’, the ‘Port Range’ to ‘3306’, and the ‘source’ to your IP (click the drop down arrow next to ‘Custom’ and select ‘My IP’).</p>
+</div>
+<div id="mysqldump" class="section level3">
+<h3>mysqldump</h3>
+<p>To export the RDS database to a local instance, open up a terminal window (change directory now if required) and run the following command, changing the revelant fields where necessary:</p>
+<pre><code>sudo mysqldump -h your_aws_database_host_name -u your_aws_database_username -p your_aws_remote_database_name &gt; your_dump_file_name.sql</code></pre>
+<p>Upon exection of the command, you will be prompted to enter the password for your database (you may also need to enter your password for <code>sudo</code> too). If the database hosted on the RDS instance is large, it make take some time for the import to complete (make sure you have enough free storage space available for the dump file). Alternatively, if you would just like to import the first 100,000 rows of a table hosted on the database you can instead run:</p>
+<pre><code>sudo mysqldump -h aws_database_host_name -u aws_database_username -p aws_remote_database_name --opt --where=&quot;1 limit 100000&quot; &gt; your_dump_file_name.sql</code></pre>
+</div>
+<div id="local-mysql" class="section level3">
+<h3>Local MySQL</h3>
+<p>The final step is to read the dump file back into MySQL on your local machine. First, open up a MySQL Shell in a terminal window:</p>
+<pre><code>sudo mysql</code></pre>
+<p>Next create a new database, which will serve as the location to read in the dump file:</p>
+<pre><code>CREATE DATABASE your_database_name;</code></pre>
+<p>Next, exit the MySQL Shell (type <code>exit</code>) and run the following command, changing the relevant fields where necessary:</p>
+<pre><code>sudo mysql -u mysql_user_name -p your_database_name &lt; your_dump_file_name.sql</code></pre>
+<p>End.</p>
+</div>
