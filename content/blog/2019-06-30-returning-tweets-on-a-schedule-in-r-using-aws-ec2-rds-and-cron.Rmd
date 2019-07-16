@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE, message = FALSE, warning = FALS
 
 ### Intro
 
-In this post, you will learn how to run R scripts on a schedule using Amazon Web Services (AWS). Specifically, you learn how to deploy R on an Amazon Elastic Cloud Computing (EC2) instance, how to write data collected in R to an Amazon Relational Database (RDS), and how to to schedule tasks on EC2 using cron.
+In this post, you will learn how to run R scripts on a schedule using Amazon Web Services (AWS). Specifically, you learn how to deploy R on an Amazon Elastic Cloud Computing (EC2) instance, how to write data collected in R to an Amazon Relational Database (RDS), and how to schedule tasks on EC2 using cron.
 
 The R code you will be deploying on the EC2 instance is a script that returns Tweets from the Twitter API and then appends them to a MySQL database hosted on an RDS instance. This code (and workflow) comes from an R script I wrote to build a data set of Tweets for [Opt Out](https://github.com/opt-out-tool/), an open source project that helps people avoid sexual harassment and sexist hate speech online. *Note:* as the search terms used to return the Tweets contains offensive material, the script has been tweaked (more details below).
 

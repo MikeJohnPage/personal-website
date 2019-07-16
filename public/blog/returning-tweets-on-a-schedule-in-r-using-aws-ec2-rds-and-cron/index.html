@@ -1147,7 +1147,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 <div id="intro" class="section level3">
 <h3>Intro</h3>
-<p>In this post, you will learn how to run R scripts on a schedule using Amazon Web Services (AWS). Specifically, you learn how to deploy R on an Amazon Elastic Cloud Computing (EC2) instance, how to write data collected in R to an Amazon Relational Database (RDS), and how to to schedule tasks on EC2 using cron.</p>
+<p>In this post, you will learn how to run R scripts on a schedule using Amazon Web Services (AWS). Specifically, you learn how to deploy R on an Amazon Elastic Cloud Computing (EC2) instance, how to write data collected in R to an Amazon Relational Database (RDS), and how to schedule tasks on EC2 using cron.</p>
 <p>The R code you will be deploying on the EC2 instance is a script that returns Tweets from the Twitter API and then appends them to a MySQL database hosted on an RDS instance. This code (and workflow) comes from an R script I wrote to build a data set of Tweets for <a href="https://github.com/opt-out-tool/">Opt Out</a>, an open source project that helps people avoid sexual harassment and sexist hate speech online. <em>Note:</em> as the search terms used to return the Tweets contains offensive material, the script has been tweaked (more details below).</p>
 <p><em>Warning:</em> To follow along with this guide, you will need to register for an AWS account. Fortunately, AWS provides a <a href="https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&amp;all-free-tier.sort-order=asc">free tier</a> of access to their services which will suffice for this task. To avoid incurring any costs, ensure you select the ‘free tier eligible’ option when appropriate.</p>
 </div>
